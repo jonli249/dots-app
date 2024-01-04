@@ -40,7 +40,7 @@ function SignUpForm() {
     <div>
       <h2>Sign Up</h2>
       {session ? (
-        <p>Welcome, {session.user.name}!</p>
+        <p>Welcome, {session?.user.name}!</p>
       ) : (
         <>
           <p>Please sign up to create your account.</p>
