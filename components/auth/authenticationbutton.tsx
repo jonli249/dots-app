@@ -1,5 +1,4 @@
-// components/AuthenticationButton.tsx
-
+/*
 import React from 'react';
 import useAuth from '../../utils/useAuth';
 
@@ -18,3 +17,4 @@ function AuthenticationButton() {
 }
 
 export default AuthenticationButton;
+*/
