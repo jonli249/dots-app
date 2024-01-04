@@ -21,7 +21,7 @@ function SignUpForm() {
       });
 
       // Check if the signup was successful
-      if (result.error) {
+      if (result?.error) {
         console.error('Signup failed:', result.error);
         // Handle the error (e.g., display an error message)
       } else {
