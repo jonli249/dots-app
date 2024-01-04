@@ -1,3 +1,4 @@
+/*
 import NextAuth from './next-auth';
 import Providers from 'next-auth/providers';
 import app from './realm'; // Import your Realm app instance
@@ -61,3 +62,4 @@ export default NextAuth({
   // Customize other configuration options as needed
 });
 
+*/

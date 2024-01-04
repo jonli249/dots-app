@@ -1,4 +1,4 @@
-import * as Realm from "realm-web";
+/*import * as Realm from "realm-web";
 import { useEffect, useState } from "react";
 
 // Define your MongoDB Realm App ID
@@ -15,3 +15,4 @@ export function useApp() {
 
   return app;
 }
+*/
