@@ -1,5 +1,5 @@
 // utils/useAuth.ts
-import { useEffect, useState } from 'react';
+/*import { useEffect, useState } from 'react';
 import * as Realm from 'realm-web';
 
 const realmAppId = 'dotstester-bpjzg'; // Define your MongoDB Realm App ID
@@ -51,3 +51,4 @@ export default function useAuth() {
 
   return { app, session, loading, login, logout };
 }
+*/

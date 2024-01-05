@@ -39,9 +39,6 @@ function SignUpForm() {
   return (
     <div>
       <h2>Sign Up</h2>
-      {session ? (
-        <p>Welcome, {session?.user.name}!</p>
-      ) : (
         <>
           <p>Please sign up to create your account.</p>
           <input
@@ -64,7 +61,6 @@ function SignUpForm() {
           />
           <button onClick={handleSignUp}>Sign Up</button>
         </>
-      )}
     </div>
   );
 }

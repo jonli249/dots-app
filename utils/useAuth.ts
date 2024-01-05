@@ -1,62 +1,75 @@
-// utils/useAuth.ts
 import { useEffect, useState } from 'react';
 import * as Realm from 'realm-web';
+import { useRouter } from 'next/router';
 
-const realmAppId = 'dotstester-bpjzg'; // Define your MongoDB Realm App ID
-import { useRouter } from 'next/router'; // Import useRouter
+// Define a user interface for Realm users
+interface RealmUser {
+  id: string;
+  // Add other user properties as needed
+}
 
+const realmAppId = 'dotstester-bpjzg';
 
 export default function useAuth() {
-  const [app, setApp] = useState(null);
-  const [session, setSession] = useState(null);
+  const [app, setApp] = useState<Realm.App | null>(null);
+  const [session, setSession] = useState<RealmUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); // Get the router instance
-
+  const router = useRouter();
 
   useEffect(() => {
-    // Initialize the Realm app
     const realmApp = Realm.getApp(realmAppId);
     setApp(realmApp);
 
-    // Check for an existing user session
     const currentUser = realmApp.currentUser;
     if (currentUser) {
-      setSession(currentUser);
+      const userObject: RealmUser = {
+        id: currentUser.id,
+        // Add other user properties as needed
+      };
+      setSession(userObject);
     }
 
     setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     try {
-      // Authenticate the user using email and password
+      if (!app) {
+        throw new Error('Realm app is not initialized');
+      }
+  
       const credentials = Realm.Credentials.emailPassword(email, password);
       const user = await app.logIn(credentials);
-
+  
       if (user) {
-        setSession(user);
+        const userObject: RealmUser = {
+          id: user.id,
+          // Add other user properties as needed
+        };
+        setSession(userObject);
         return user;
       }
     } catch (error) {
       console.error('Login error:', error);
-      throw error; // Handle or re-throw the error as needed
+      throw error;
     }
   };
 
   const logout = async () => {
     try {
-      await app.currentUser?.logOut();
-      router.push('/'); // Redirect to the index.tsx page after logou
+      if (app) {
+        await app.currentUser?.logOut();
+      }
+      router.push('/');
       setSession(null);
     } catch (error) {
       console.error('Logout error:', error);
-      throw error; // Handle or re-throw the error as needed
+      throw error;
     }
   };
-
   const isAuthenticated = () => {
-    return !!session; // Returns true if session exists, indicating authentication
+    return !!session;
   };
 
-  return { app, session, loading, login, logout , isAuthenticated, logout};
+  return { app, session, loading, login, logout, isAuthenticated };
 }
