@@ -4,9 +4,10 @@ import UserProfile from '../components/UserProfile'; // Import the UserProfile c
 
 const SettingsPage: React.FC = () => {
   const { session, isAuthenticated, logout } = useAuth(); // Use the hook to get user session and isAuthenticated method
-
+  console.log("Sessions",session);
   return (
     <div>
+      
       <h1>Settings</h1>
       {session !== null ? (
         <>

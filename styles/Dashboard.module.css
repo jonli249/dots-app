@@ -1,0 +1,28 @@
+/* Dashboard.module.css */
+
+.dashboardContainer {
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .searchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  /* Add a class for the input element */
+  .searchInput {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  /* Add a class for the button element */
+  .searchButton {
+    margin-left: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  

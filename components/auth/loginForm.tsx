@@ -15,7 +15,7 @@ function LoginForm() {
       await login(email, password); // Call the login function from useAuth
 
       // Redirect to the settings page upon successful login
-      router.push('/settings');
+      router.push('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       // Handle the login failure (e.g., display an error message)
