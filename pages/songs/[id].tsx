@@ -10,12 +10,12 @@ interface Song {
     'first-release-date': string;
     'artist-credit': { name: string }[];
     songwriters: { name: string }[];
-    'producer-credit': { name: string }[];
+    'producers-credit': { name: string }[];
     composers: { name: string }[];
     lyricists: { name: string }[];
   }
 
-  
+
 const SongPage: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;

@@ -9,10 +9,10 @@ interface SongDetailViewProps {
     'artist-credit': {
       name: string;
     }[];
-    'songwriters': {
+    'writers': {
       name: string;
     }[];
-    'producer-credit': {
+    'producers-credit': {
       name: string;
     }[];
     'composers': {
@@ -29,8 +29,8 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     title,
     'first-release-date': releaseDate,
     'artist-credit': artists,
-    'songwriters': songwriters,
-    'producer-credit': producers,
+    'writers': songwriters,
+    'producers-credit': producers,
     'composers': composers,
     'lyricists': lyricists,
   } = songData;
