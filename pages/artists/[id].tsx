@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 interface Artist {
-  _id: string;
+  id: string;
   name: string;
   songs: string[]; // Assuming 'songs' is an array of song names or IDs
   // Add more fields as needed
@@ -44,7 +44,7 @@ const ArtistPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Artist</h1>
+      <h1>Artist {id}</h1>
       <h2>Songs:</h2>
       <div>
         <pre>{artistData}</pre>

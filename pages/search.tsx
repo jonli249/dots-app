@@ -1,59 +1,50 @@
 // pages/search.tsx
 
 import React, { useState } from 'react';
-import axios from 'axios'; // Import axios for making API requests
+import axios from 'axios';
 import styles from '../styles/Dashboard.module.css';
 import Link from 'next/link';
 
-//import ExpandableListItem from '../components/ExpandableListItem';
-
 interface SearchResult {
   id: string;
-  name: string;
+  title: string;
   // Add more fields as needed
 }
 
-
-const SearchCollabPage: React.FC = () => {
-  const [id, setId] = useState<string>('');
+const SearchSongPage: React.FC = () => {
+  const [title, setTitle] = useState<string>('');
   const [searchResult, setSearchResult] = useState<SearchResult[] | null>(null);
 
   const handleSearch = async () => {
     try {
-      // Make an HTTP GET request to your API route with the provided ID
-      const searchparam = `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${id}`;
+      // Make an HTTP GET request to your API route with the provided title
+      const searchparam = `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${title}`;
       const response = await axios.get(searchparam);
       if (response.data) {
         // Handle the search result data here
         setSearchResult(response.data);
       } else {
         setSearchResult(null);
-        console.log(searchparam);
-        console.error('Document not found');
+        console.error('No matching songs found');
       }
     } catch (error) {
       console.error('Search error:', error);
-      
       setSearchResult(null);
     }
   };
 
-
   return (
     <div className={styles.dashboardContainer}>
-      <h1>Search for Artist</h1>
+      <h1>Search for Songs</h1>
       <div className={styles.searchContainer}>
         <input
-          className={styles.searchInput} 
+          className={styles.searchInput}
           type="text"
-          placeholder="Name"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
-        <button
-          className={styles.searchButton} 
-          onClick={handleSearch}
-        >
+        <button className={styles.searchButton} onClick={handleSearch}>
           Search
         </button>
       </div>
@@ -62,9 +53,9 @@ const SearchCollabPage: React.FC = () => {
           <ul>
             {searchResult.map((result) => (
               <li key={result.id}>
-                {/* Make each result clickable and link to the artist page */}
-                <Link href={`/artists/${result.id}`}>
-                    {result.name}
+                {/* Make each result clickable and link to the song page */}
+                <Link href={`/songs/${result.id}`}>
+                  {result.title}
                 </Link>
               </li>
             ))}
@@ -73,8 +64,6 @@ const SearchCollabPage: React.FC = () => {
       )}
     </div>
   );
-      };
+};
 
-  
-
-export default SearchCollabPage;
+export default SearchSongPage;
