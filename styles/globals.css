@@ -1,100 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
     /* font-family: "Outfit", sans-serif; */
     font-family: 'Barlow', sans-serif !important;
 }
 
-body {
-    overflow-x: hidden;
-}
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-    margin: 0;
-}
-
-button * {
-    text-transform: capitalize !important;
-}
-
-p {
-    font-size: 22px;
-    opacity: 0.5;
-}
-
-.flex {
-    display: flex;
-}
-
-.aic {
-    align-items: center;
-}
-
-.jcc {
-    justify-content: center;
-}
-
-.fdc {
-    flex-direction: column;
-}
-
-.jcsb {
-    justify-content: space-between;
-}
-
-.fdr {
-    flex-direction: row;
-}
-
-.vh {
-    height: 100vh;
-    /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 100);
-}
-
-.view-width {
-    width: 100vw;
-}
-
-.height100 {
-    height: 100%;
-}
-
-.width100 {
-    width: 100%;
-}
-
-.cp {
-    cursor: pointer;
-}
-
-.bb {
-    box-sizing: border-box;
-}
-
-.tac {
-    text-align: center;
-}
-
-.margin-center {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-body {
-    margin: 0;
-}
-
-a {
-    text-decoration: none;
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
-}
 
 .powerFont {
     font-family: 'Rubik Glitch', cursive !important;

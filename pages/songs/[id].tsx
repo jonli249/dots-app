@@ -3,17 +3,17 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import SongDetailView from '../../components/songs/songdetailed'; // Import the component
+import SongDetailView from '../../components/songs/songdetailed'; // Import the component 
 
 interface Song {
-    title: string;
-    'first-release-date': string;
-    'artist-credit': { name: string }[];
-    songwriters: { name: string }[];
-    'producers-credit': { name: string }[];
-    composers: { name: string }[];
-    lyricists: { name: string }[];
-  }
+    title?: string;
+    'first-release-date'?: string;
+    'artist-credit'?: { name: string }[];
+    songwriters?: { name: string }[];
+    'producers-credit'?: { name: string }[];
+    composers?: { name: string }[];
+    lyricists?: { name: string }[];
+}
 
 
 const SongPage: React.FC = () => {

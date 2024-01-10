@@ -1,24 +1,26 @@
 // components/SongDetailView.tsx
 
 import React from 'react';
+import { Button } from "@/components/ui/button";
+
 
 interface SongDetailViewProps {
   songData: {
-    title: string;
-    'first-release-date': string;
-    'artist-credit': {
+    title?: string;
+    'first-release-date'?: string;
+    'artist-credit'?: {
       name: string;
     }[];
-    'writers': {
+    'writers'?: {
       name: string;
     }[];
-    'producers-credit': {
+    'producers-credit'?: {
       name: string;
     }[];
-    'composers': {
+    'composers'?: {
       name: string;
     }[];
-    'lyricists': {
+    'lyricists'?: {
       name: string;
     }[];
   };
@@ -29,7 +31,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     title,
     'first-release-date': releaseDate,
     'artist-credit': artists,
-    'writers': songwriters,
+    'writers': writers,
     'producers-credit': producers,
     'composers': composers,
     'lyricists': lyricists,
@@ -37,69 +39,78 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white">
-      <div className="flex flex-col lg:flex-row lg:items-start lg:space-x-8">
-        <div className="flex-shrink-0">
-          {/* Blank box */}
-          <div
-            className="w-48 h-48 bg-black"
-            style={{
-              aspectRatio: "200/200",
-            }}
-          />
-        </div>
-        <div className="mt-2 lg:mt-0 lg:flex-1">
+      <div className="flex items-start space-x-6">
+      <img
+          alt="Album cover"
+          className="w-32 h-32"
+          height="128"
+          src="/placeholder.svg"
+          style={{
+            aspectRatio: "128/128",
+            objectFit: "cover",
+          }}
+          width="128"
+        />
+        <div className="flex flex-col space-y-2">
           <h1 className="text-4xl font-bold">{title}</h1>
-          <p className="text-xl mt-1">
-            {artists.map((artist, index) => (
-              <span key={index}>
-                {index > 0 && ', '}
-                {artist.name}
-              </span>
-            ))}
+          <p className="text-xl">
+          {
+              artists ? 
+                artists.map((artist, index) => (
+                  <span key={index}>
+                    {index > 0 && ', '}
+                    {artist.name}
+                  </span>
+                )) 
+              : <span>No artists found</span>
+          }
           </p>
-          <p className="text-gray-600">Released {releaseDate}</p>
-          {/* ... Rest of the component remains unchanged */}
-          {/* ... */}
+          <p className="text-gray-600">Released: {releaseDate}</p>
+          
+          </div>
+
+          <div className="mt-6 flex space-x-4">
+            <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 bg-black text-white"> Add to Favorites</button>
+            <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">Bad Data</button>
+            <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2">
+              Claim
+            </button>        
+          </div>
         </div>
-      </div>
-      <div className="mt-3">
-        <h2 className="text-2xl font-semibold">MAIN ARTISTS</h2>
-        <div className="mt-2">
-          {artists.map((artist, index) => (
-            <button
+      <div className="mt-8">
+        <h2 className="text-2xl font-semibold mb-4">MAIN ARTIST</h2>
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          { artists?
+            artists.map((artist, index) => (
+            <Button
               key={index}
-              className="border border-gray-600 p-2 rounded-md"
             >
               {artist.name}
-            </button>
-          ))}
+            </Button>
+          )): <span>Nada</span>}
         </div>
-      </div>
-      <div className="mt-3">
-        <h2 className="text-2xl font-semibold">SONGWRITERS</h2>
-        <div className="mt-2">
-          {songwriters && songwriters.length > 0 ? (
-            songwriters.map((songwriter, index) => (
-              <button
-                key={index}
-                className="border border-gray-600 p-2 rounded-md"
-              >
-                {songwriter.name}
-              </button>
-            ))
-          ) : (
-            <p>No songwriters found</p>
-          )}
-        </div>
-      </div>
-      <div className="mt-3">
-        <h2 className="text-2xl font-semibold">COMPOSERS</h2>
-        <div className="mt-2">
+          <h2 className="text-2xl font-semibold">SONGWRITERS</h2>
+          <div className="mt-2 grid grid-cols-2 gap-4">
+            {writers && writers.length > 0 ? (
+              writers.map((songwriter, index) => (
+                <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                  key={index}
+                >
+                  {songwriter.name}
+                </button>
+              ))
+            ) : (
+              <p>No songwriters found</p>
+            )}
+          </div>
+
+          <h2 className="text-2xl font-semibold">COMPOSERS</h2>
+          <div className="grid grid-cols-2 gap-4">
           {composers && composers.length > 0 ? (
             composers.map((composer, index) => (
-              <button
+              <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
                 key={index}
-                className="border border-gray-600 p-2 rounded-md"
+   
               >
                 {composer.name}
               </button>
@@ -107,16 +118,13 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           ) : (
             <p>No composers found</p>
           )}
-        </div>
-      </div>
-      <div className="mt-3">
-        <h2 className="text-2xl font-semibold">LYRICISTS</h2>
-        <div className="mt-2">
+          </div>
+          <h2 className="text-2xl font-semibold">LYRICISTS</h2>
+          <div className="mt-2 grid grid-cols-2 gap-4">
           {lyricists && lyricists.length > 0 ? (
             lyricists.map((lyricist, index) => (
-              <button
+              <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
                 key={index}
-                className="border border-gray-600 p-2 rounded-md"
               >
                 {lyricist.name}
               </button>
@@ -125,15 +133,13 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
             <p>No lyricists found</p>
           )}
         </div>
-      </div>
-      <div className="mt-3">
-        <h2 className="text-2xl font-semibold">PRODUCERS</h2>
-        <div className="mt-2">
+          <h2 className="text-2xl font-semibold">PRODUCERS</h2>
+          <div className="mt-2 grid grid-cols-2 gap-4">
           {producers && producers.length > 0 ? (
             producers.map((producer, index) => (
-              <button
+              <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
                 key={index}
-                className="border border-gray-600 p-2 rounded-md"
+      
               >
                 {producer.name}
               </button>
@@ -142,7 +148,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
             <p>No producers found</p>
           )}
         </div>
-      </div>
+        </div>
     </div>
   );
 };

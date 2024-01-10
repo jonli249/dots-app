@@ -44,8 +44,8 @@ const ArtistPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Artist {id}</h1>
-      <h2>Songs:</h2>
+      <h1 className='font-bold'>Artist {id}</h1>
+      <h2 className='font-bold'>Songs:</h2>
       <div>
         <pre>{artistData}</pre>
         </div>

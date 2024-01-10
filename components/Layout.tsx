@@ -1,4 +1,6 @@
 import React, { ReactNode } from 'react';
+import '/Users/jli/Desktop/dev_playground/Dots-app/dots/styles/globals.css';
+
 
 interface LayoutProps {
   children: ReactNode;
