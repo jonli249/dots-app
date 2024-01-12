@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import Image from 'next/image';
 
 interface SongDetailViewProps {
   songData: {
@@ -37,7 +38,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white">
       <div className="flex items-start space-x-6">
-        <img
+        <Image 
           alt="Album cover"
           className="w-32 h-32"
           height="128"

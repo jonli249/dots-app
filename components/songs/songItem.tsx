@@ -1,6 +1,7 @@
 // components/SongItem.tsx
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 interface SongItemProps {
@@ -15,7 +16,7 @@ const SongItem: React.FC<SongItemProps> = ({ title, artists = [], coverImage, _i
     <Link href={`/songs/${_id}`}>
     <div className="flex flex-col items-center w-42 h-14 border border-gray-300 rounded-md p-2 m-2">
       {/* Set width longer than height, reduce size, and add margin */}
-      <img
+      <Image
         src={coverImage}
         alt={`${title} cover`}
         className="w-14 h-14 object-cover rounded-md border border-gray-300"
