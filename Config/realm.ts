@@ -1,18 +1,75 @@
-/*import * as Realm from "realm-web";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import * as Realm from 'realm-web';
+import { useRouter } from 'next/router';
 
-// Define your MongoDB Realm App ID
+// Define a user interface for Realm users
+interface RealmUser {
+  id: string;
+  // Add other user properties as needed
+}
+
 const realmAppId = 'dotstester-bpjzg';
 
-export function useApp() {
-  const [app, setApp] = useState(null);
+export default function useAuth() {
+  const [app, setApp] = useState<Realm.App | null>(null);
+  const [session, setSession] = useState<RealmUser | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  // Move the getApp call into the useEffect
   useEffect(() => {
     const realmApp = Realm.getApp(realmAppId);
     setApp(realmApp);
+
+    const currentUser = realmApp.currentUser;
+    if (currentUser) {
+      const userObject: RealmUser = {
+        id: currentUser.id,
+        // Add other user properties as needed
+      };
+      setSession(userObject);
+    }
+
+    setLoading(false);
   }, []);
 
-  return app;
+  const login = async (email: string, password: string) => {
+    try {
+      if (!app) {
+        throw new Error('Realm app is not initialized');
+      }
+  
+      const credentials = Realm.Credentials.emailPassword(email, password);
+      const user = await app.logIn(credentials);
+  
+      if (user) {
+        const userObject: RealmUser = {
+          id: user.id,
+          // Add other user properties as needed
+        };
+        setSession(userObject);
+        return user;
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      if (app) {
+        await app.currentUser?.logOut();
+      }
+      router.push('/');
+      setSession(null);
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
+  };
+  const isAuthenticated = () => {
+    return !!session;
+  };
+
+  return { app, session, loading, login, logout, isAuthenticated };
 }
-*/

@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import axios from 'axios'; // Import axios for making API requests
 import styles from '../styles/Dashboard.module.css';
 import Link from 'next/link';
+// pages/dashboard.js or pages/dashboard.tsx
+
 
 interface SearchResult {
   _id : string;

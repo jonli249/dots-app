@@ -3,11 +3,17 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import axios for making API requests
 import styles from '../styles/Dashboard.module.css';
+import useAuth from '../utils/useAuth'; // Import the useAuth hook
+import Navbar from '../components/main/navbar'; // Import the Navbar component
+
 
 
 const DashboardPage: React.FC = () => {
   const [id, setId] = useState<string>('');
   const [searchResult, setSearchResult] = useState<any>(null);
+  const { logout, isAuthenticated } = useAuth(); // Use the useAuth Hook
+
+
 
   const handleSearch = async () => {
     try {
@@ -34,6 +40,8 @@ const DashboardPage: React.FC = () => {
 
 
   return (
+    <div>
+    <Navbar />
     <div className={styles.dashboardContainer}>
       <h1>Dashboard</h1>
       <div className={styles.searchContainer}>
@@ -57,6 +65,18 @@ const DashboardPage: React.FC = () => {
           <pre>{JSON.stringify(searchResult, null, 2)}</pre>
         </div>
       )}
+      <div>
+      {isAuthenticated() && ( // Show the button only if the user is authenticated
+        <button
+          onClick={logout}
+          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      )}
+      {/* Your dashboard content goes here */}
+    </div>
+    </div>
     </div>
   );
       };

@@ -55,6 +55,29 @@ export default function useAuth() {
     }
   };
 
+  const signup = async (name: string, email: string, password: string) => {
+    try {
+      if (!app) {
+        throw new Error('Realm app is not initialized');
+      }
+  
+      // Register a new user with the provided email and password
+      await app.emailPasswordAuth.registerUser({
+        email,
+        password,
+      });
+  
+      // Optionally, you can log in the user after signup
+      await login(email, password);
+  
+      return null; // Return null if signup is successful
+    } catch (error) {
+      console.error('Signup error:', error);
+      throw error;
+    }
+  };
+  
+
   const logout = async () => {
     try {
       if (app) {
@@ -71,5 +94,5 @@ export default function useAuth() {
     return !!session;
   };
 
-  return { app, session, loading, login, logout, isAuthenticated };
+  return { app, session, loading, login, logout, signup,  isAuthenticated };
 }
