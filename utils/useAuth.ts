@@ -2,9 +2,13 @@ import { useEffect, useState } from 'react';
 import * as Realm from 'realm-web';
 import { useRouter } from 'next/router';
 
+
 // Define a user interface for Realm users
 interface RealmUser {
   id: string;
+  name?: string; 
+  email?: string;
+  company?: string
   // Add other user properties as needed
 }
 
@@ -24,7 +28,6 @@ export default function useAuth() {
     if (currentUser) {
       const userObject: RealmUser = {
         id: currentUser.id,
-        // Add other user properties as needed
       };
       setSession(userObject);
     }
@@ -40,11 +43,11 @@ export default function useAuth() {
   
       const credentials = Realm.Credentials.emailPassword(email, password);
       const user = await app.logIn(credentials);
+
   
       if (user) {
         const userObject: RealmUser = {
           id: user.id,
-          // Add other user properties as needed
         };
         setSession(userObject);
         return user;
@@ -55,27 +58,31 @@ export default function useAuth() {
     }
   };
 
-  const signup = async (name: string, email: string, password: string) => {
+  const signup = async (name: string, email: string, password: string, company: string) => {
     try {
       if (!app) {
         throw new Error('Realm app is not initialized');
       }
   
-      // Register a new user with the provided email and password
-      await app.emailPasswordAuth.registerUser({
-        email,
-        password,
-      });
+      await app.emailPasswordAuth.registerUser({ email, password });
   
-      // Optionally, you can log in the user after signup
-      await login(email, password);
+      // Log in the user
+      const user = await login(email, password);
   
-      return null; // Return null if signup is successful
+      if (user) {
+        const pushdata = await user.callFunction('inituserdata', user.id, name, email, company);
+        
+        return user;
+      } else {
+        console.error('User not logged in after registration');
+        // Handle error
+        return null; // or throw an error if needed
+      }
     } catch (error) {
       console.error('Signup error:', error);
       throw error;
     }
-  };
+  }
   
 
   const logout = async () => {

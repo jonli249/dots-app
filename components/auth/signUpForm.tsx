@@ -1,17 +1,17 @@
-// SignupForm.js or SignupForm.tsx
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'; // Import the useRouter hook
-import useAuth from '../../utils/useAuth'; // Import the useAuth hook
-import Link from 'next/link'; // Import Link from Next.js
+import { useRouter } from 'next/router';
+import useAuth from '../../utils/useAuth';
+import Link from 'next/link';
 
 function SignupForm() {
-  const router = useRouter(); // Initialize the useRouter hook
-  const { signup } = useAuth(); // Use the hook
+  const router = useRouter();
+  const { signup } = useAuth();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [company, setCompany] = useState(''); // Add state for company
   const [signupError, setSignupError] = useState('');
 
   const handleSignup = async () => {
@@ -21,10 +21,9 @@ function SignupForm() {
         return;
       }
 
-      const user = await signup(name, email, password); // Call the signup function from useAuth
+      const user = await signup(name, email, password, company); // Pass company to the signup function
 
       if (user) {
-        // Redirect to the dashboard or another page upon successful signup
         router.push('/dashboard');
       }
     } catch (error) {
@@ -42,6 +41,13 @@ function SignupForm() {
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className="w-full p-2 mb-2 border rounded"
+        />
+        <input
+          type="text"
+          placeholder="Company"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
           className="w-full p-2 mb-2 border rounded"
         />
         <input
@@ -65,6 +71,7 @@ function SignupForm() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           className="w-full p-2 mb-2 border rounded"
         />
+        
         <button
           onClick={handleSignup}
           className="w-full py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600"

@@ -12,26 +12,32 @@ interface SongItemProps {
 }
 
 const SongItem: React.FC<SongItemProps> = ({ title, artists = [], coverImage, _id }) => {
-  return (
-    <Link href={`/songs/${_id}`}>
-    <div className="flex flex-col items-center w-42 h-14 border border-gray-300 rounded-md p-2 m-2">
-      {/* Set width longer than height, reduce size, and add margin */}
-      <Image
-        src={coverImage}
-        alt={`${title} cover`}
-        className="w-14 h-14 object-cover rounded-md border border-gray-300"
-        style={{ minWidth: '1rem', minHeight: '1rem' }}
-      />
-      <div className="flex flex-col justify-center text-center">
-        <h2 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold">
-          {title}
-        </h2>
-        <p className="text-xxs sm:text-xs md:text-sm lg:text-base text-gray-500">
-          {artists.length > 0 ? artists.map((artist) => artist.name).join(', ') : 'Unknown Artist'}
-        </p>
-      </div>
-    </div>
-    </Link>
+    return (
+        <Link href={`/songs/${_id}`}>
+          <div className="flex items-center w-72 h-14 border border-gray-300 rounded-md p-2 m-2">
+            <div className="flex-shrink-0">
+              {/* Set width longer than height, reduce size, and add margin */}
+              <Image
+                src={coverImage}
+                alt={`${title} cover`}
+                width={64} // Adjust this value as needed
+                height={64} // Adjust this value as needed to create a square image
+                className="object-cover rounded-md border border-gray-300"
+              />
+            </div>
+            <div className="ml-2 flex-grow">
+              <div className="flex flex-col justify-center text-center">
+                <h2 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold">
+                  {title}
+                </h2>
+                {/* Uncomment this section if you want to display artist names */}
+                {/* <p className="text-xxs sm:text-xs md:text-sm lg:text-base text-gray-500">
+                  {artists.length > 0 ? artists.map((artist) => artist.name).join(', ') : 'Unknown Artist'}
+                </p> */}
+              </div>
+            </div>
+          </div>
+        </Link>
   );
 };
 
