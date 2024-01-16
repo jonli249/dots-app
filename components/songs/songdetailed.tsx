@@ -47,7 +47,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
             aspectRatio: "128/128",
             objectFit: "cover",
           }}
-          width="128"
+          width="24"
         />
         <div className="flex flex-col space-y-2">
           <h1 className="text-4xl font-bold">{title}</h1>
@@ -63,13 +63,12 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           </p>
           <p className="text-gray-600">Released: {releaseDate}</p>
         </div>
+        <div className="ml-auto flex items-center space-x-2">
+        <Button className="bg-gray-200 hover:bg-gray-300">Add to Favorites</Button>
+        </div>
       </div>
 
-      <div className="ml-auto flex items-center space-x-2">
-        <Button className="bg-gray-200 hover:bg-gray-300">Add to Favorites</Button>
-        <Button variant="outline">Bad Data</Button>
-        <Button variant="secondary">Claim</Button>
-      </div>
+      
 
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">MAIN ARTIST</h2>

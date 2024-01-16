@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import axios from 'axios'; // Import axios for making API requests
 import styles from '../styles/Dashboard.module.css';
 import Link from 'next/link';
+import Header from '../components/header/Header';
+import Navbar from '../components/main/navbar';
 
 //import ExpandableListItem from '../components/ExpandableListItem';
 
@@ -40,7 +42,10 @@ const SearchCollabPage: React.FC = () => {
 
 
   return (
+    <div>
     <div className={styles.dashboardContainer}>
+      <Navbar />
+
       <h1>Search for Artist</h1>
       <div className={styles.searchContainer}>
         <input
@@ -71,6 +76,7 @@ const SearchCollabPage: React.FC = () => {
           </ul>
         </div>
       )}
+    </div>
     </div>
   );
       };

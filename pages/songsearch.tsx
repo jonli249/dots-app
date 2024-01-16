@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios'; // Import axios for making API requests
 import styles from '../styles/Dashboard.module.css';
 import Link from 'next/link';
-// pages/dashboard.js or pages/dashboard.tsx
+import Navbar from '../components/main/navbar';
 
 
 interface SearchResult {
@@ -37,7 +37,9 @@ const SearchCollabPage: React.FC = () => {
   };
 
   return (
+
     <div className={styles.dashboardContainer}>
+            <Navbar />
       <h1>Search for Song</h1>
       <div className={styles.searchContainer}>
         <input

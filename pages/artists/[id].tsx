@@ -3,9 +3,11 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css'; // Import Tailwind CSS styles
-import {Button} from "@/components/ui/button";
-import SongItem from '../../components/songs/songItem';
+import SongList from '../../components/songs/songlist';
 import Collaborators from '../../components/artist/mostcollabs';
+import Navbar from '../../components/main/navbar';
+import { Skeleton } from "@/components/ui/skeleton"
+
 
 
 interface Song {
@@ -56,43 +58,31 @@ const ArtistPage: React.FC = () => {
   const songsToDisplay = songs.slice(startIndex, endIndex);
 
   if (songs.length === 0) {
-    return <div className="flex items-center justify-center h-screen mt-4">Loading...</div>;
+    return <div className="flex items-center justify-center h-screen mt-4">Loading...</div>
+    
   }
   return (
+    <div> 
+
+    <Navbar />
     <div className="flex flex-col items-center mt-30">
-      <h1 className='font-bold mt-20'>Artist {id}</h1>
-      <h2 className='font-bold mt-10'>Songs:</h2>
-      <div className="grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {songsToDisplay.map((song, index) => (
-            <SongItem
-            key={index}
-            title={song.title}
-            _id = {song._id}
-            //artists={song['artist-credit'].name} 
-            coverImage={song.coverImage} // Assuming song.coverImage is a URL to the cover image
-          />
-        ))}
-        </div>
-      {/* Pagination controls */}
-      <div className="space-x-4 mt-10">
-        <Button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous Page
-        </Button>
-        <Button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={endIndex >= songs.length}
-        >
-          Next Page
-        </Button>
-      </div>
-      
+        
+      <h1 className="font-bold mt-20">Artist {id}</h1>
+      <h2 className="font-bold mt-10">Songs:</h2>
+      <SongList
+        songs={songsToDisplay}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        startIndex={startIndex}
+        endIndex={endIndex}
+        totalSongs={songs.length}
+        songsPerPage={songsPerPage}
+      />
       <div className = "mt-10"> 
         <Collaborators artistId={id} />
 
       </div>
+    </div>
     </div>
   );
 };
