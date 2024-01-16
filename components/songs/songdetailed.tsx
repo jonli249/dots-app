@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import Image from 'next/image';
+import Navbar from '../main/navbar';
 
 interface SongDetailViewProps {
   songData: {
@@ -36,6 +37,9 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
   } = songData;
 
   return (
+    <div>
+
+    <Navbar />
     <div className="max-w-4xl mx-auto p-8 bg-white">
       <div className="flex items-start space-x-6">
         <Image 
@@ -133,6 +137,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -14,7 +14,7 @@ function Navbar() {
   const { logout, isAuthenticated } = useAuth(); // Use the useAuth hook
 
   return (
-    <nav className="bg-gray-500 p-10 flex justify-between items-center">
+    <nav className="p-4 flex justify-between items-center bg-white bg-opacity-90 shadow-md sticky top-0 z-50">
       <div>
       <Image 
         src= {'/logo.png'}

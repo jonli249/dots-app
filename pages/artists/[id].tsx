@@ -6,7 +6,7 @@ import 'tailwindcss/tailwind.css'; // Import Tailwind CSS styles
 import SongList from '../../components/songs/songlist';
 import Collaborators from '../../components/artist/mostcollabs';
 import Navbar from '../../components/main/navbar';
-import { Skeleton } from "@/components/ui/skeleton"
+import ArtistSummary from '../../components/artist/artistsummary';
 
 
 
@@ -16,6 +16,7 @@ interface Song {
     _id: string;
     coverImage: string;
     'artist-credit': string[];
+    'first-release-date': string;
     
     // Add other properties as needed
   }
@@ -67,7 +68,8 @@ const ArtistPage: React.FC = () => {
     <Navbar />
     <div className="flex flex-col items-center mt-30">
         
-      <h1 className="font-bold mt-20">Artist {id}</h1>
+      
+      <ArtistSummary artistId={id} />
       <h2 className="font-bold mt-10">Songs:</h2>
       <SongList
         songs={songsToDisplay}

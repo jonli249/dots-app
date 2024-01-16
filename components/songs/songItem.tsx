@@ -21,8 +21,8 @@ const SongItem: React.FC<SongItemProps> = ({ title, artists = [], coverImage, _i
             <Image
               src={coverImage}
               alt={`${title} cover`}
-              width={64}
-              height={64}
+              width={32}
+              height={32}
               layout="responsive"
               className="object-cover"
             />
