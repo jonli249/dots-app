@@ -28,7 +28,6 @@ const SongSearchCollabPage: React.FC = () => {
       const response = await axios.get(searchparam);
       if (response.data) {
         setSearchResult(response.data);
-        console.log(response.data);
       } else {
         setSearchResult(null);
         console.error('Document not found');
@@ -61,7 +60,7 @@ const SongSearchCollabPage: React.FC = () => {
   const inputProps = {
     placeholder: 'Name',
     value: id,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
+    onChange: (event: React.FormEvent<any>, { newValue }: Autosuggest.ChangeEvent) => {
       setId(newValue);
     },
   };

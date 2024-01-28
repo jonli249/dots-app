@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Autosuggest from 'react-autosuggest'; // Import react-autosuggest
 import styles from '../styles/Dashboard.module.css';
 import Link from 'next/link';
 import Navbar from '../components/main/navbar';
@@ -8,6 +7,7 @@ import Navbar from '../components/main/navbar';
 interface SearchResult {
   id: string;
   name: string;
+  // Add more fields as needed
 }
 
 const SearchCollabPage: React.FC = () => {
@@ -37,49 +37,39 @@ const SearchCollabPage: React.FC = () => {
     }
   };
 
-  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
-    handleSearch(value);
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setId(newValue);
+    handleSearch(newValue);
   };
-
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-
-  const getSuggestionValue = (suggestion: SearchResult) => suggestion.name;
-
-  const renderSuggestion = (suggestion: SearchResult) => (
-    <Link href={`/artists/${suggestion.id}`}>
-      <div className="border border-gray-200 p-4 m-2 hover:border-blue-500 rounded-lg">
-        <h3 className="text-lg font-semibold">{suggestion.name}</h3>
-        {/* Add more fields as needed */}
-      </div>
-    </Link>
-  );
-
-
-  const inputProps = {
-    placeholder: 'Name',
-    value: id,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>, { newValue }: Autosuggest.ChangeEvent) => {
-      setId(newValue);
-    },
-  };
-  
 
   return (
     <div className={styles.dashboardContainer}>
       <Navbar />
-
       <h1>Search for Artist</h1>
       <div className={styles.searchContainer}>
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
+        <input
+          placeholder="Name"
+          value={id}
+          onChange={onInputChange}
+          className={styles.searchInput}
         />
+        {suggestions && suggestions.length > 0 && (
+          <div>
+            <ul>
+              {suggestions.map((result) => (
+                <li key={result.id}>
+                  <Link href={`/artists/${result.id}`}>
+                    <div className="border border-gray-200 p-4 m-2 hover:border-blue-500 rounded-lg">
+                      <h3 className="text-lg font-semibold">{result.name}</h3>
+                      {/* Add more fields as needed */}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
