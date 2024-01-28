@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import Image from 'next/image';
 import Navbar from '../main/navbar';
+import Link from 'next/link';
 
 interface SongDetailViewProps {
   songData: {
@@ -9,18 +10,24 @@ interface SongDetailViewProps {
     'first-release-date'?: string;
     'artist-credit'?: {
       name: string;
+      id: string; 
+
     }[];
     'writers'?: {
       name: string;
+      id: string; 
     }[];
     'producers-credit'?: {
       name: string;
+      id: string; 
     }[];
     'composers'?: {
       name: string;
+      id: string; 
     }[];
     'lyricists'?: {
       name: string;
+      id: string; 
     }[];
   };
 }
@@ -66,7 +73,9 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
               artists.map((artist, index) => (
                 <span key={index}>
                   {index > 0 && ', '}
-                  {artist.name}
+                  <Link href={`/artists/${artist.id}`}> {/* Use Link for artist */}
+                      {artist.name}
+                    </Link>
                 </span>
               )) 
             : <span>No artists found</span>}
@@ -86,7 +95,9 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           { artists?
             artists.map((artist, index) => (
               <Button variant="outline" key={index}>
-                {artist.name}
+                <Link href={`/artists/${artist.id}`}> {/* Use Link for artist */}
+                    {artist.name}
+                  </Link>
               </Button>
             )) : <span>Nada</span>}
         </div>
@@ -96,7 +107,9 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           {allwriters && allwriters.length > 0 ? (
             allwriters.map((songwriter, index) => (
               <Button variant="outline" key={index}>
-                {songwriter.name}
+                <Link href={`/artists/${songwriter.id}`}> {/* Use Link for songwriter */}
+                    {songwriter.name}
+                  </Link>
               </Button>
             ))
           ) : (
@@ -109,7 +122,9 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           {producers && producers.length > 0 ? (
             producers.map((producer, index) => (
               <Button variant="outline" key={index}>
-                {producer.name}
+                <Link href={`/artists/${producer.id}`}> 
+                    {producer.name}
+                  </Link>
               </Button>
             ))
           ) : (
