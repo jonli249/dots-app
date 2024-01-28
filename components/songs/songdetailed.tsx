@@ -36,6 +36,12 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     'lyricists': lyricists,
   } = songData;
 
+  const allwriters = [
+    ...(writers || []),
+    ...(composers || []),
+    ...(lyricists || []),
+  ];
+
   return (
     <div>
 
@@ -87,40 +93,14 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
 
         <h2 className="text-2xl font-semibold mb-4">SONGWRITERS</h2>
         <div className="grid grid-cols-2 gap-4 mb-8">
-          {writers && writers.length > 0 ? (
-            writers.map((songwriter, index) => (
+          {allwriters && allwriters.length > 0 ? (
+            allwriters.map((songwriter, index) => (
               <Button variant="outline" key={index}>
                 {songwriter.name}
               </Button>
             ))
           ) : (
             <p>No songwriters found</p>
-          )}
-        </div>
-
-        <h2 className="text-2xl font-semibold mb-4">COMPOSERS</h2>
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          {composers && composers.length > 0 ? (
-            composers.map((composer, index) => (
-              <Button variant="outline" key={index}>
-                {composer.name}
-              </Button>
-            ))
-          ) : (
-            <p>No composers found</p>
-          )}
-        </div>
-
-        <h2 className="text-2xl font-semibold mb-4">LYRICISTS</h2>
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          {lyricists && lyricists.length > 0 ? (
-            lyricists.map((lyricist, index) => (
-              <Button variant="outline" key={index}>
-                {lyricist.name}
-              </Button>
-            ))
-          ) : (
-            <p>No lyricists found</p>
           )}
         </div>
 
