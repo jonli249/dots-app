@@ -60,10 +60,11 @@ const SearchCollabPage: React.FC = () => {
   const inputProps = {
     placeholder: 'Name',
     value: id,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
+    onChange: (event: React.ChangeEvent<HTMLInputElement>, { newValue }: Autosuggest.ChangeEvent) => {
       setId(newValue);
     },
   };
+  
 
   return (
     <div className={styles.dashboardContainer}>
