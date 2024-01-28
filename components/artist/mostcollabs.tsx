@@ -10,7 +10,7 @@ interface Collaborator {
 }
 
 interface CollaboratorsProps {
-  artistId: string;
+  artistId?: string;
 }
 
 const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
@@ -41,7 +41,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   }
 
   return (
-    <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 lg:grid-cols-3 bg-black bg-opacity-90">
       {collaborators.map((collaborator) => (
         <Link key={collaborator._id} href={`/artists/${collaborator._id}`} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
             <Image

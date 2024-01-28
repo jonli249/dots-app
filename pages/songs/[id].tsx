@@ -9,7 +9,7 @@ interface Song {
     title?: string;
     'first-release-date'?: string;
     'artist-credit'?: { name: string }[];
-    songwriters?: { name: string }[];
+    writers?: { name: string }[];
     'producers-credit'?: { name: string }[];
     composers?: { name: string }[];
     lyricists?: { name: string }[];
@@ -27,10 +27,8 @@ const SongPage: React.FC = () => {
       const fetchSong = async () => {
         try {
             const param = `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/onesongroute?songId=${id}`;
-            console.log("Params", param);
             const response = await axios.get(param);
  
-            console.log("RIP", response.data);
           if (response.data) {
             setSong(response.data);
           } else {

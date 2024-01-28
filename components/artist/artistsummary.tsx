@@ -48,7 +48,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
 
   return (
-    <div className="flex items-center rounded border-slate-600 m-10">
+    <div className="flex items-center rounded border-slate-600 m-10 bg-black bg-opacity-40">
       <div className="mr-4">
         <Image
           src={photoSource}

@@ -14,7 +14,7 @@ function Navbar() {
   const { logout, isAuthenticated } = useAuth(); // Use the useAuth hook
 
   return (
-    <nav className="p-4 flex justify-between items-center bg-white bg-opacity-90 shadow-md sticky top-0 z-50">
+    <nav className="p-4 m-4 flex justify-between items-center bg-white bg-opacity-90 shadow-md sticky top-0 z-50">
       <div>
       <Image 
         src= {'/logo.png'}
@@ -37,6 +37,13 @@ function Navbar() {
                 <Link href="/search" legacyBehavior passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Artist Search
+                    </NavigationMenuLink>
+                </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+                <Link href="/settings" legacyBehavior passHref>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Settings
                     </NavigationMenuLink>
                 </Link>
             </NavigationMenuItem>

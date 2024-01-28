@@ -11,8 +11,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       {/* Rest of your app */}
-      <Component {...pageProps} />
+      <div className='flex flex-col min-h-screen'>
+        <div className="flex-grow">
+        <Component {...pageProps} />
+        </div>
+        </div>
       <Footer />
+      
+      
     </SessionProvider>
     
   );

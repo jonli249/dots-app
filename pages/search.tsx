@@ -41,7 +41,7 @@ const SearchCollabPage: React.FC = () => {
 
 
   return (
-    <div>
+
     <div className={styles.dashboardContainer}>
       <Navbar />
 
@@ -76,7 +76,7 @@ const SearchCollabPage: React.FC = () => {
         </div>
       )}
     </div>
-    </div>
+
   );
       };
 
