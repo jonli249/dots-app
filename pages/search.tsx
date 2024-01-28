@@ -1,85 +1,87 @@
-// pages/search.tsx
-
-import React, { useState } from 'react';
-import axios from 'axios'; // Import axios for making API requests
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Autosuggest from 'react-autosuggest'; // Import react-autosuggest
 import styles from '../styles/Dashboard.module.css';
 import Link from 'next/link';
 import Navbar from '../components/main/navbar';
 
-//import ExpandableListItem from '../components/ExpandableListItem';
-
 interface SearchResult {
   id: string;
   name: string;
-  // Add more fields as needed
 }
-
 
 const SearchCollabPage: React.FC = () => {
   const [id, setId] = useState<string>('');
   const [searchResult, setSearchResult] = useState<SearchResult[] | null>(null);
+  const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
 
-  const handleSearch = async () => {
+  useEffect(() => {
+    if (searchResult) {
+      setSuggestions(searchResult);
+    }
+  }, [searchResult]);
+
+  const handleSearch = async (value: string) => {
     try {
-      // Make an HTTP GET request to your API route with the provided ID
-      const searchparam = `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${id}`;
+      const searchparam = `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${value}`;
       const response = await axios.get(searchparam);
       if (response.data) {
-        // Handle the search result data here
         setSearchResult(response.data);
       } else {
         setSearchResult(null);
-        console.log(searchparam);
         console.error('Document not found');
       }
     } catch (error) {
       console.error('Search error:', error);
-      
       setSearchResult(null);
     }
   };
 
+  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
+    handleSearch(value);
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
+  };
+
+  const getSuggestionValue = (suggestion: SearchResult) => suggestion.name;
+
+  const renderSuggestion = (suggestion: SearchResult) => (
+    <Link href={`/artists/${suggestion.id}`}>
+      <div className="border border-gray-200 p-4 m-2 hover:border-blue-500 rounded-lg">
+        <h3 className="text-lg font-semibold">{suggestion.name}</h3>
+        {/* Add more fields as needed */}
+      </div>
+    </Link>
+  );
+
+
+  const inputProps = {
+    placeholder: 'Name',
+    value: id,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
+      setId(newValue);
+    },
+  };
 
   return (
-
     <div className={styles.dashboardContainer}>
       <Navbar />
 
       <h1>Search for Artist</h1>
       <div className={styles.searchContainer}>
-        <input
-          className={styles.searchInput} 
-          type="text"
-          placeholder="Name"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps}
         />
-        <button
-          className={styles.searchButton} 
-          onClick={handleSearch}
-        >
-          Search
-        </button>
       </div>
-      {searchResult && (
-        <div>
-          <ul>
-            {searchResult.map((result) => (
-              <li key={result.id}>
-                {/* Make each result clickable and link to the artist page */}
-                <Link href={`/artists/${result.id}`}>
-                    {result.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
-
   );
-      };
-
-  
+};
 
 export default SearchCollabPage;

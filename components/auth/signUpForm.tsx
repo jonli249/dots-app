@@ -22,6 +22,7 @@ function SignupForm() {
       }
 
       const user = await signup(name, email, password, company); // Pass company to the signup function
+      console.log("User", user);
 
       if (user) {
         router.push('/dashboard');

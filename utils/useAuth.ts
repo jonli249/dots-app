@@ -70,7 +70,7 @@ export default function useAuth() {
       const user = await login(email, password);
   
       if (user) {
-        const pushdata = await user.callFunction('inituserdata', user.id, name, email, company);
+        const pushdata = await user.callFunction('inituserdata', user, name, email, company);
         
         return user;
       } else {
