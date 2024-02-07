@@ -28,6 +28,7 @@ const SearchPage: React.FC = () => {
   const fetchArtists = async (value: string) => {
     try {
       const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${value}`);
+      `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${value}`
       return response.data || [];
     } catch (error) {
       console.error('Error fetching artists:', error);
@@ -68,17 +69,24 @@ const SearchPage: React.FC = () => {
   };
 
   const renderSuggestion = (suggestion: SearchResult, { sectionIndex }: any) => {
+    // Determine the URL path based on the section
+    let href;
+    if (sectionIndex === 0) { // Assuming 0 is for artists
+        // Adjust this line to use the correct attribute for artist paths
+        href = `/artists/${encodeURIComponent(suggestion.name || '')}`; 
+    } else {
+        href = `/songs/${suggestion.id}`;
+    }
+
     return (
-      <Link href={`/${sectionIndex === 0 ? 'artists' : 'songs'}/${suggestion.id}`}>
-        <div className="suggestion-content">
-          {suggestion.name || suggestion.title}
-        </div>
-      </Link>
+        <Link href={href} className={styles.suggestionItem}>
+            {suggestion.name || suggestion.title}
+        </Link>
     );
-  };
+};
 
   const renderSectionTitle = (section: Section) => {
-    return <strong>{section.title}</strong>;
+    return <div className={styles.sectionTitle}>{section.title}</div>;
   };
 
   const getSectionSuggestions = (section: Section) => {
@@ -87,6 +95,7 @@ const SearchPage: React.FC = () => {
 
   const inputProps = {
     placeholder: 'Search for artists or songs',
+    className: styles.inputStyle,
     value: searchTerm,
     onChange: (_: any, { newValue }: Autosuggest.ChangeEvent) => {
       setSearchTerm(newValue);
@@ -109,12 +118,11 @@ const SearchPage: React.FC = () => {
           getSectionSuggestions={getSectionSuggestions}
           inputProps={inputProps}
           theme = {{
-            container: "m-2 relative", 
-            suggestionsContainer: "absolute mt-2 left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-md",
-            //suggestionsList: "py-2", 
-            suggestion: "px-4 cursor-pointer hover:bg-gray-100",
-            input: "p- pl-8 bg-gray-300 w-128 rounded-lg focus:outline-none", 
-            suggestionHighlighted: "bg-gray-100",
+            container: styles.container ,
+            suggestionsContainer: styles.suggestionContainer,
+            suggestion: styles.suggestionItem,
+            input: styles.inputStyle,
+            suggestionHighlighted: styles.suggestionHighlighted,
           }}
 
         />

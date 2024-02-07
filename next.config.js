@@ -4,9 +4,10 @@ const nextConfig = {
       remotePatterns: [
         {
           protocol: 'https',
-          hostname: '**.wikimedia.org',
-          port: ''
-                },
+          hostname: 'www.theaudiodb.com',
+          port: '', 
+          pathname: '/images/**',
+        },
       ],
     },
   }

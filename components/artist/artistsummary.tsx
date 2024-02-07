@@ -53,13 +53,11 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
   return (
     <div className="p-4 relative">
-      <Button className="bg-gray-500 text-white px-4 py-2 rounded-lg absolute top-4 right-4">
-        Favorite
-      </Button>
+      
       <div className="flex items-center">
         <div className="mr-4">
           <Image
-            src={photoSource}
+            src= 'https://www.theaudiodb.com/images/media/artist/thumb/rocuvh1680227272.jpg/preview'//{photoSource}
             alt="/album.svg"
             className="w-24 h-24 rounded-full"
             width={24}
@@ -85,6 +83,9 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
           </div>
         </div>
       </div>
+      <Button className="bg-gray-500 text-white px-4 py-2 rounded-lg absolute top-4 right-4">
+        Favorite
+      </Button>
     </div>
   );
 };

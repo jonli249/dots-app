@@ -5,17 +5,7 @@
     margin: 0 auto;
     padding: 20px;
   }
-  
- .searchContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: rgb(255, 255, 255); /* Background color for the search container */
-}
+
 
 .tabContainer {
   display: flex;
@@ -64,4 +54,42 @@
   }
   
 
-  
+  /* Input style */
+.inputStyle {
+  width: 100%; /* Adjust the width as needed */
+  background-color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Two-column layout for suggestions */
+.suggestionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Adjust the spacing between items */
+}
+
+.suggestionItem {
+  flex-basis: calc(50% - 10px); /* Adjust for two columns */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.suggestionItem:hover {
+  background-color: #eaeaea;
+}
+
+/* Section title style */
+.sectionTitle {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #efefef;
+  border-radius: 4px;
+}
