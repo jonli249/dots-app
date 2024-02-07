@@ -4,8 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import styles from '../styles/Dashboard.module.css';
 import Link from 'next/link';
 import Navbar from '../components/main/navbar';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 
 interface SearchResult {
   _id: string;
