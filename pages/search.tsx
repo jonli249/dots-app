@@ -4,6 +4,8 @@ import Autosuggest from 'react-autosuggest';
 import styles from '../styles/Dashboard.module.css';
 import Link from 'next/link';
 import Navbar from '../components/main/navbar';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface SearchResult {
   _id: string;
@@ -13,44 +15,45 @@ interface SearchResult {
   // Add more fields as needed
 }
 
+interface Section {
+  title: string;
+  data: SearchResult[];
+}
 const SearchPage: React.FC = () => {
-  const [id, setId] = useState<string>('');
-  const [searchResultArtist, setSearchResultArtist] = useState<SearchResult[] | null>(null);
-  const [searchResultSong, setSearchResultSong] = useState<SearchResult[] | null>(null);
-  const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [sections, setSections] = useState<Section[]>([
+    { title: 'Artists', data: [] },
+    { title: 'Songs', data: [] },
+  ]);
 
-  useEffect(() => {
-    if (searchResultArtist && searchResultSong) {
-      // Combine the results from both endpoints
-      const combinedResults = [...searchResultArtist, ...searchResultSong];
-      setSuggestions(combinedResults);
+  const fetchArtists = async (value: string) => {
+    try {
+      const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${value}`);
+      return response.data || [];
+    } catch (error) {
+      console.error('Error fetching artists:', error);
+      return [];
     }
-  }, [searchResultArtist, searchResultSong]);
+  };
+
+  const fetchSongs = async (value: string) => {
+    try {
+      const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${value}`);
+      return response.data || [];
+    } catch (error) {
+      console.error('Error fetching songs:', error);
+      return [];
+    }
+  };
 
   const handleSearch = async (value: string) => {
-    try {
-      // Fetch results from both endpoints
-      const responseArtist = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${value}`);
-      const responseSong = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${value}`);
-      
-      if (responseArtist.data) {
-        setSearchResultArtist(responseArtist.data);
-      } else {
-        setSearchResultArtist(null);
-        console.error('Artist document not found');
-      }
-
-      if (responseSong.data) {
-        setSearchResultSong(responseSong.data);
-      } else {
-        setSearchResultSong(null);
-        console.error('Song document not found');
-      }
-    } catch (error) {
-      console.error('Search error:', error);
-      setSearchResultArtist(null);
-      setSearchResultSong(null);
-    }
+    setSearchTerm(value);
+    const artistData = await fetchArtists(value);
+    const songData = await fetchSongs(value);
+    setSections([
+      { title: 'Artists', data: artistData },
+      { title: 'Songs', data: songData },
+    ]);
   };
 
   const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
@@ -58,49 +61,63 @@ const SearchPage: React.FC = () => {
   };
 
   const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
+    setSections(prevSections => prevSections.map(section => ({ ...section, data: [] })));
   };
 
   const getSuggestionValue = (suggestion: SearchResult) => {
     return suggestion.name || suggestion.title || '';
   };
 
-  const renderSuggestion = (suggestion: SearchResult) => (
-    <Link href={`/${suggestion.title ? 'songs' : 'artists'}/${suggestion.id}`}>
-      <div className="border border-gray-200 p-2 m-2 hover:border-blue-500 rounded-md">
-        <h3 className="text-base font-semibold">
+  const renderSuggestion = (suggestion: SearchResult, { sectionIndex }: any) => {
+    return (
+      <Link href={`/${sectionIndex === 0 ? 'artists' : 'songs'}/${suggestion.id}`}>
+        <div className="suggestion-content">
           {suggestion.name || suggestion.title}
-        </h3>
-      </div>
-    </Link>
-  );
+        </div>
+      </Link>
+    );
+  };
+
+  const renderSectionTitle = (section: Section) => {
+    return <strong>{section.title}</strong>;
+  };
+
+  const getSectionSuggestions = (section: Section) => {
+    return section.data;
+  };
 
   const inputProps = {
-    placeholder: 'Search for collaborators or songs',
-    value: id,
-    onChange: (event: React.FormEvent<any>, { newValue }: Autosuggest.ChangeEvent) => {
-      setId(newValue);
+    placeholder: 'Search for artists or songs',
+    value: searchTerm,
+    onChange: (_: any, { newValue }: Autosuggest.ChangeEvent) => {
+      setSearchTerm(newValue);
     },
   };
+
 
   return (
     <div className={styles.dashboardContainer}>
       <Navbar />
-      <div className={styles.searchContainer}>
+      <div className={styles.searchContainer}>   
         <Autosuggest
-          suggestions={suggestions}
+          multiSection={true}
+          suggestions={sections}
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
           onSuggestionsClearRequested={onSuggestionsClearRequested}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
+          renderSectionTitle={renderSectionTitle}
+          getSectionSuggestions={getSectionSuggestions}
           inputProps={inputProps}
-          theme={{
-            container: "m-2 relative",
+          theme = {{
+            container: "m-2 relative", 
             suggestionsContainer: "absolute mt-2 left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-md",
+            //suggestionsList: "py-2", 
             suggestion: "px-4 cursor-pointer hover:bg-gray-100",
-            input: "p-1 pl-8 bg-gray-300 w-128 rounded-lg focus:outline-none",
+            input: "p- pl-8 bg-gray-300 w-128 rounded-lg focus:outline-none", 
             suggestionHighlighted: "bg-gray-100",
           }}
+
         />
       </div>
     </div>
