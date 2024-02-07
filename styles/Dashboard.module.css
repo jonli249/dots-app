@@ -6,12 +6,49 @@
     padding: 20px;
   }
   
-  .searchContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
+ .searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgb(255, 255, 255); /* Background color for the search container */
+}
+
+.tabContainer {
+  display: flex;
+  justify-content: center;
+  gap: 16px; /* Adjust the spacing between tabs */
+  margin-bottom: 16px; /* Margin below the tabs */
+}
+
+.tabButton {
+  padding: 8px 16px;
+  background-color: #f3f4f6; /* Background color for inactive tabs */
+  color: #000; /* Text color for inactive tabs */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tabButton.active {
+  background-color: #4299e1; /* Background color for active tab */
+  color: #fff; /* Text color for active tab */
+}
+
+.tabButton:hover {
+  background-color: #cbd5e0; /* Background color on hover for inactive tabs */
+}
+
+.tabButton.active:hover {
+  background-color: #3182ce; /* Background color on hover for active tab */
+}
+
+/* Additional styles for the input and suggestions can be added here */
+
   
   /* Add a class for the input element */
   .searchInput {

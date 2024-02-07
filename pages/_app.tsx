@@ -7,6 +7,7 @@ import Footer from '../components/main/footer';
 
 
 
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>

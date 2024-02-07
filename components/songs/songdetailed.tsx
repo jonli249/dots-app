@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Navbar from '../main/navbar';
 import Link from 'next/link';
 
+
 interface SongDetailViewProps {
   songData: {
     title?: string;
@@ -66,31 +67,34 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           }}
           width="24"
         />
-        <div className="flex flex-col space-y-2">
-          <h1 className="text-4xl font-bold">{title}</h1>
-          <p className="text-xl">
-            {artists ? 
-              artists.map((artist, index) => (
-                <span key={index}>
-                  {index > 0 && ', '}
-                  <Link href={`/artists/${artist.id}`}> {/* Use Link for artist */}
-                      {artist.name}
-                    </Link>
-                </span>
-              )) 
-            : <span>No artists found</span>}
-          </p>
-          <p className="text-gray-600">Released: {releaseDate}</p>
+        <div className="flex flex-col space-y-2 flex-grow"> {/* Added flex-grow */}
+            <div className="flex items-center justify-between"> {/* Added flex container */}
+              <div>
+                <h1 className="text-4xl font-bold">{title}</h1>
+                <p className="text-xl">
+                  {artists ?
+                    artists.map((artist, index) => (
+                      <span key={index}>
+                        {index > 0 && ', '}
+                        <Link href={`/artists/${artist.id}`}>
+                          {artist.name}
+                        </Link>
+                      </span>
+                    ))
+                    : <span>No artists found</span>}
+                </p>
+                <p className="text-gray-600">Released: {releaseDate}</p>
+              </div>
+              <div className="ml-auto flex items-center space-x-2">
+                <Button className="bg-gray-200 hover:bg-gray-300">Bad Data</Button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="ml-auto flex items-center space-x-2">
-        <Button className="bg-gray-200 hover:bg-gray-300">Add to Favorites</Button>
-        </div>
-      </div>
-
       
 
       <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">MAIN ARTIST</h2>
+        <h2 className="text-l font-semibold mb-4 text-gray-500">MAIN ARTIST</h2>
         <div className="grid grid-cols-2 gap-4 mb-8">
           { artists?
             artists.map((artist, index) => (
@@ -102,7 +106,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
             )) : <span>Nada</span>}
         </div>
 
-        <h2 className="text-2xl font-semibold mb-4">SONGWRITERS</h2>
+        <h2 className="text-l font-semibold mb-4 text-gray-500">SONGWRITERS</h2>
         <div className="grid grid-cols-2 gap-4 mb-8">
           {allwriters && allwriters.length > 0 ? (
             allwriters.map((songwriter, index) => (
@@ -117,7 +121,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           )}
         </div>
 
-        <h2 className="text-2xl font-semibold mb-4">PRODUCERS</h2>
+        <h2 className="text-l font-semibold mb-4 text-gray-500">PRODUCERS</h2>
         <div className="grid grid-cols-2 gap-4 mb-8">
           {producers && producers.length > 0 ? (
             producers.map((producer, index) => (
