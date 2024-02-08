@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import SongItem from '../../components/songs/songItem';
 import { Button } from '@chakra-ui/react';
+import Fuse from 'fuse.js';
 
 interface Song {
-    title: string;
-    artist?: string[];
-    _id: string;
-    coverImage: string;
-    'first-release-date': string;  }
-  
+  title: string;
+  artist?: string[];
+  _id: string;
+  coverImage: string;
+  'first-release-date': string;
+}
 
 interface SongListWithPaginationProps {
   songs: Song[];
@@ -29,34 +30,59 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
   totalSongs,
   songsPerPage,
 }) => {
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  
-    const sortedSongs = [...songs].sort((a, b) => {
-      // Parse date strings into Date objects
-      const dateA = new Date(a['first-release-date']);
-      const dateB = new Date(b['first-release-date']);
-  
-      // Sort by date in ascending or descending order based on sortOrder
-      if (sortOrder === 'asc') {
-        return dateA.getTime() - dateB.getTime(); // Use getTime() for subtraction
-      } else {
-        return dateB.getTime() - dateA.getTime(); // Use getTime() for subtraction
-      }
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const fuse = useMemo(() => {
+    return new Fuse(songs, {
+      keys: ['title'],
+      threshold: 0.3, // Adjust the threshold as needed for your fuzzy search
     });
-  
-    const toggleSortOrder = () => {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    };
+  }, [songs]);
+
+  const sortedSongs = [...songs].sort((a, b) => {
+    const dateA = new Date(a['first-release-date']);
+    const dateB = new Date(b['first-release-date']);
+    return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+  });
+
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredSongs = useMemo(() => {
+    if (!searchQuery) {
+      return sortedSongs;
+    }
+    const result = fuse.search(searchQuery);
+    return result.map((r) => r.item);
+  }, [fuse, searchQuery, sortedSongs]);
 
   return (
     <div className="m-15">
-      <div className="flex justify-end mb-4">
-        <Button onClick={toggleSortOrder}>
-          {`Sort by Date ${sortOrder === 'asc' ? '▲' : '▼'}`}
-        </Button>
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <input
+            type="text"
+            placeholder="Search by song title..."
+            value={searchQuery}
+            onChange={handleSearch}
+            className="px-2 py-1 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div>
+          <Button onClick={toggleSortOrder}>
+            {`Sort by Date ${sortOrder === 'asc' ? '▲' : '▼'}`}
+          </Button>
+        </div>
+        
       </div>
       <div className="grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {sortedSongs.map((song, index) => (
+        {filteredSongs.map((song, index) => (
           <SongItem
             key={index}
             title={song.title}

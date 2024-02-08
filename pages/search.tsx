@@ -103,13 +103,13 @@ const SearchPage = () => {
             </InputGroup>
               
             </ModalHeader>
-            <ModalBody>
+            <ModalBody maxHeight="40vh" overflowY="auto">
               <Flex>
                 {sections.map((section) => (
                   <Box key={section.title} flex="1">
                     <Text fontSize="sm" fontWeight="bold">{section.title}</Text>
                     <Divider my={2} />
-                    <VStack spacing={2} class="justify-items-start">
+                    <VStack spacing={2} className="justify-items-start">
                     {section.data.map((item, index) => (
                         <React.Fragment key={index}>
                           {section.title === 'Collaborators' ? (
