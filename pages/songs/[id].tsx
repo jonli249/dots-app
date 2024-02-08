@@ -7,7 +7,7 @@ import SongDetailView from '../../components/songs/songdetailed';
 interface Song {
   title?: string;
   'first-release-date'?: string;
-  'artist-credit'?: { name: string; id: string }[]; 
+  'artist-credit'?: { name: string; 'artist': { id: string}}[]; 
   writers?: { name: string; id: string }[]; 
   'producers-credit'?: { name: string; id: string }[];
   composers?: { name: string; id: string }[]; 

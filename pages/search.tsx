@@ -28,7 +28,6 @@ const SearchPage: React.FC = () => {
   const fetchArtists = async (value: string) => {
     try {
       const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${value}`);
-      `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${value}`
       return response.data || [];
     } catch (error) {
       console.error('Error fetching artists:', error);

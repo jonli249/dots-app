@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SongItem from '../../components/songs/songItem';
-import { Button } from '@/components/ui/button';
+import { Button } from '@chakra-ui/react';
 
 interface Song {
     title: string;
@@ -49,7 +49,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
     };
 
   return (
-    <div className="m-15 bg-black bg-opacity-40">
+    <div className="m-15">
       <div className="flex justify-end mb-4">
         <Button onClick={toggleSortOrder}>
           {`Sort by Date ${sortOrder === 'asc' ? '▲' : '▼'}`}

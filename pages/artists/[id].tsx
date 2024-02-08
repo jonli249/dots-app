@@ -1,25 +1,21 @@
-// pages/artists/[id].tsx
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import 'tailwindcss/tailwind.css'; // Import Tailwind CSS styles
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
 import SongList from '../../components/songs/songlist';
 import Collaborators from '../../components/artist/mostcollabs';
 import Navbar from '../../components/main/navbar';
 import ArtistSummary from '../../components/artist/artistsummary';
 
-
-
 interface Song {
-    title: string;
-    artist: string[];
-    _id: string;
-    coverImage: string;
-    'artist-credit': string[];
-    'first-release-date': string;
-    
-    // Add other properties as needed
-  }
+  title: string;
+  artist: string[];
+  _id: string;
+  coverImage: string;
+  'artist-credit': string[];
+  'first-release-date': string;
+  // Add other properties as needed
+}
 
 const ArtistPage: React.FC = () => {
   const router = useRouter();
@@ -38,7 +34,6 @@ const ArtistPage: React.FC = () => {
           );
           if (response.data && Array.isArray(response.data)) {
             setSongs(response.data);
-            
           } else {
             setSongs([]);
             console.error('No songs found for the artist');
@@ -59,32 +54,39 @@ const ArtistPage: React.FC = () => {
   const songsToDisplay = songs.slice(startIndex, endIndex);
 
   if (songs.length === 0) {
-    return <div className="flex items-center justify-center h-screen mt-4">Loading...</div>
-    
+    return <div className="flex items-center justify-center h-screen mt-4">Loading...</div>;
   }
+
   return (
-    <div> 
-
-    <Navbar />
-    <div className="flex flex-col items-center mt-30">
-        
-      
-      <ArtistSummary artistId={id} />
-      <h2 className="font-bold mt-10">Songs:</h2>
-      <SongList
-        songs={songsToDisplay}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        startIndex={startIndex}
-        endIndex={endIndex}
-        totalSongs={songs.length}
-        songsPerPage={songsPerPage}
-      />
-      <div className = "mt-10"> 
-        <Collaborators artistId={id} />
-
+    <div>
+      <Navbar />
+      <div className="flex flex-col items-start mt-12 mx-auto px-30 lg:px-60 xl:px-90 2xl:px-120">
+        <ArtistSummary artistId={id} />
+        <Tabs defaultIndex={0} variant="enclosed">
+          <TabList>
+            <Tab>Songs</Tab>
+            <Tab>Collaborators</Tab>
+            <Tab isDisabled>Smart Tools</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <SongList
+                songs={songsToDisplay}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                startIndex={startIndex}
+                endIndex={endIndex}
+                totalSongs={songs.length}
+                songsPerPage={songsPerPage}
+              />
+            </TabPanel>
+            <TabPanel>
+              <Collaborators artistId={id} />
+            </TabPanel>
+            <TabPanel>Coming Soon!</TabPanel>
+          </TabPanels>
+        </Tabs>
       </div>
-    </div>
     </div>
   );
 };

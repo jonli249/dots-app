@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
+import { Image } from '@chakra-ui/react';
 
 interface ArtistSummaryProps {
   artistId: string;
@@ -46,7 +46,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     return <div>Loading artist information...</div>;
   }
 
-  const photoSource = artistInfo.photoUrl || '/album.svg';
+  const photoSource = artistInfo.photoUrl || '/avatar.png';
 
   // Define the maximum number of tags to display initially
   const maxTagsToShow = 3;
@@ -57,11 +57,11 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       <div className="flex items-center">
         <div className="mr-4">
           <Image
-            src= 'https://www.theaudiodb.com/images/media/artist/thumb/rocuvh1680227272.jpg/preview'//{photoSource}
-            alt="/album.svg"
+            src={photoSource}
+            alt="/avatar.png"
             className="w-24 h-24 rounded-full"
-            width={24}
-            height={24}
+            htmlWidth={400}
+            htmlHeight={400}
           />
         </div>
         <div>
@@ -76,7 +76,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
               </Badge>
             ))}
             {artistInfo.tags.length > maxTagsToShow && (
-              <span className="cursor-pointer text-blue-500 hover:underline">
+              <span className="cursor-pointer text-black-500 hover:underline">
                 {`+${artistInfo.tags.length - maxTagsToShow} more`}
               </span>
             )}

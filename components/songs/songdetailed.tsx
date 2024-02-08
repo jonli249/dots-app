@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
+import { Button } from "@chakra-ui/react";
 import Image from 'next/image';
 import Navbar from '../main/navbar';
 import Link from 'next/link';
+import PersonCard from '../artist/personcard';
 
 
 interface SongDetailViewProps {
@@ -11,7 +12,10 @@ interface SongDetailViewProps {
     'first-release-date'?: string;
     'artist-credit'?: {
       name: string;
-      id: string; 
+      'artist':
+      {
+        id: string;
+      } 
 
     }[];
     'writers'?: {
@@ -58,25 +62,26 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
       <div className="flex items-start space-x-6">
         <Image 
           alt="Album cover"
-          className="w-32 h-32"
-          height="128"
-          src="/album.svg"
+          className="w-32 h-32 rounded-l"
+          height={400}
+          width={400}
+          src="/album.png"
           style={{
             aspectRatio: "128/128",
             objectFit: "cover",
           }}
-          width="24"
         />
-        <div className="flex flex-col space-y-2 flex-grow"> {/* Added flex-grow */}
-            <div className="flex items-center justify-between"> {/* Added flex container */}
+        <div className="flex flex-col space-y-2 flex-grow"> 
+            <div className="flex items-center justify-between"> 
               <div>
                 <h1 className="text-4xl font-bold">{title}</h1>
                 <p className="text-xl">
+        
                   {artists ?
                     artists.map((artist, index) => (
                       <span key={index}>
                         {index > 0 && ', '}
-                        <Link href={`/artists/${artist.id}`}>
+                        <Link href={`/artists/${artist.artist.id}`}>
                           {artist.name}
                         </Link>
                       </span>
@@ -98,11 +103,12 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
         <div className="grid grid-cols-2 gap-4 mb-8">
           { artists?
             artists.map((artist, index) => (
-              <Button variant="outline" key={index}>
-                <Link href={`/artists/${artist.id}`}> {/* Use Link for artist */}
-                    {artist.name}
-                  </Link>
-              </Button>
+              <PersonCard
+              key={artist.artist.id}
+              id={artist.artist.id}
+              name={artist.name}
+              imageUrl='/avatar.png' // Replace with your image path or pass dynamically
+            />
             )) : <span>Nada</span>}
         </div>
 
@@ -110,11 +116,12 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
         <div className="grid grid-cols-2 gap-4 mb-8">
           {allwriters && allwriters.length > 0 ? (
             allwriters.map((songwriter, index) => (
-              <Button variant="outline" key={index}>
-                <Link href={`/artists/${songwriter.id}`}> {/* Use Link for songwriter */}
-                    {songwriter.name}
-                  </Link>
-              </Button>
+              <PersonCard
+              key={songwriter.id}
+              id={songwriter.id}
+              name={songwriter.name}
+              imageUrl='/avatar.png' // Replace with your image path or pass dynamically
+            />
             ))
           ) : (
             <p>No songwriters found</p>
@@ -125,11 +132,12 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
         <div className="grid grid-cols-2 gap-4 mb-8">
           {producers && producers.length > 0 ? (
             producers.map((producer, index) => (
-              <Button variant="outline" key={index}>
-                <Link href={`/artists/${producer.id}`}> 
-                    {producer.name}
-                  </Link>
-              </Button>
+              <PersonCard
+              key={producer.id}
+              id={producer.id}
+              name={producer.name}
+              imageUrl='/avatar.png' // Replace with your image path or pass dynamically
+            />
             ))
           ) : (
             <p>No producers found</p>
