@@ -2,10 +2,13 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Navbar from '../components/main/navbar';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="flex h-screen justify-center items-center">
+    <div>
+      <Navbar />
+      <div className="flex h-screen justify-center items-center">
       <div className="text-center">
 
       <h1 className="text-3xl font-semibold">Welcome to Dots!</h1>
@@ -24,6 +27,8 @@ const HomePage: React.FC = () => {
       </p>
     </div>
     </div>
+    </div>
+    
   );
 };
 

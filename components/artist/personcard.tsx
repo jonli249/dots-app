@@ -13,9 +13,9 @@ const PersonCard: React.FC<PersonCardProps> = ({ id, name, imageUrl }) => {
     const imageSrc = imageUrl || '/avatar.png';
     
   return (
-    <div className="flex items-center bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+    <div className="flex items-center bg-white shadow-md rounded-full overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer">
       <Link href={`/artists/${id}`} className="flex items-center no-underline text-black">
-        <div className="flex-shrink-0 w-16 h-16 relative mr-4">
+        <div className="flex-shrink-0 w-14 h-14 relative mr-4">
           <Image 
             src={imageSrc} 
             alt="Person"

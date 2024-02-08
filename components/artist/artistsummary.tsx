@@ -52,8 +52,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   const maxTagsToShow = 3;
 
   return (
-    <div className="p-4 relative">
-      
+    <div className=" p-4 relative flex justify-between">
       <div className="flex items-center">
         <div className="mr-4">
           <Image
@@ -83,9 +82,12 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
           </div>
         </div>
       </div>
-      <Button className="bg-gray-500 text-white px-4 py-2 rounded-lg absolute top-4 right-4">
-        Favorite
-      </Button>
+      <div>
+        <Button className="bg-gray-500 text-white py-2 rounded-lg absolute top-4">
+          Favorite
+        </Button>
+      </div>
+      
     </div>
   );
 };

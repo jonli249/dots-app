@@ -26,12 +26,16 @@ function Navbar() {
           </MenuButton>
           <MenuList>
             <ul className="grid w-[100px] gap-2 p-2 md:w-[300px] md:grid-cols-1 lg:w-[300px]">
+            <Link href="/search">
               <MenuItem>
-                <Link href="/search">Search</Link>
+                Search
               </MenuItem>
+              </Link>
+              <Link href="/settings">
               <MenuItem>
-                <Link href="/settings">Settings</Link>
+                Settings
               </MenuItem>
+              </Link>
               {isAuthenticated() && (
                 <MenuItem onClick={logout}>
                   Logout

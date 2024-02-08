@@ -60,14 +60,14 @@ const ArtistPage: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col items-start mt-12 mx-auto px-30 lg:px-60 xl:px-90 2xl:px-120">
+      <div className="flex flex-col mt-12 mx-auto px-30 md:px-40 lg:px-60 xl:px-90 2xl:px-120">
         <ArtistSummary artistId={id} />
-        <Tabs defaultIndex={0} variant="enclosed">
+        <Tabs defaultIndex={0} variant="unstyled" className="mt-8">
           <TabList>
-            <Tab>Songs</Tab>
-            <Tab>Collaborators</Tab>
+            <Tab _selected={{ fontWeight: 'bold', color: 'gray' }} >SONGS</Tab>
+            <Tab _selected={{ fontWeight: 'bold', color: 'gray' }}> COLLABORATORS</Tab>
             <Tooltip label="Coming Soon!" aria-label='A tooltip'>
-              <Tab isDisabled>Smart Tools</Tab>         
+              <Tab isDisabled>SMART TOOLS</Tab>         
             </Tooltip>
            
           </TabList>

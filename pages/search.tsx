@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Input, Box, Text, VStack, Link, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, Divider, Button } from '@chakra-ui/react';
+import { Input, InputGroup, InputLeftElement, Box, Text, VStack, Link, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, Divider, Button } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 import Navbar from '../components/main/navbar';
 import { SearchIcon } from '@chakra-ui/icons';
+import PersonCard from '../components/artist/personcard';
+import SongItem from '../components/songs/songItem';
+
+
 
 interface Artist {
   id: string;
   name: string;
+  imageUrl?: string;
 }
 
 interface Song {
   id: string;
   title: string;
+  artists: { name: string }[];
+  coverImage: string;
 }
 
 interface Section {
   title: string;
-  data: Artist[] | Song[];
+  data: Artist[] | Song[]; 
+  link: string;
 }
 
 const SearchPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [sections, setSections] = useState<Section[]>([
-    { title: 'Songs', data: [] },
-    { title: 'Collaborators', data: [] },
+    { title: 'Songs', data: [], link: 'songs'},
+    { title: 'Collaborators', data: [], link: 'artists' },
   ]);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -42,8 +50,8 @@ const SearchPage = () => {
   const debouncedSearch = debounce(async (searchTerm: string) => {
     if (!searchTerm.trim()) {
       setSections([
-        { title: 'Songs', data: [] },
-        { title: 'Collaborators', data: [] },
+        { title: 'Songs', data: [], link: 'songs' },
+        { title: 'Collaborators', data: [], link: 'artists' },
       ]);
       return;
     }
@@ -52,8 +60,8 @@ const SearchPage = () => {
     const songs = await fetchSongs(searchTerm);
 
     setSections([
-      { title: 'Songs', data: songs },
-      { title: 'Collaborators', data: artists },
+      { title: 'Songs', data: songs, link: 'songs'},
+      { title: 'Collaborators', link: 'artists', data: artists },
     ]);
     setModalOpen(true);
   }, 150);
@@ -80,25 +88,45 @@ const SearchPage = () => {
         <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} size="xl">
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>
-              <Input
+            <ModalHeader className="w-full">
+            <InputGroup >
+            <InputLeftElement pointerEvents='none'>
+              <SearchIcon color='gray.300' />
+            </InputLeftElement>
+            <Input
                 size="sm"
                 placeholder= "Search for collaborators or songs"
                 onChange={(e) => setInputValue(e.target.value)}
                 value={inputValue}
+                className="w-full"
               />
+            </InputGroup>
+              
             </ModalHeader>
             <ModalBody>
               <Flex>
                 {sections.map((section) => (
                   <Box key={section.title} flex="1">
-                    <Text fontSize="lg" fontWeight="bold">{section.title}</Text>
+                    <Text fontSize="sm" fontWeight="bold">{section.title}</Text>
                     <Divider my={2} />
-                    <VStack spacing={2}>
-                      {section.data.map((item, index) => (
-                        <Link key={index} href={`/${section.title.toLowerCase()}/${item.id}`} isExternal>
-                          {('name' in item) ? item.name : item.title}
-                        </Link>
+                    <VStack spacing={2} class="justify-items-start">
+                    {section.data.map((item, index) => (
+                        <React.Fragment key={index}>
+                          {section.title === 'Collaborators' ? (
+                            <PersonCard
+                              id={(item as Artist).id}
+                              name={(item as Artist).name}
+                              imageUrl={(item as Artist).imageUrl}
+                            />
+                          ) : (
+                            <SongItem
+                              title={(item as Song).title}
+                              artists={(item as Song).artists}
+                              coverImage={(item as Song).coverImage}
+                              _id={(item as Song).id}
+                            />
+                          )}
+                        </React.Fragment>
                       ))}
                     </VStack>
                   </Box>
