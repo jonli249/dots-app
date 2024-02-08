@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Tooltip } from '@chakra-ui/react';
 import SongList from '../../components/songs/songlist';
 import Collaborators from '../../components/artist/mostcollabs';
 import Navbar from '../../components/main/navbar';
@@ -66,7 +66,10 @@ const ArtistPage: React.FC = () => {
           <TabList>
             <Tab>Songs</Tab>
             <Tab>Collaborators</Tab>
-            <Tab isDisabled>Smart Tools</Tab>
+            <Tooltip label="Coming Soon!" aria-label='A tooltip'>
+              <Tab isDisabled>Smart Tools</Tab>         
+            </Tooltip>
+           
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -83,7 +86,7 @@ const ArtistPage: React.FC = () => {
             <TabPanel>
               <Collaborators artistId={id} />
             </TabPanel>
-            <TabPanel>Coming Soon!</TabPanel>
+  
           </TabPanels>
         </Tabs>
       </div>

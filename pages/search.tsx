@@ -1,131 +1,113 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Autosuggest from 'react-autosuggest';
-import styles from '../styles/Dashboard.module.css';
-import Link from 'next/link';
+import { Input, Box, Text, VStack, Link, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, Divider, Button } from '@chakra-ui/react';
+import { debounce } from 'lodash';
 import Navbar from '../components/main/navbar';
+import { SearchIcon } from '@chakra-ui/icons';
 
-
-interface SearchResult {
-  _id: string;
+interface Artist {
   id: string;
-  title?: string;
-  name?: string;
-  // Add more fields as needed
+  name: string;
+}
+
+interface Song {
+  id: string;
+  title: string;
 }
 
 interface Section {
   title: string;
-  data: SearchResult[];
+  data: Artist[] | Song[];
 }
-const SearchPage: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+
+const SearchPage = () => {
+  const [inputValue, setInputValue] = useState('');
   const [sections, setSections] = useState<Section[]>([
-    { title: 'Artists', data: [] },
     { title: 'Songs', data: [] },
+    { title: 'Collaborators', data: [] },
   ]);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const fetchArtists = async (value: string) => {
-    try {
-      const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${value}`);
-      return response.data || [];
-    } catch (error) {
-      console.error('Error fetching artists:', error);
-      return [];
-    }
+  const fetchArtists = async (searchTerm: string): Promise<Artist[]> => {
+    const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${searchTerm}`);
+    return response.data || [];
+  };
+  
+  const fetchSongs = async (searchTerm: string): Promise<Song[]> => {
+    const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${searchTerm}`);
+    return response.data || [];
   };
 
-  const fetchSongs = async (value: string) => {
-    try {
-      const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${value}`);
-      return response.data || [];
-    } catch (error) {
-      console.error('Error fetching songs:', error);
-      return [];
+  // Debounced function to handle input changes and data fetching
+  const debouncedSearch = debounce(async (searchTerm: string) => {
+    if (!searchTerm.trim()) {
+      setSections([
+        { title: 'Songs', data: [] },
+        { title: 'Collaborators', data: [] },
+      ]);
+      return;
     }
-  };
 
-  const handleSearch = async (value: string) => {
-    setSearchTerm(value);
-    const artistData = await fetchArtists(value);
-    const songData = await fetchSongs(value);
+    const artists = await fetchArtists(searchTerm);
+    const songs = await fetchSongs(searchTerm);
+
     setSections([
-      { title: 'Artists', data: artistData },
-      { title: 'Songs', data: songData },
+      { title: 'Songs', data: songs },
+      { title: 'Collaborators', data: artists },
     ]);
-  };
+    setModalOpen(true);
+  }, 150);
 
-  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
-    handleSearch(value);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      if (inputValue) {
+        debouncedSearch(inputValue);
+      }
+    };
 
-  const onSuggestionsClearRequested = () => {
-    setSections(prevSections => prevSections.map(section => ({ ...section, data: [] })));
-  };
+    fetchData();
 
-  const getSuggestionValue = (suggestion: SearchResult) => {
-    return suggestion.name || suggestion.title || '';
-  };
-
-  const renderSuggestion = (suggestion: SearchResult, { sectionIndex }: any) => {
-    // Determine the URL path based on the section
-    let href;
-    if (sectionIndex === 0) { // Assuming 0 is for artists
-        // Adjust this line to use the correct attribute for artist paths
-        href = `/artists/${encodeURIComponent(suggestion.name || '')}`; 
-    } else {
-        href = `/songs/${suggestion.id}`;
-    }
-
-    return (
-        <Link href={href} className={styles.suggestionItem}>
-            {suggestion.name || suggestion.title}
-        </Link>
-    );
-};
-
-  const renderSectionTitle = (section: Section) => {
-    return <div className={styles.sectionTitle}>{section.title}</div>;
-  };
-
-  const getSectionSuggestions = (section: Section) => {
-    return section.data;
-  };
-
-  const inputProps = {
-    placeholder: 'Search for artists or songs',
-    className: styles.inputStyle,
-    value: searchTerm,
-    onChange: (_: any, { newValue }: Autosuggest.ChangeEvent) => {
-      setSearchTerm(newValue);
-    },
-  };
-
+    return () => {
+      debouncedSearch.cancel();
+    };
+      }, [inputValue, debouncedSearch]);
 
   return (
-    <div className={styles.dashboardContainer}>
+    <div>
       <Navbar />
-      <div className={styles.searchContainer}>   
-        <Autosuggest
-          multiSection={true}
-          suggestions={sections}
-          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          renderSectionTitle={renderSectionTitle}
-          getSectionSuggestions={getSectionSuggestions}
-          inputProps={inputProps}
-          theme = {{
-            container: styles.container ,
-            suggestionsContainer: styles.suggestionContainer,
-            suggestion: styles.suggestionItem,
-            input: styles.inputStyle,
-            suggestionHighlighted: styles.suggestionHighlighted,
-          }}
-
-        />
-      </div>
+      <Box className="flex justify-center">
+        <Button leftIcon={<SearchIcon />} variant="outline" onClick={() => setModalOpen(true)}>Search for a collaborator or song</Button>
+        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} size="xl">
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              <Input
+                size="sm"
+                placeholder= "Search for collaborators or songs"
+                onChange={(e) => setInputValue(e.target.value)}
+                value={inputValue}
+              />
+            </ModalHeader>
+            <ModalBody>
+              <Flex>
+                {sections.map((section) => (
+                  <Box key={section.title} flex="1">
+                    <Text fontSize="lg" fontWeight="bold">{section.title}</Text>
+                    <Divider my={2} />
+                    <VStack spacing={2}>
+                      {section.data.map((item, index) => (
+                        <Link key={index} href={`/${section.title.toLowerCase()}/${item.id}`} isExternal>
+                          {('name' in item) ? item.name : item.title}
+                        </Link>
+                      ))}
+                    </VStack>
+                  </Box>
+                ))}
+              </Flex>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </Box>
     </div>
   );
 };

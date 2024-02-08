@@ -1,86 +1,92 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Autosuggest from 'react-autosuggest';
-import styles from '../styles/Dashboard.module.css';
-import Link from 'next/link';
-import Navbar from '../components/main/navbar';
+import { Input, Box, Text, VStack, Link } from '@chakra-ui/react';
+import { debounce } from 'lodash';
 
-interface SearchResult {
-  _id: string;
-  title: string;
-  // Add more fields as needed
+interface Artist {
+  id: string;
+  name: string;
 }
 
-const SongSearchCollabPage: React.FC = () => {
-  const [id, setId] = useState<string>('');
-  const [searchResult, setSearchResult] = useState<SearchResult[] | null>(null);
-  const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
+interface Song {
+  id: string;
+  title: string;
+}
+
+interface Section {
+  title: string;
+  data: Artist[] | Song[];
+}
+
+const SearchPage = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [sections, setSections] = useState<Section[]>([
+    { title: 'Artists', data: [] },
+    { title: 'Songs', data: [] },
+  ]);
+
+  const fetchArtists = async (searchTerm: string): Promise<Artist[]> => {
+    const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${searchTerm}`);
+    return response.data || [];
+  };
+  
+  const fetchSongs = async (searchTerm: string): Promise<Song[]> => {
+    const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${searchTerm}`);
+    return response.data || [];
+  };
+
+  // Debounced function to handle input changes and data fetching
+  const debouncedSearch = debounce(async (searchTerm: string) => {
+    if (!searchTerm.trim()) {
+      setSections([
+        { title: 'Artists', data: [] },
+        { title: 'Songs', data: [] },
+      ]);
+      return;
+    }
+
+    const artists = await fetchArtists(searchTerm);
+    const songs = await fetchSongs(searchTerm);
+
+    setSections([
+      { title: 'Artists', data: artists },
+      { title: 'Songs', data: songs },
+    ]);
+  }, 300);
 
   useEffect(() => {
-    if (searchResult) {
-      setSuggestions(searchResult);
+    if (inputValue) {
+      debouncedSearch(inputValue);
     }
-  }, [searchResult]);
 
-  const handleSearch = async (value: string) => {
-    try {
-      const searchparam = `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsearch?collabname=${value}`;
-      const response = await axios.get(searchparam);
-      if (response.data) {
-        setSearchResult(response.data);
-      } else {
-        setSearchResult(null);
-        console.error('Document not found');
-      }
-    } catch (error) {
-      console.error('Search error:', error);
-      setSearchResult(null);
-    }
-  };
-
-  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
-    handleSearch(value);
-  };
-
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-
-  const getSuggestionValue = (suggestion: SearchResult) => suggestion.title;
-
-  const renderSuggestion = (suggestion: SearchResult) => (
-    <Link href={`/songs/${suggestion._id}`}>
-      <div className="border border-gray-200 p-4 m-2 hover:border-blue-500 rounded-lg">
-        <h3 className="text-lg font-semibold">{suggestion.title}</h3>
-        {/* Add more fields as needed */}
-      </div>
-    </Link>
-  );
-
-  const inputProps = {
-    placeholder: 'Name',
-    value: id,
-    onChange: (event: React.FormEvent<any>, { newValue }: Autosuggest.ChangeEvent) => {
-      setId(newValue);
-    },
-  };
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [inputValue]);
 
   return (
-    <div className={styles.dashboardContainer}>
-      <Navbar />
-      <h1>Search for Song</h1>
-      <div className={styles.searchContainer}>
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-        />
-      </div>
+    <div>
+    <Box>
+      <Input
+        placeholder="Search for artists or songs"
+        onChange={(e) => setInputValue(e.target.value)}
+        value={inputValue}
+      />
+      <VStack spacing={4}>
+        {sections.map((section) => (
+          <Box key={section.title}>
+            <Text fontSize="lg" fontWeight="bold">{section.title}</Text>
+            {section.data.map((item, index) => (
+              <Link key={index} href={`/${section.title.toLowerCase()}/${item.id}`} isExternal>
+                {('name' in item) ? item.name : item.title}
+              </Link>
+            ))}
+          </Box>
+        ))}
+      </VStack>
+    </Box>
     </div>
   );
 };
 
-export default SongSearchCollabPage;
+export default SearchPage;

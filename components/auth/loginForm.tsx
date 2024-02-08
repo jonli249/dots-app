@@ -68,8 +68,8 @@ function LoginForm() {
         </div>
         <p className="text-sm text-gray-600">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" passHref>
-            <a className="text-blue-500">Sign Up</a>
+          <Link href="/signup" className="text-blue-500"passHref>
+           Sign Up
           </Link>
         </p>
       </div>
