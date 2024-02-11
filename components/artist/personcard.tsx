@@ -7,28 +7,32 @@ interface PersonCardProps {
   name: string;
   imageUrl?: string; // Optional image URL for the person's picture
 }
-
 const PersonCard: React.FC<PersonCardProps> = ({ id, name, imageUrl }) => {
-
     const imageSrc = imageUrl || '/avatar.png';
     
-  return (
-    <div className="flex items-center bg-white shadow-md rounded-full overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer mb-2">
-      <Link href={`/artists/${id}`} className="flex items-center no-underline text-black">
-        <div className="flex-shrink-0 w-14 h-14 relative mr-4">
-          <Image 
-            src={imageSrc} 
-            alt="Person"
-            layout="fill" 
-            objectFit="cover" 
-            className="rounded-full shadow-sm p-2" />
-        </div>
-        <div className="text-md font-semibold">
-          {name}
-        </div>
-      </Link>
-    </div>
-  );
-};
-
-export default PersonCard;
+    const cardStyle = "flex items-center bg-white shadow-md rounded-full overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer mb-2";
+    const imageContainerStyle = "flex-shrink-0 w-14 h-14 relative mr-4"; 
+    const imageStyle = "rounded-full shadow-sm"; 
+  
+    return (
+      <div className={`${cardStyle} w-[250px] h-[60px]`}>
+        <Link href={`/artists/${id}`} className="flex items-center no-underline text-black p-1">
+          <div className={`${imageContainerStyle}`}>
+            <div className="relative w-full h-full p-1">
+              <Image 
+                src={imageSrc} 
+                alt="Person"
+                layout="fill" 
+                objectFit="cover" 
+                className={imageStyle} />
+            </div>
+          </div>
+          <div className="text-md font-semibold truncate">
+            {name}
+          </div>
+        </Link>
+      </div>
+    );
+  };
+  
+  export default PersonCard;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import CollabCard from './collabpersoncard'; 
 
 interface Collaborator {
   _id: string;
@@ -43,21 +44,13 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   return (
     <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 lg:grid-cols-3 bg-opacity-90">
       {collaborators.map((collaborator) => (
-        <Link key={collaborator._id} href={`/artists/${collaborator._id}`} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-            <Image
-              className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-              src={collaborator.imageUrl} // Replace with the actual collaborator image URL
-              alt={collaborator.name}
-            />
-            <div className="flex flex-col justify-between p-4 leading-normal">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {collaborator.name}
-              </h5>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                Count: {collaborator.count}
-              </p>
-            </div>
-        </Link>
+        <CollabCard
+          key={collaborator._id}
+          id={collaborator._id}
+          name={collaborator.name}
+          imageUrl={collaborator.imageUrl}
+          count={collaborator.count} // Pass count to CollabCard component
+        />
       ))}
     </div>
   );
