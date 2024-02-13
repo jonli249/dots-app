@@ -38,7 +38,7 @@ interface SongDetailViewProps {
       name: string;
       id: string; 
     }[];
-    _id: string;
+    _id?: string;
   };
 }
 
