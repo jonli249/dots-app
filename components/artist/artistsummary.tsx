@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Badge } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
 import { Image } from '@chakra-ui/react';
+import { Toaster, toast } from 'sonner';
+import { WarningTwoIcon } from '@chakra-ui/icons';
+
 
 interface ArtistSummaryProps {
   artistId: string;
@@ -41,6 +44,23 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
     fetchArtistSummary();
   }, [artistId]);
+
+  const handleButtonClick = async () => {
+    try {
+      
+        const response =  await axios.post(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/baddatacollab?id=${artistId}`);
+        if (response.status === 200) {
+          toast.success('Thanks for the feedback!');
+        } else {
+          toast.error('Failed to mark bad data');
+        }
+        
+    } catch (error) {
+      console.error('Error updating document timestamp:', error);
+    }
+  };
+
+  
 
   if (!artistInfo) {
     return <div>Loading artist information...</div>;
@@ -83,11 +103,11 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         </div>
       </div>
       <div>
-        <Button className="bg-gray-500 text-white py-2 rounded-lg absolute top-4">
-          Favorite
+        <Toaster />
+        <Button className="bg-gray-200 hover:bg-gray-300 align-middle	" leftIcon={<WarningTwoIcon />} onClick={handleButtonClick}>
+          Bad Data
         </Button>
       </div>
-      
     </div>
   );
 };

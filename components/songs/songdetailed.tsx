@@ -4,6 +4,10 @@ import Image from 'next/image';
 import Navbar from '../main/navbar';
 import Link from 'next/link';
 import PersonCard from '../artist/personcard';
+import { Toaster, toast } from 'sonner';
+import axios from 'axios';
+import { WarningTwoIcon } from '@chakra-ui/icons';
+
 
 
 interface SongDetailViewProps {
@@ -34,6 +38,7 @@ interface SongDetailViewProps {
       name: string;
       id: string; 
     }[];
+    _id: string;
   };
 }
 
@@ -46,7 +51,9 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     'producers-credit': producers,
     'composers': composers,
     'lyricists': lyricists,
+    '_id': id2,
   } = songData;
+  
 
   const allwriters = [
     ...(writers || []),
@@ -54,9 +61,26 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     ...(lyricists || []),
   ];
 
+  const handleButtonClick = async () => {
+    try {
+      
+        const response =  await axios.post(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/badsongdata?id=${id2}`);
+        if (response.status === 200) {
+          toast.success('Thanks for the feedback!');
+        } else {
+          toast.error('Failed to mark bad data');
+        }
+        
+    } catch (error) {
+      console.error('Error updating document timestamp:', error);
+    }
+  };
+
+  
+
+
   return (
     <div>
-
     <Navbar />
     <div className="max-w-4xl mx-auto p-8 bg-white">
       <div className="flex items-start space-x-6">
@@ -91,7 +115,10 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
                 <p className="text-gray-600">Released: {releaseDate}</p>
               </div>
               <div className="ml-auto flex items-center space-x-2">
-                <Button className="bg-gray-200 hover:bg-gray-300">Bad Data</Button>
+                <Toaster />
+                <Button className="bg-gray-200 hover:bg-gray-300 align-middle" leftIcon={<WarningTwoIcon/>} onClick={handleButtonClick}>
+                Bad Data
+                </Button>
               </div>
             </div>
           </div>
