@@ -46,6 +46,7 @@ const SearchPage = () => {
     return response.data || [];
   };
 
+  // Debounced function to handle input changes and data fetching
   const debouncedSearch = debounce(async (searchTerm: string) => {
     if (!searchTerm.trim()) {
       setSections([
@@ -81,60 +82,7 @@ const SearchPage = () => {
 
   return (
     <div>
-      <Navbar />
-      <Box className="flex justify-center">
-        <Button leftIcon={<SearchIcon />} variant="outline" onClick={() => setModalOpen(true)}>Search for a collaborator or song</Button>
-        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} size="xl">
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader className="w-full">
-            <InputGroup >
-            <InputLeftElement pointerEvents='none'>
-              <SearchIcon color='gray.300' />
-            </InputLeftElement>
-            <Input
-                size="sm"
-                placeholder= "Search for collaborators or songs"
-                onChange={(e) => setInputValue(e.target.value)}
-                value={inputValue}
-                className="w-full"
-              />
-            </InputGroup>
-              
-            </ModalHeader>
-            <ModalBody maxHeight="40vh" overflowY="auto">
-              <Flex>
-                {sections.map((section) => (
-                  <Box key={section.title} flex="1">
-                    <Text fontSize="sm" fontWeight="bold">{section.title}</Text>
-                    <Divider my={2} />
-                    <VStack spacing={2} className="justify-items-start">
-                    {section.data.map((item, index) => (
-                        <React.Fragment key={index}>
-                          {section.title === 'Collaborators' ? (
-                            <PersonCard
-                              id={(item as Artist).id}
-                              name={(item as Artist).name}
-                              imageUrl={(item as Artist).imageUrl}
-                            />
-                          ) : (
-                            <SongItem
-                              title={(item as Song).title}
-                              artists={(item as Song).artists}
-                              coverImage={(item as Song).coverImage}
-                              _id={(item as Song).id}
-                            />
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </VStack>
-                  </Box>
-                ))}
-              </Flex>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-      </Box>
+      
     </div>
   );
 };

@@ -12,7 +12,7 @@ interface Song {
   artist: string[];
   _id: string;
   coverImage: string;
-  'artist-credit': string[];
+  'artist-credit'?: { name: string }[];
   'first-release-date': string;
   // Add other properties as needed
 }
@@ -65,8 +65,8 @@ const ArtistPage: React.FC = () => {
         <ArtistSummary artistId={id} />
         <Tabs defaultIndex={0} variant="unstyled" className="mt-8">
           <TabList>
-            <Tab _selected={{ fontWeight: 'bold', color: 'black' }} _notSelected={{ fontWeight: 'lighter', color: 'gray' }} >SONGS</Tab>
-            <Tab _selected={{ fontWeight: 'bold', color: 'black' }} _notSelected={{ fontWeight: 'lighter', color: 'gray' }}> COLLABORATORS</Tab>
+            <Tab _selected={{ fontWeight: 'bold', color: 'black' }} >SONGS</Tab>
+            <Tab _selected={{ fontWeight: 'bold', color: 'black' }}> COLLABORATORS</Tab>
             <Tooltip label="Coming Soon!" aria-label='A tooltip'>
               <Tab isDisabled>SMART TOOLS</Tab>         
             </Tooltip>

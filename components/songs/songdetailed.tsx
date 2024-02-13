@@ -38,7 +38,7 @@ interface SongDetailViewProps {
       name: string;
       id: string; 
     }[];
-    _id: string;
+    _id?: string;
   };
 }
 
@@ -134,7 +134,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
               key={artist.artist.id}
               id={artist.artist.id}
               name={artist.name}
-              imageUrl='/avatar.png' // Replace with your image path or pass dynamically
+              strArtistThumb='/avatar.png' // Replace with your image path or pass dynamically
             />
             )) : <span>Nada</span>}
         </div>
@@ -147,7 +147,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
               key={songwriter.id}
               id={songwriter.id}
               name={songwriter.name}
-              imageUrl='/avatar.png' // Replace with your image path or pass dynamically
+              strArtistThumb='/avatar.png' // Replace with your image path or pass dynamically
             />
             ))
           ) : (
@@ -163,7 +163,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
               key={producer.id}
               id={producer.id}
               name={producer.name}
-              imageUrl='/avatar.png' // Replace with your image path or pass dynamically
+              strArtistThumb='/avatar.png' // Replace with your image path or pass dynamically
             />
             ))
           ) : (

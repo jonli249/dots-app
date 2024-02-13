@@ -6,14 +6,14 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import arrow icon
 
 interface Song {
   title: string;
-  artist?: string[];
+  'artist-credit'?: { name: string }[];
   _id: string;
   coverImage: string;
   'first-release-date': string;
 }
 
 interface SongListWithPaginationProps {
-  songs: Song[];
+  songs?: Song[];
   currentPage: number;
   setCurrentPage: (page: number) => void;
   startIndex: number;
@@ -35,10 +35,13 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const fuse = useMemo(() => {
-    return new Fuse(songs, {
-      keys: ['title'],
-      threshold: 0.3,
-    });
+    if (songs) {
+      return new Fuse(songs, {
+        keys: ['title'],
+        threshold: 0.3,
+      });
+    }
+    return null; 
   }, [songs]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,20 +53,22 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
   };
 
   const sortedSongs = useMemo(() => {
-    return [...songs].sort((a, b) => {
-      const dateA = new Date(a['first-release-date']);
-      const dateB = new Date(b['first-release-date']);
-      return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
-    });
-  }, [songs, sortOrder]);
+    if (songs) {
 
-  const filteredSongs = useMemo(() => {
-    if (!searchQuery) {
-      return sortedSongs;
-    }
-    const result = fuse.search(searchQuery);
-    return result.map((r) => r.item);
-  }, [fuse, searchQuery, sortedSongs]);
+      return [...songs].sort((a, b) => {
+        const dateA = new Date(a['first-release-date']);
+        const dateB = new Date(b['first-release-date']);
+        return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+      })};
+    }, [songs, sortOrder]);
+
+    const filteredSongs = useMemo(() => {
+      if (!searchQuery || !fuse) {
+        return sortedSongs;
+      }
+      const result = fuse.search(searchQuery);
+      return result.map((r) => r.item);
+    }, [fuse, searchQuery, sortedSongs]);
 
   return (
     <div className="m-15">
@@ -74,7 +79,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
             placeholder="Search by song title..."
             value={searchQuery}
             onChange={handleSearch}
-            className="px-2 py-1 border border-gray-300 rounded-md w-full"
+            className="px-2 py-2 border border-gray-300 rounded-md w-full"
           />
         </div>
         <div>
@@ -85,23 +90,26 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
         </div>
       </div>
       <div className="grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filteredSongs.map((song, index) => (
+        {filteredSongs?.map((song, index) => (
+        
           <SongItem
             key={index}
             title={song.title}
+            artistCredit={song['artist-credit']}
             _id={song._id}
             coverImage={song.coverImage}
           />
-        ))}
+        )
+        )}
       </div>
       <div className="flex justify-center mt-10">
         <div className="flex space-x-4">
           <FaArrowLeft
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             className={`cursor-pointer ${currentPage === 1 ? 'text-gray-300' : 'text-black'}`}
           />
           <FaArrowRight
-            onClick={() => setCurrentPage(currentPage + 1)}
+            onClick={() => setCurrentPage(Math.min(Math.ceil(totalSongs / songsPerPage), currentPage + 1))}
             className={`cursor-pointer ${endIndex >= totalSongs ? 'text-gray-300' : 'text-black'}`}
           />
         </div>

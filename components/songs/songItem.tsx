@@ -6,12 +6,12 @@ import Image from 'next/image';
 
 interface SongItemProps {
   title: string;
-  artists?: { name: string }[];
+  artistCredit?: { name: string }[];
   coverImage: string;
   _id: string;
 }
 
-const SongItem: React.FC<SongItemProps> = ({ title, artists = [], coverImage, _id }) => {
+const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, coverImage, _id }) => {
   const photoSource = coverImage || '/album.png';
 
   return (
@@ -37,8 +37,15 @@ const SongItem: React.FC<SongItemProps> = ({ title, artists = [], coverImage, _i
               {title}
             </h2>
             <p className="text-xxs sm:text-xs md:text-xs lg:text-sm text-gray-500 truncate">
-              {artists.length > 0
-                ? artists.map((artist) => artist.name).join(', ')
+              {artistCredit && artistCredit.length > 0
+                ? artistCredit.map((artist, index) => (
+                    <span key={artist.name}>
+                      {index > 0 && ', '}
+
+                       {artist.name}
+
+                    </span>
+                  ))
                 : 'Unknown Artist'}
             </p>
           </div>

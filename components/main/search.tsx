@@ -32,7 +32,7 @@ interface Artist {
   interface Song {
     _id: string;
     title: string;
-    artists: { name: string }[];
+    'artist-credit': { name: string }[];
     coverImage: string;
   }
   
@@ -155,7 +155,7 @@ const SearchComponent = () => {
                           ) : (
                             <SongItem
                               title={(item as Song).title}
-                              artists={(item as Song).artists}
+                              artistCredit={(item as Song)['artist-credit']}
                               coverImage={(item as Song).coverImage}
                               _id={(item as Song)._id}
                             />
