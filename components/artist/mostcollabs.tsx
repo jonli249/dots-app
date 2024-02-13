@@ -26,7 +26,6 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
     fetch(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/mostcollabs?artistId=${artistId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("API response data:", data); // Log the response data to inspect its structure
         if (Array.isArray(data)) {
           setCollaborators(data);
         } else {
