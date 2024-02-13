@@ -19,16 +19,20 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Fetch the data from the HTTPS endpoint
     if (!artistId) {
-        // Handle the case when artistId is not defined yet
-        setLoading(false);
-        return;
-      }
+      setLoading(false);
+      return;
+    }
     fetch(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/mostcollabs?artistId=${artistId}`)
       .then((response) => response.json())
-      .then((data: Collaborator[]) => {
-        setCollaborators(data);
+      .then((data) => {
+        console.log("API response data:", data); // Log the response data to inspect its structure
+        if (Array.isArray(data)) {
+          setCollaborators(data);
+        } else {
+          console.warn('Expected data to be an array, but received:', data);
+          setCollaborators([]);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -36,14 +40,13 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
         setLoading(false);
       });
   }, [artistId]);
-  console.log("TYPE", typeof artistId);
-  if (loading) {
-    return <p>Loading collaborators...</p>;
-  }
+  
 
   return (
     <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 lg:grid-cols-3 bg-opacity-90">
-      {collaborators.map((collaborator) => (
+      {collaborators
+        .filter(collaborator => collaborator._id && collaborator.name )
+        .map((collaborator) => (
         <CollabCard
           key={collaborator._id}
           id={collaborator._id}

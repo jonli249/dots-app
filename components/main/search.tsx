@@ -1,40 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Input, InputGroup, InputLeftElement, Box, Text, VStack, Link, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, Divider, Button } from '@chakra-ui/react';
-import { debounce } from 'lodash';
-import Navbar from '../components/main/navbar';
+import {
+  Box,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Flex,
+  Text,
+  VStack,
+  Divider,
+  useDisclosure,
+  Icon
+} from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import PersonCard from '../components/artist/personcard';
-import SongItem from '../components/songs/songItem';
-
-
+import axios from 'axios';
+import debounce from 'lodash/debounce';
+import PersonCard from '../artist/personcard';
+import SongItem from '../songs/songItem';
 
 interface Artist {
-  id: string;
-  name: string;
-  imageUrl?: string;
-}
+    id: string;
+    name: string;
+    imageUrl?: string;
+  }
+  
+  interface Song {
+    id: string;
+    title: string;
+    artists: { name: string }[];
+    coverImage: string;
+  }
+  
+  interface Section {
+    title: string;
+    data: Artist[] | Song[]; 
+    link: string;
+  }
 
-interface Song {
-  id: string;
-  title: string;
-  artists: { name: string }[];
-  coverImage: string;
-}
-
-interface Section {
-  title: string;
-  data: Artist[] | Song[]; 
-  link: string;
-}
-
-const SearchPage = () => {
+const SearchComponent = () => {
   const [inputValue, setInputValue] = useState('');
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [sections, setSections] = useState<Section[]>([
     { title: 'Songs', data: [], link: 'songs'},
     { title: 'Collaborators', data: [], link: 'artists' },
   ]);
-  const [modalOpen, setModalOpen] = useState(false);
+
 
   const fetchArtists = async (searchTerm: string): Promise<Artist[]> => {
     const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findcollaboratornames?collabname=${searchTerm}`);
@@ -46,7 +61,7 @@ const SearchPage = () => {
     return response.data || [];
   };
 
-  const debouncedSearch = debounce(async (searchTerm: string) => {
+  const debouncedSearch = debounce(async (searchTerm) => {
     if (!searchTerm.trim()) {
       setSections([
         { title: 'Songs', data: [], link: 'songs' },
@@ -60,31 +75,49 @@ const SearchPage = () => {
 
     setSections([
       { title: 'Songs', data: songs, link: 'songs'},
-      { title: 'Collaborators', link: 'artists', data: artists },
+      { title: 'Collaborators', data: artists, link: 'artists' },
     ]);
-    setModalOpen(true);
   }, 150);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (inputValue) {
-        debouncedSearch(inputValue);
-      }
-    };
-
-    fetchData();
-
+    if (inputValue) {
+      debouncedSearch(inputValue);
+    } else {
+      setSections([
+        { title: 'Songs', data: [], link: 'songs' },
+        { title: 'Collaborators', data: [], link: 'artists' },
+      ]);
+    }
+    // Cleanup function to cancel the debounced call if the component unmounts
     return () => {
       debouncedSearch.cancel();
     };
-      }, [inputValue, debouncedSearch]);
+  }, [inputValue]);
+
 
   return (
-    <div>
-      <Navbar />
-      <Box className="flex justify-center">
-        <Button leftIcon={<SearchIcon />} variant="outline" onClick={() => setModalOpen(true)}>Search for a collaborator or song</Button>
-        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} size="xl">
+    <>
+      <Box
+        as="button"
+        display="flex"
+        alignItems="center"
+        justifyContent="left"
+        padding="3"
+        width="full" 
+        borderRadius='md'
+        backgroundColor="transparent"
+        _hover={{ bg: 'gray.100' }} 
+        borderWidth='1px'
+        onClick={onOpen}
+        cursor="pointer"
+        boxShadow='base'
+      >
+        <Icon as={SearchIcon} color="gray.400" mr="2" />
+        <Text color="gray.400" fontWeight="normal">
+          Search for a collaborator or song
+        </Text>
+      </Box>
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalOverlay />
           <ModalContent>
             <ModalHeader className="w-full">
@@ -102,7 +135,7 @@ const SearchPage = () => {
             </InputGroup>
               
             </ModalHeader>
-            <ModalBody maxHeight="40vh" overflowY="auto">
+            <ModalBody maxHeight="50vh" overflowY="auto">
               <Flex>
                 {sections.map((section) => (
                   <Box key={section.title} flex="1">
@@ -134,9 +167,8 @@ const SearchPage = () => {
             </ModalBody>
           </ModalContent>
         </Modal>
-      </Box>
-    </div>
+    </>
   );
 };
 
-export default SearchPage;
+export default SearchComponent;
