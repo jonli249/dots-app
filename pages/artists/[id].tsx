@@ -60,12 +60,13 @@ const ArtistPage: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col mt-12 mx-auto px-30 md:px-40 lg:px-60 xl:px-90 2xl:px-120">
+      <div className="flex flex-col mt-12 mx-auto px-48 md:px-64 lg:px-68 xl:px-72 2xl:px-80">
+        <div className='px-4 md:px-4 lg:px-8 xl:px-12 2xl:px-16'>
         <ArtistSummary artistId={id} />
         <Tabs defaultIndex={0} variant="unstyled" className="mt-8">
           <TabList>
-            <Tab _selected={{ fontWeight: 'bold', color: 'gray' }} >SONGS</Tab>
-            <Tab _selected={{ fontWeight: 'bold', color: 'gray' }}> COLLABORATORS</Tab>
+            <Tab _selected={{ fontWeight: 'bold', color: 'black' }} _notSelected={{ fontWeight: 'lighter', color: 'gray' }} >SONGS</Tab>
+            <Tab _selected={{ fontWeight: 'bold', color: 'black' }} _notSelected={{ fontWeight: 'lighter', color: 'gray' }}> COLLABORATORS</Tab>
             <Tooltip label="Coming Soon!" aria-label='A tooltip'>
               <Tab isDisabled>SMART TOOLS</Tab>         
             </Tooltip>
@@ -89,6 +90,7 @@ const ArtistPage: React.FC = () => {
   
           </TabPanels>
         </Tabs>
+        </div>
       </div>
     </div>
   );

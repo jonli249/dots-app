@@ -38,7 +38,7 @@ interface SongDetailViewProps {
       name: string;
       id: string; 
     }[];
-    _id?: string;
+    _id: string;
   };
 }
 
@@ -64,7 +64,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
   const handleButtonClick = async () => {
     try {
       
-        const response =  await axios.post(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/badsongdata?id=${id2}`);
+        const response =  await axios.post(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/badsongdata=${id2}`);
         if (response.status === 200) {
           toast.success('Thanks for the feedback!');
         } else {
@@ -116,7 +116,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
               </div>
               <div className="ml-auto flex items-center space-x-2">
                 <Toaster />
-                <Button className="bg-gray-200 hover:bg-gray-300 align-middle" leftIcon={<WarningTwoIcon/>} onClick={handleButtonClick}>
+                <Button className="bg-gray-200 hover:bg-gray-300" leftIcon={<WarningTwoIcon/>} onClick={handleButtonClick}>
                 Bad Data
                 </Button>
               </div>

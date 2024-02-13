@@ -7,10 +7,10 @@ interface PersonCardProps {
   name: string;
   imageUrl?: string; // Optional image URL for the person's picture
 }
-const PersonCard: React.FC<PersonCardProps> = ({ id, name, imageUrl }) => {
+const PersonCard: React.FC<PersonCardProps> = ({ id, name, imageUrl}) => {
     const imageSrc = imageUrl || '/avatar.png';
-    
-    const cardStyle = "flex items-center bg-white shadow-md rounded-full overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer mb-2";
+
+    const cardStyle = "flex-shrink-0 shadow-md rounded-full overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer mb-2";
     const imageContainerStyle = "flex-shrink-0 w-14 h-14 relative mr-4"; 
     const imageStyle = "rounded-full shadow-sm"; 
   

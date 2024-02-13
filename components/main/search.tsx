@@ -30,7 +30,7 @@ interface Artist {
   }
   
   interface Song {
-    id: string;
+    _id: string;
     title: string;
     artists: { name: string }[];
     coverImage: string;
@@ -95,6 +95,7 @@ const SearchComponent = () => {
   }, [inputValue]);
 
 
+
   return (
     <>
       <Box
@@ -149,13 +150,14 @@ const SearchComponent = () => {
                               id={(item as Artist).id}
                               name={(item as Artist).name}
                               imageUrl={(item as Artist).imageUrl}
+  
                             />
                           ) : (
                             <SongItem
                               title={(item as Song).title}
                               artists={(item as Song).artists}
                               coverImage={(item as Song).coverImage}
-                              _id={(item as Song).id}
+                              _id={(item as Song)._id}
                             />
                           )}
                         </React.Fragment>

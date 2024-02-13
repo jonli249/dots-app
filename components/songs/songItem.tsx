@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+
 interface SongItemProps {
   title: string;
   artists?: { name: string }[];
@@ -15,7 +16,7 @@ const SongItem: React.FC<SongItemProps> = ({ title, artists = [], coverImage, _i
 
   return (
     <Link href={`/songs/${_id}`}>
-      <div className="flex items-center w-44 sm:w-52 border border-gray-300 rounded-md p-1 sm:p-2 m-1 overflow-hidden">
+      <div className="flex items-center w-44 sm:w-52 border border-gray-300 rounded-md p-1 sm:p-2 m-2 overflow-hidden">
         {/* Left side with square image */}
         <div className="flex-shrink-0">
           <div className="w-12 h-12 sm:w-14 sm:h-14 overflow-hidden rounded-md">
