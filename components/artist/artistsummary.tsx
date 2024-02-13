@@ -13,7 +13,7 @@ interface ArtistSummaryProps {
 
 interface ArtistInfo {
   name: string;
-  photoUrl: string;
+  strArtistThumb?: string;
   tags: { count: number; name: string }[];
   // Add other artist information fields here
 }
@@ -29,9 +29,9 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         );
 
         if (response.data && response.data.name) {
-          const { name, photoUrl, tags } = response.data;
+          const { name, strArtistThumb, tags } = response.data;
           tags.sort((a: { count: number; name: string }, b: { count: number; name: string }) => b.count - a.count);
-          setArtistInfo({ name, photoUrl, tags });
+          setArtistInfo({ name, strArtistThumb, tags });
         } else {
           setArtistInfo(null);
           console.error('No artist information found');
@@ -66,7 +66,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     return <div>Loading artist information...</div>;
   }
 
-  const photoSource = artistInfo.photoUrl || '/avatar.png';
+  const photoSource = artistInfo.strArtistThumb || '/avatar.png';
 
   // Define the maximum number of tags to display initially
   const maxTagsToShow = 3;

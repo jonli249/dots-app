@@ -26,7 +26,7 @@ import SongItem from '../songs/songItem';
 interface Artist {
     id: string;
     name: string;
-    imageUrl?: string;
+    strArtistThumb?: string;
   }
   
   interface Song {
@@ -149,7 +149,7 @@ const SearchComponent = () => {
                             <PersonCard
                               id={(item as Artist).id}
                               name={(item as Artist).name}
-                              imageUrl={(item as Artist).imageUrl}
+                              strArtistThumb={(item as Artist).strArtistThumb}
   
                             />
                           ) : (
