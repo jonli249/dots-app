@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from 'react';
-import SongItem from '../../components/songs/songItem';
+import React, { useState, useEffect, useMemo } from 'react';
+import axios from 'axios';
 import { Select } from '@chakra-ui/react';
 import Fuse from 'fuse.js';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import arrow icons
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import SongItem from '../../components/songs/songItem';
 
 interface Song {
   title: string;
@@ -13,36 +14,65 @@ interface Song {
 }
 
 interface SongListWithPaginationProps {
-  songs?: Song[];
-  currentPage: number;
-  setCurrentPage: (page: number) => void;
-  startIndex: number;
-  endIndex: number;
-  totalSongs: number;
+  artistId: string;
   songsPerPage: number;
 }
 
-const SongList: React.FC<SongListWithPaginationProps> = ({
-  songs,
-  currentPage,
-  setCurrentPage,
-  startIndex,
-  endIndex,
-  totalSongs,
-  songsPerPage,
-}) => {
+const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPage }) => {
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const fuse = useMemo(() => {
-    if (songs) {
-      return new Fuse(songs, {
-        keys: ['title'],
-        threshold: 0.3,
-      });
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsongs?artistId=${artistId}`);
+        if (response.data && Array.isArray(response.data)) {
+          setSongs(response.data);
+        } else {
+          setSongs([]);
+          console.error('No songs found for the artist');
+        }
+      } catch (error) {
+        console.error('Error fetching songs:', error);
+        setSongs([]);
+      }
+    };
+
+    if (artistId) {
+      fetchSongs();
     }
-    return null; 
-  }, [songs]);
+  }, [artistId]);
+
+  const fuse = useMemo(() => new Fuse(songs, {
+    keys: ['title'],
+    threshold: 0.3,
+  }), [songs]);
+
+  const filteredSongs = useMemo(() => {
+    if (searchQuery && fuse) {
+      const results = fuse.search(searchQuery);
+      return results.map(result => result.item);
+    }
+    return songs;
+  }, [searchQuery, fuse, songs]);
+
+  // Apply sorting to filtered (and possibly searched) songs
+  const sortedAndFilteredSongs = useMemo(() => {
+    return [...filteredSongs].sort((a, b) => {
+      const dateA = new Date(a['first-release-date']).getTime();
+      const dateB = new Date(b['first-release-date']).getTime();
+      return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+  }, [filteredSongs, sortOrder]);
+
+  // Apply pagination to the sorted and filtered list
+  const displayedSongs = useMemo(() => {
+    const startIndex = (currentPage - 1) * songsPerPage;
+    const endIndex = startIndex + songsPerPage;
+    return sortedAndFilteredSongs.slice(startIndex, endIndex);
+  }, [sortedAndFilteredSongs, currentPage, songsPerPage]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -51,24 +81,6 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(e.target.value as 'asc' | 'desc');
   };
-
-  const sortedSongs = useMemo(() => {
-    if (songs) {
-
-      return [...songs].sort((a, b) => {
-        const dateA = new Date(a['first-release-date']);
-        const dateB = new Date(b['first-release-date']);
-        return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
-      })};
-    }, [songs, sortOrder]);
-
-    const filteredSongs = useMemo(() => {
-      if (!searchQuery || !fuse) {
-        return sortedSongs;
-      }
-      const result = fuse.search(searchQuery);
-      return result.map((r) => r.item);
-    }, [fuse, searchQuery, sortedSongs]);
 
   return (
     <div className="m-15">
@@ -90,8 +102,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
         </div>
       </div>
       <div className="grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filteredSongs?.map((song, index) => (
-        
+        {displayedSongs.map((song, index) => (
           <SongItem
             key={index}
             title={song.title}
@@ -99,8 +110,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
             _id={song._id}
             coverImage={song.coverImage}
           />
-        )
-        )}
+        ))}
       </div>
       <div className="flex justify-center mt-10">
         <div className="flex space-x-4">
@@ -109,8 +119,8 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
             className={`cursor-pointer ${currentPage === 1 ? 'text-gray-300' : 'text-black'}`}
           />
           <FaArrowRight
-            onClick={() => setCurrentPage(Math.min(Math.ceil(totalSongs / songsPerPage), currentPage + 1))}
-            className={`cursor-pointer ${endIndex >= totalSongs ? 'text-gray-300' : 'text-black'}`}
+            onClick={() => setCurrentPage(Math.min(Math.ceil(filteredSongs.length / songsPerPage), currentPage + 1))}
+            className={`cursor-pointer ${currentPage * songsPerPage >= filteredSongs.length ? 'text-gray-300' : 'text-black'}`}
           />
         </div>
       </div>
