@@ -51,7 +51,7 @@ interface SongDetailViewProps {
       name: string;
       id: string; 
     }[];
-    id: string;
+    _id?: string;
   };
 }
 
@@ -64,7 +64,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     'producers-credit': producers,
     'composers': composers,
     'lyricists': lyricists,
-    'id': id2,
+    _id: id2,
   } = songData;
   const [feedback, setFeedback] = useState<string>('');
   const { isOpen, onOpen, onClose } = useDisclosure();

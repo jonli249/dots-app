@@ -27,6 +27,7 @@ const SongPage: React.FC = () => {
       // Fetch song data based on 'id' using an API call
       const fetchSong = async () => {
         try {
+            console.log("IDDD from useEffect", id);
             const param = `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/onesongroute?songId=${id}`;
             const response = await axios.get(param);
  
