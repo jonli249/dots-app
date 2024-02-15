@@ -83,7 +83,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
   };
 
   return (
-    <div className="m-15">
+    <div className="m-4">
       <div className="flex justify-between mb-4">
         <div className="flex-1 mr-4">
           <input
@@ -101,7 +101,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
           </Select>
         </div>
       </div>
-      <div className="grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {displayedSongs.map((song, index) => (
           <SongItem
             key={index}

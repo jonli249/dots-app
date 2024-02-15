@@ -42,7 +42,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   
 
   return (
-    <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 lg:grid-cols-3 bg-opacity-90">
+    <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 lg:grid-cols-4 bg-opacity-90">
       {collaborators
         .filter(collaborator => collaborator._id && collaborator.name )
         .map((collaborator) => (

@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState }  from 'react';
 import { Button } from "@chakra-ui/react";
 import Image from 'next/image';
 import Navbar from '../main/navbar';
@@ -7,6 +7,19 @@ import PersonCard from '../artist/personcard';
 import { Toaster, toast } from 'sonner';
 import axios from 'axios';
 import { WarningTwoIcon } from '@chakra-ui/icons';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Input, 
+  useDisclosure
+} from '@chakra-ui/react'
 
 
 
@@ -38,7 +51,7 @@ interface SongDetailViewProps {
       name: string;
       id: string; 
     }[];
-    _id?: string;
+    id: string;
   };
 }
 
@@ -51,8 +64,10 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     'producers-credit': producers,
     'composers': composers,
     'lyricists': lyricists,
-    '_id': id2,
+    'id': id2,
   } = songData;
+  const [feedback, setFeedback] = useState<string>('');
+  const { isOpen, onOpen, onClose } = useDisclosure();
   
 
   const allwriters = [
@@ -61,12 +76,18 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     ...(lyricists || []),
   ];
 
+  const handleBadDataButtonClick = () => {
+    onOpen();
+  };
+
   const handleButtonClick = async () => {
     try {
       
-        const response =  await axios.post(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/badsongdata=${id2}`);
+        const response =  await axios.post(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/badsongdata?id=${id2}&note=${feedback}`);
         if (response.status === 200) {
           toast.success('Thanks for the feedback!');
+          setFeedback('');
+          onClose();
         } else {
           toast.error('Failed to mark bad data');
         }
@@ -115,10 +136,31 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
                 <p className="text-gray-600">Released: {releaseDate}</p>
               </div>
               <div className="ml-auto flex items-center space-x-2">
-                <Toaster />
-                <Button className="bg-gray-200 hover:bg-gray-300" leftIcon={<WarningTwoIcon/>} onClick={handleButtonClick}>
-                Bad Data
+              <Toaster />
+              <Popover isOpen={isOpen} onClose={onClose}>
+              <PopoverTrigger>
+                <Button className="bg-gray-200 hover:bg-gray-300 align-middle" leftIcon={<WarningTwoIcon />} onClick={handleBadDataButtonClick}>
+                  Bad Data
                 </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>Submit Feedback</PopoverHeader>
+                <PopoverBody>
+                  <Input
+                    placeholder="Describe the issue"
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
+                  />
+                </PopoverBody>
+                <PopoverFooter display="flex" justifyContent="flex-end">
+                  <Button size="sm" onClick={handleButtonClick}>
+                    Submit
+                  </Button>
+                </PopoverFooter>
+              </PopoverContent>
+            </Popover>
               </div>
             </div>
           </div>

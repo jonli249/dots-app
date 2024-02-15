@@ -5,6 +5,19 @@ import { Button } from '@chakra-ui/react';
 import { Image } from '@chakra-ui/react';
 import { Toaster, toast } from 'sonner';
 import { WarningTwoIcon } from '@chakra-ui/icons';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Input, 
+  useDisclosure
+} from '@chakra-ui/react'
 
 
 interface ArtistSummaryProps {
@@ -20,6 +33,10 @@ interface ArtistInfo {
 
 const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   const [artistInfo, setArtistInfo] = useState<ArtistInfo | null>(null);
+  const [feedback, setFeedback] = useState<string>('');
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+
 
   useEffect(() => {
     const fetchArtistSummary = async () => {
@@ -45,12 +62,18 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     fetchArtistSummary();
   }, [artistId]);
 
+  const handleBadDataButtonClick = () => {
+    onOpen();
+  };
+
   const handleButtonClick = async () => {
     try {
       
-        const response =  await axios.post(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/baddatacollab?id=${artistId}`);
+        const response =  await axios.post(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/baddatacollab?id=${artistId}&note=${feedback}`);
         if (response.status === 200) {
           toast.success('Thanks for the feedback!');
+          setFeedback('');
+          onClose();
         } else {
           toast.error('Failed to mark bad data');
         }
@@ -103,10 +126,34 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         </div>
       </div>
       <div>
-        <Toaster />
-        <Button className="bg-gray-200 hover:bg-gray-300 align-middle	" leftIcon={<WarningTwoIcon />} onClick={handleButtonClick}>
-          Bad Data
-        </Button>
+
+              <Toaster />
+              <Popover isOpen={isOpen} onClose={onClose}>
+              <PopoverTrigger>
+                <Button className="bg-gray-200 hover:bg-gray-300 align-middle" leftIcon={<WarningTwoIcon />} onClick={handleBadDataButtonClick}>
+                  Bad Data
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>Submit Feedback</PopoverHeader>
+                <PopoverBody>
+                  <Input
+                    placeholder="Describe the issue"
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
+                  />
+                </PopoverBody>
+                <PopoverFooter display="flex" justifyContent="flex-end">
+                  <Button size="sm" onClick={handleButtonClick}>
+                    Submit
+                  </Button>
+                </PopoverFooter>
+              </PopoverContent>
+            </Popover>
+       
+        
       </div>
     </div>
   );

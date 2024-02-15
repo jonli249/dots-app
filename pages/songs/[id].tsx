@@ -13,6 +13,7 @@ interface Song {
   composers?: { name: string; id: string }[]; 
   lyricists?: { name: string; id: string }[]; 
   _id?: string;
+  mbid?: string;
 }
 
 
