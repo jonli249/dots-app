@@ -1,4 +1,4 @@
-import { React, useState }  from 'react';
+import  React, { useState }  from 'react';
 import { Button } from "@chakra-ui/react";
 import Image from 'next/image';
 import Navbar from '../main/navbar';
