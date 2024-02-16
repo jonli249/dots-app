@@ -23,7 +23,10 @@ function Navbar() {
   return (
     <nav className="px-8 py-4 m-4 flex justify-between items-center space-x-80 sticky top-0 z-50">
       <Link href='/'>
-        <Image src={'/logo.png'} alt="Logo" width={46} height={46} />
+      <div style={{ width: '46px', height: '46px' }}>
+      <Image src={'/logo.png'} alt="Logo" width={46} height={46} />
+    
+        </div>
       </Link>
       {showSearchButton && (
         <SearchComponent />

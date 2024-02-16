@@ -16,20 +16,35 @@ import {
   PopoverCloseButton,
   PopoverAnchor,
   Input, 
-  useDisclosure
-} from '@chakra-ui/react'
+  useDisclosure, 
+} from '@chakra-ui/react';
+import { ReactCountryFlag } from 'react-country-flag';
+import { render } from 'react-dom';
+
 
 
 interface ArtistSummaryProps {
   artistId: string;
 }
 
+
 interface ArtistInfo {
   name: string;
   strArtistThumb?: string;
   tags: { count: number; name: string }[];
-  // Add other artist information fields here
+  area?: {
+    'iso-3166-1-codes': string[];
+  };
 }
+
+function renderFlags(isoCodes: string[]) {
+  return isoCodes.map((code, index) => (
+    <div key={index} className="inline-block">
+      <ReactCountryFlag countryCode={code} svg />
+    </div>
+  ));
+}
+
 
 const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   const [artistInfo, setArtistInfo] = useState<ArtistInfo | null>(null);
@@ -46,9 +61,9 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         );
 
         if (response.data && response.data.name) {
-          const { name, strArtistThumb, tags } = response.data;
+          const { name, strArtistThumb, tags, area} = response.data;
           tags.sort((a: { count: number; name: string }, b: { count: number; name: string }) => b.count - a.count);
-          setArtistInfo({ name, strArtistThumb, tags });
+          setArtistInfo({ name, strArtistThumb, tags, area});
         } else {
           setArtistInfo(null);
           console.error('No artist information found');
@@ -122,6 +137,16 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                 {`+${artistInfo.tags.length - maxTagsToShow} more`}
               </span>
             )}
+          </div>
+          <div className='mt-1'>
+            {artistInfo.area && artistInfo.area['iso-3166-1-codes'] ? (
+              <div>
+                {artistInfo.area['iso-3166-1-codes'].map((code, index) => {
+                  console.log('ISO 3166-1 code:', code);
+                  return <ReactCountryFlag countryCode={code} svg />
+                })}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

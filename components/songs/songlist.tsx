@@ -101,6 +101,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
           <Select value={sortOrder} onChange={handleSortChange}>
             <option value="asc">Date - Newest</option>
             <option value="desc">Date - Oldest</option>
+            <option> Popularity</option>
           </Select>
         </div>
       </div>
