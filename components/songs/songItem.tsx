@@ -7,12 +7,15 @@ import Image from 'next/image';
 interface SongItemProps {
   title: string;
   artistCredit?: { name: string }[];
-  coverImage: string;
+  coverImage?: string;
   _id: string;
+  geniusData?: {
+    header_image_thumbnail_url?: string, 
+  }
 }
 
-const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, coverImage, _id }) => {
-  const photoSource = coverImage || '/album.png';
+const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, _id, geniusData}) => {
+  const photoSource = geniusData?.header_image_thumbnail_url || '/album.png';
 
   return (
     <Link href={`/songs/${_id}`}>
@@ -22,8 +25,8 @@ const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, coverImage, _i
           <Image
             src={photoSource}
             alt="Album Cover"
-            width={24} 
-            height={24} 
+            width={16} 
+            height={16} 
             layout="responsive"
             className="object-cover"
           />

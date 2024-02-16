@@ -11,6 +11,9 @@ interface Song {
   _id: string;
   coverImage: string;
   'first-release-date': string;
+  geniusData?: {
+    header_image_thumbnail_url: string, 
+  }
 }
 
 interface SongListWithPaginationProps {
@@ -108,7 +111,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
             title={song.title}
             artistCredit={song['artist-credit']}
             _id={song._id}
-            coverImage={song.coverImage}
+            geniusData={song.geniusData}
           />
         ))}
       </div>
