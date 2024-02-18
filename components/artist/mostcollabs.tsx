@@ -65,7 +65,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   }, [filteredCollaborators, currentPage, collaboratorsPerPage]);
 
   return (
-    <div className="m-4">
+    <div>
       <div className="flex justify-between mb-4">
         <input
           type="text"

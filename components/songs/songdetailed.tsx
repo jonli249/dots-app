@@ -52,7 +52,11 @@ interface SongDetailViewProps {
       id: string; 
     }[];
     _id?: string;
+    geniusData?: {
+      header_image_thumbnail_url?: string, 
+    };
   };
+  
 }
 
 const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
@@ -65,6 +69,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     'composers': composers,
     'lyricists': lyricists,
     _id: id2,
+    geniusData: coverImage,
   } = songData;
   const [feedback, setFeedback] = useState<string>('');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -97,9 +102,8 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
     }
   };
 
+  const image = coverImage?.header_image_thumbnail_url || "/album.png";
   
-
-
   return (
     <div>
     <Navbar />
@@ -110,7 +114,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
           className="w-32 h-32 rounded-l"
           height={400}
           width={400}
-          src="/album.png"
+          src={image}
           style={{
             aspectRatio: "128/128",
             objectFit: "cover",
