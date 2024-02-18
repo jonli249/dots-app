@@ -33,7 +33,9 @@ interface Artist {
     _id: string;
     title: string;
     'artist-credit': { name: string }[];
-    coverImage: string;
+    geniusData?: {
+      header_image_thumbnail_url?: string, 
+    };
   }
   
   interface Section {
@@ -156,7 +158,8 @@ const SearchComponent = () => {
                             <SongItem
                               title={(item as Song).title}
                               artistCredit={(item as Song)['artist-credit']}
-                              coverImage={(item as Song).coverImage}
+                              geniusData={(item as Song).geniusData}
+                          
                               _id={(item as Song)._id}
                             />
                           )}

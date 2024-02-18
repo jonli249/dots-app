@@ -18,8 +18,6 @@ import {
   Input, 
   useDisclosure, 
 } from '@chakra-ui/react';
-import { ReactCountryFlag } from 'react-country-flag';
-import { render } from 'react-dom';
 
 
 
@@ -35,14 +33,6 @@ interface ArtistInfo {
   area?: {
     'iso-3166-1-codes': string[];
   };
-}
-
-function renderFlags(isoCodes: string[]) {
-  return isoCodes.map((code, index) => (
-    <div key={index} className="inline-block">
-      <ReactCountryFlag countryCode={code} svg />
-    </div>
-  ));
 }
 
 
@@ -137,16 +127,6 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                 {`+${artistInfo.tags.length - maxTagsToShow} more`}
               </span>
             )}
-          </div>
-          <div className='mt-1'>
-            {artistInfo.area && artistInfo.area['iso-3166-1-codes'] ? (
-              <div>
-                {artistInfo.area['iso-3166-1-codes'].map((code, index) => {
-                  console.log('ISO 3166-1 code:', code);
-                  return <ReactCountryFlag countryCode={code} svg />
-                })}
-              </div>
-            ) : null}
           </div>
         </div>
       </div>
