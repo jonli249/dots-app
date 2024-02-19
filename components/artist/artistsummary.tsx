@@ -17,6 +17,7 @@ import {
   PopoverAnchor,
   Input, 
   useDisclosure, 
+  Box,
 } from '@chakra-ui/react';
 
 
@@ -34,6 +35,7 @@ interface ArtistInfo {
     'iso-3166-1-codes': string[];
   };
 }
+
 
 
 const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {

@@ -97,83 +97,81 @@ const SearchComponent = () => {
   }, [inputValue]);
 
 
-
   return (
     <>
-      <Box
-        as="button"
-        display="flex"
-        alignItems="center"
-        justifyContent="left"
-        padding="3"
-        width="full" 
-        borderRadius='md'
-        backgroundColor="transparent"
-        _hover={{ bg: 'gray.100' }} 
-        borderWidth='1px'
-        onClick={onOpen}
-        cursor="pointer"
-        boxShadow='base'
-      >
-        <Icon as={SearchIcon} color="gray.400" mr="2" />
-        <Text color="gray.400" fontWeight="normal">
-          Search for a collaborator or song
-        </Text>
-      </Box>
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader className="w-full">
-            <InputGroup >
-            <InputLeftElement pointerEvents='none'>
-              <SearchIcon color='gray.300' />
-            </InputLeftElement>
-            <Input
-                size="sm"
-                placeholder= "Search for collaborators or songs"
-                onChange={(e) => setInputValue(e.target.value)}
-                value={inputValue}
-                className="w-full"
-              />
-            </InputGroup>
-              
-            </ModalHeader>
-            <ModalBody maxHeight="50vh" overflowY="auto">
-              <Flex>
-                {sections.map((section) => (
-                  <Box key={section.title} flex="1">
-                    <Text fontSize="sm" fontWeight="bold">{section.title}</Text>
-                    <Divider my={2} />
-                    <VStack spacing={2} className="justify-items-start">
-                    {section.data.map((item, index) => (
-                        <React.Fragment key={index}>
-                          {section.title === 'Collaborators' ? (
-                            <PersonCard
-                              id={(item as Artist).id}
-                              name={(item as Artist).name}
-                              strArtistThumb={(item as Artist).strArtistThumb}
-  
-                            />
-                          ) : (
-                            <SongItem
-                              title={(item as Song).title}
-                              artistCredit={(item as Song)['artist-credit']}
-                              geniusData={(item as Song).geniusData}
-                          
-                              _id={(item as Song)._id}
-                            />
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </VStack>
-                  </Box>
-                ))}
-              </Flex>
-            </ModalBody>
-          </ModalContent>
+        <Box
+            as="button"
+            display="flex"
+            alignItems="center"
+            justifyContent="left"
+            padding="3"
+            width="full" 
+            borderRadius='md'
+            backgroundColor="transparent"
+            _hover={{ bg: 'gray.100' }} 
+            borderWidth='1px'
+            onClick={onOpen}
+            cursor="pointer"
+            boxShadow='base'
+            // Adjust margins based on screen size
+            margin={{ base: '0 5px', md: '0 60px' }}
+        >
+            <Icon as={SearchIcon} color="gray.400" mr="2" />
+            <Text color="gray.400" fontWeight="normal" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
+                Search for a collaborator or song
+            </Text>
+        </Box>
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader className="w-full">
+                    <InputGroup >
+                        <InputLeftElement pointerEvents='none'>
+                            <SearchIcon color='gray.300' />
+                        </InputLeftElement>
+                        <Input
+                            size="sm"
+                            placeholder= "Search for collaborators or songs"
+                            onChange={(e) => setInputValue(e.target.value)}
+                            value={inputValue}
+                            className="w-full"
+                        />
+                    </InputGroup>
+                </ModalHeader>
+                <ModalBody maxHeight="50vh" overflowY="auto">
+                    <Flex direction={{ base: 'column', md: 'row' }} gap={{ base: '4', md: '8' }}>
+                        {sections.map((section) => (
+                            <Box key={section.title}  flex="1">
+                                <Text fontSize="sm" fontWeight="bold">{section.title}</Text>
+                                <Divider my={2} />
+                                <VStack spacing={2} align="stretch">
+                                    {section.data.map((item, index) => (
+                                        <React.Fragment key={index}>
+                                            {section.title === 'Collaborators' ? (
+                                                <PersonCard
+                                                    id={(item as Artist).id}
+                                                    name={(item as Artist).name}
+                                                    strArtistThumb={(item as Artist).strArtistThumb}
+                                                />
+                                            ) : (
+                                                <SongItem
+                                                    title={(item as Song).title}
+                                                    artistCredit={(item as Song)['artist-credit']}
+                                                    geniusData={(item as Song).geniusData}
+                                                    _id={(item as Song)._id}
+                                                />
+                                            )}
+                                        </React.Fragment>
+                                    ))}
+                                </VStack>
+                            </Box>
+                        ))}
+                    </Flex>
+                </ModalBody>
+            </ModalContent>
         </Modal>
     </>
-  );
+);
 };
 
 export default SearchComponent;

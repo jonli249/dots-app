@@ -76,6 +76,7 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+
   background-color: #f9f9f9;
 }
 
@@ -92,4 +93,14 @@
   padding: 5px 10px;
   background-color: #efefef;
   border-radius: 4px;
+}
+
+.mobileMargin {
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+@media (max-width: 768px) {
+  .dashboardContainer h1 {
+    font-size: 1.5rem; /* Adjust font size for smaller screens */
+  }
 }
