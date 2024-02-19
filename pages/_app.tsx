@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <ChakraProvider>
-      <div className='flex flex-col min-h-screen'>
+      <div className='flex flex-col min-h-screen overflow-hidden'>
         <div className="flex-grow">
         <Component {...pageProps} />
         </div>

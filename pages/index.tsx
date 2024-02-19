@@ -4,11 +4,11 @@ import SearchComponent from '../components/main/search';
   
 const Homepage = () => {
   return (
-    <div>
+    <div className="overflow-hidden">
       <Navbar />
-      <div className="flex flex-col items-center justify-center min-h-screen mb-4">
+      <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-5xl font-bold mb-4">Smart Music Credits</h1>
-        <div className="w-full max-w-l md:max-w-xl lg:max-w-2xl mb-72"> 
+        <div className="flex justify-center w-full max-w-l md:max-w-xl lg:max-w-2xl mb-72"> 
           <SearchComponent />
         </div>
       </div>
