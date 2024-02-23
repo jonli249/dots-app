@@ -5,7 +5,6 @@ import Fuse from 'fuse.js';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import SongItem from '../../components/songs/songItem';
 
-
 interface Song {
   title: string;
   'artist-credit'?: { name: string }[];
@@ -88,7 +87,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
   };
 
   return (
-    <div className="">
+    <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-6">
       <div className="flex justify-between mb-4">
         <div className="flex-1 mr-4">
           <input
@@ -107,7 +106,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
           </Select>
         </div>
       </div>
-      <div className="flex justify-between grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {displayedSongs.map((song, index) => (
           <SongItem
             key={index}

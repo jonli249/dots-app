@@ -22,6 +22,7 @@ import axios from 'axios';
 import debounce from 'lodash/debounce';
 import PersonCard from '../artist/personcard';
 import SongItem from '../songs/songItem';
+import Image from '../../node_modules/next/image';
 
 interface Artist {
     id: string;
@@ -99,28 +100,38 @@ const SearchComponent = () => {
 
   return (
     <>
-        <Box
-            as="button"
-            display="flex"
-            alignItems="center"
-            justifyContent="left"
-            padding="3"
-            width="full" 
-            borderRadius='md'
-            backgroundColor="transparent"
-            _hover={{ bg: 'gray.100' }} 
-            borderWidth='1px'
-            onClick={onOpen}
-            cursor="pointer"
-            boxShadow='base'
-            // Adjust margins based on screen size
-            margin={{ base: '0 5px', md: '0 60px' }}
-        >
-            <Icon as={SearchIcon} color="gray.400" mr="2" />
-            <Text color="gray.400" fontWeight="normal" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
-                Search for a collaborator or song
-            </Text>
-        </Box>
+    <div className="max-w-[800px] w-full mx-auto px-3 xl:px-0 relative">
+      <Image
+        src={"/bg-input.png"}
+        alt="/bg-input.png"
+        className="absolute -top-7"
+        width={956}
+        height={144}
+      />
+      <Box
+        as="button"
+        display="flex"
+        alignItems="center"
+        justifyContent="start"
+        textAlign="left" // Align text to the left
+        padding="3"
+        width="full" 
+        borderRadius='md'
+        backgroundColor="white" 
+        _hover={{ bg: 'gray.100' }} 
+        borderWidth='1px'
+        onClick={onOpen}
+        cursor="pointer"
+        boxShadow='base'
+        position="relative" 
+        zIndex="10" 
+      >
+        <Icon as={SearchIcon} color="gray.400" mr="2" />
+        <Text color="gray.400" fontWeight="normal" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
+          Search for a collaborator or song
+        </Text>
+      </Box>
+    </div>
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
             <ModalOverlay />
             <ModalContent>

@@ -18,8 +18,8 @@ const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, _id, geniusDat
   const photoSource = geniusData?.header_image_thumbnail_url || '/album.png';
 
   return (
-    <Link href={`/songs/${_id}`}>
-      <div className="flex items-center sm:w-40 border border-gray-300 rounded-md p-1 overflow-hidden">
+    <Link href={`/songs/${_id}`} className="border border-gray-300 rounded">
+      <div className="flex items-center sm:w-40 rounded-md p-1 overflow-hidden">
           
         <div className="flex-shrink-0 w-14 h-14 sm:w-12 sm:h-12 overflow-hidden rounded-md">
             <Image
@@ -31,7 +31,6 @@ const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, _id, geniusDat
               className="object-cover"
             />
           </div>
-          {/* Right side with title and artists */}
           <div className="ml-2 flex-shrink">
             <h2 className="text-xs sm:text-xs font-semibold truncate">
               {title}

@@ -10,15 +10,18 @@ function Navbar() {
   const showSearchButton = pathname !== '/' && pathname !== '/settings';
 
   return (
-    <nav className="px-4 py-2 flex justify-between items-center sticky top-0 z-50">
-      <Link href="/">
-        <div style={{ width: '36px', height: '36px' }}>
-          <Image src="/logo.png" alt="Logo" width={36} height={36} />
-        </div>
-      </Link>
-      {showSearchButton && <SearchComponent />}
-      <DropdownMenu />
-    </nav>
+   <div className="px-5 z-[100]">
+
+        <nav className="w-full mx-auto flex items-center justify-between pt-3 sm:pt-8">
+          <Link href="/">
+            <div style={{ width: '36px', height: '36px' }}>
+              <Image src="/logo.png" alt="Logo" width={36} height={36} />
+            </div>
+          </Link>
+          {showSearchButton && <SearchComponent />}
+          <DropdownMenu />
+        </nav>
+  </div>
   );
 }
 

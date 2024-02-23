@@ -100,9 +100,9 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   const alias = artistInfo.geniusData?.alternate_names;
 
   return (
-    <div className="sm:flex w-full mt-6 justify-between">
-      <div className="space-x-3 flex flex-col sm:flex-row items-center justify-center sm:justify-normal sm:items-start">
-        <div className="mr-4">
+    <div className="sm:flex w-full mt-6 justify-between mx-auto max-w-[750px]">
+      <div className="space-x-3 flex flex-col sm:flex-row items-center justify-between sm:justify-normal sm:items-start">
+        <div>
           <Image
             src={photoSource}
             alt="/avatar.png"
