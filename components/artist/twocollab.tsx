@@ -83,7 +83,7 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   return (
     <>
     <div className="p-4 relative flex items-center justify-center">
-      <div className="relative flex items-center space-x-2 sm:space-x-16 mt-8 mb-3">
+      <div className="relative flex items-center space-x-2 sm:space-x-16 mt-4 mb-3">
         {originalCollaboratorInfo && (
           <CollaboratorCard
             id={originalCollaboratorInfo.id}
@@ -150,13 +150,16 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       </div>
     </div>
     <FlowLine />
-    {originalCollaboratorInfo && selectedCollaboratorInfo && (
-        <SongListCollab 
-          artistId={originalCollaboratorInfo.id} 
-          artistId2={selectedCollaboratorInfo.id}
-          songsPerPage = {12}
-        />
-      )}
+    <div className = "mt-2">
+        {originalCollaboratorInfo && selectedCollaboratorInfo && (
+            <SongListCollab 
+            artistId={originalCollaboratorInfo.id} 
+            artistId2={selectedCollaboratorInfo.id}
+            songsPerPage = {12}
+            />
+        )}
+    </div>
+    
 
     </>
   );

@@ -108,7 +108,7 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({ artistId, artis
           </Select>
         </div>
       </div>
-      <div className="flex justify-between grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {displayedSongs.map((song, index) => (
           <SongItem
             key={index}

@@ -141,7 +141,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
               <Toaster />
               <Popover isOpen={isOpen} onClose={onClose}>
               <PopoverTrigger>
-                <Button  colorScheme='black' color="black" className="transition-all duration-200 ease-in-out hover:-translate-y-[2px] text-[15px] border-[2px] justify-center items-center px-[16px] py-[7px] border-black rounded-[5px] flex space-x-1 text-black w-full sm:max-w-[125px]" leftIcon={<WarningTwoIcon />} onClick={handleBadDataButtonClick}>
+                <Button  colorScheme='black' color="black" className="transition-all duration-200 ease-in-out hover:-translate-y-[2px] text-[15px] border-[2px] justify-center items-center px-[16px] py-[7px] border-black rounded-[5px] flex space-x-1 text-black w-full" leftIcon={<WarningTwoIcon />} onClick={handleBadDataButtonClick}>
                   Bad Data
                 </Button>
               </PopoverTrigger>

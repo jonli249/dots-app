@@ -65,7 +65,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   }, [filteredCollaborators, currentPage, collaboratorsPerPage]);
 
   return (
-    <div>
+    <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-6">
       <div className="flex justify-between mb-4">
         <input
           type="text"
@@ -79,7 +79,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
           <option value="desc">Descending</option>
         </Select>
       </div>
-      <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 lg:grid-cols-4 bg-opacity-90">
+      <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 bg-opacity-90">
         {displayedCollaborators.map((collaborator, index) => (
           <CollabCard
             key={index}
