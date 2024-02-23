@@ -5,7 +5,6 @@ import Fuse from 'fuse.js';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import SongItem from '../../components/songs/songItem';
 
-
 interface Song {
   title: string;
   'artist-credit'?: { name: string }[];
@@ -19,20 +18,22 @@ interface Song {
 
 interface SongListWithPaginationProps {
   artistId: string;
+  artistId2: string;
   songsPerPage: number;
 }
 
-const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPage }) => {
+const SongListCollab: React.FC<SongListWithPaginationProps> = ({ artistId, artistId2, songsPerPage }) => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  
 
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/artistsongs?artistId=${artistId}`);
+        console.log(artistId);
+        console.log(artistId2);
+        const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${artistId}&artistId2=${artistId2}`);
         if (response.data && Array.isArray(response.data)) {
           setSongs(response.data);
         } else {
@@ -45,10 +46,10 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
       }
     };
 
-    if (artistId) {
+    if (artistId && artistId2) {
       fetchSongs();
     }
-  }, [artistId]);
+  }, [artistId, artistId2]);
 
   const fuse = useMemo(() => new Fuse(songs, {
     keys: ['title'],
@@ -134,4 +135,4 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
   );
 };
 
-export default SongList;
+export default SongListCollab;

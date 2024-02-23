@@ -19,9 +19,9 @@ const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, _id, geniusDat
 
   return (
     <Link href={`/songs/${_id}`}>
-      <div className="flex items-center sm:w-52 border border-gray-300 rounded-md p-1 overflow-hidden">
+      <div className="flex items-center sm:w-40 border border-gray-300 rounded-md p-1 overflow-hidden">
           
-        <div className="flex-shrink-0 w-14 h-14 sm:w-14 sm:h-14 overflow-hidden rounded-md">
+        <div className="flex-shrink-0 w-14 h-14 sm:w-12 sm:h-12 overflow-hidden rounded-md">
             <Image
               src={photoSource}
               alt="Album Cover"
@@ -33,10 +33,10 @@ const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, _id, geniusDat
           </div>
           {/* Right side with title and artists */}
           <div className="ml-2 flex-shrink">
-            <h2 className="text-xs sm:text-sm font-semibold truncate">
+            <h2 className="text-xs sm:text-xs font-semibold truncate">
               {title}
             </h2>
-            <p className="text-xs sm:text-sm text-gray-500 truncate">
+            <p className="text-xs sm:text-xxs text-gray-500 truncate">
               {artistCredit && artistCredit.length > 0
                 ? artistCredit.map((artist, index) => (
                     <span key={artist.name}>

@@ -5,6 +5,7 @@ import SongList from '../../components/songs/songlist';
 import Collaborators from '../../components/artist/mostcollabs';
 import Navbar from '../../components/main/navbar';
 import ArtistSummary from '../../components/artist/artistsummary';
+import TwoCollab from '../../components/artist/twocollab';
 
 const ArtistPage: React.FC = () => {
   const router = useRouter();
@@ -17,16 +18,15 @@ const ArtistPage: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col mt-12 mx-auto px-48 md:px-64 lg:px-68 xl:px-68 2xl:px-80">
-        <div className='px-2 md:px-4 lg:px-8 xl:px-8 2xl:px-16'>
+      <div className="flex flex-col mx-auto xl:px-16">
+        <div className='w-full md:w-5/6 lg:w-5/6 xl:w-3/4 2xl:w-2/3 mx-auto'>
           <ArtistSummary artistId={id} />
           <Tabs defaultIndex={0} variant="unstyled" className="mt-8">
             <TabList>
               <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>SONGS</Tab>
               <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>COLLABORATORS</Tab>
-              <Tooltip label="Coming Soon!" aria-label='A tooltip'>
-                <Tab isDisabled>SMART TOOLS</Tab>
-              </Tooltip>
+              <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>SMART TOOLS</Tab>
+        
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -38,6 +38,9 @@ const ArtistPage: React.FC = () => {
               </TabPanel>
               <TabPanel>
                 <Collaborators artistId={id} />
+              </TabPanel>
+              <TabPanel> 
+                <TwoCollab artistId={id} />
               </TabPanel>
             </TabPanels>
           </Tabs>

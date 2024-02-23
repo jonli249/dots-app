@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Badge } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
-import { Image } from '@chakra-ui/react';
+import { Image, Tooltip} from '@chakra-ui/react';
 import { Toaster, toast } from 'sonner';
 import { WarningTwoIcon } from '@chakra-ui/icons';
 import {
@@ -30,10 +30,10 @@ interface ArtistSummaryProps {
 interface ArtistInfo {
   name: string;
   strArtistThumb?: string;
-  tags: { count: number; name: string }[];
   area?: {
     'iso-3166-1-codes': string[];
   };
+  geniusData?: {alternate_names: string[]};
 }
 
 
@@ -53,9 +53,8 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         );
 
         if (response.data && response.data.name) {
-          const { name, strArtistThumb, tags, area} = response.data;
-          tags.sort((a: { count: number; name: string }, b: { count: number; name: string }) => b.count - a.count);
-          setArtistInfo({ name, strArtistThumb, tags, area});
+          const { name, strArtistThumb, geniusData,  area} = response.data;
+          setArtistInfo({ name, strArtistThumb, geniusData, area});
         } else {
           setArtistInfo(null);
           console.error('No artist information found');
@@ -98,8 +97,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
   const photoSource = artistInfo.strArtistThumb || '/avatar.png';
 
-  // Define the maximum number of tags to display initially
-  const maxTagsToShow = 3;
+  const alias = artistInfo.geniusData?.alternate_names;
 
   return (
     <div className=" p-4 relative flex justify-between">
@@ -108,31 +106,38 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
           <Image
             src={photoSource}
             alt="/avatar.png"
-            className="w-24 h-24 rounded-full"
+            className="w-24 h-24 rounded-full bg-white p-1 shadow-md"
             htmlWidth={400}
             htmlHeight={400}
           />
         </div>
         <div>
-          <h1 className="font-bold mt-4">{artistInfo.name}</h1>
+          <h1 className="font-bold mt-4 text-xl">{artistInfo.name}</h1>
           <div className="mt-2">
-            {artistInfo.tags.slice(0, maxTagsToShow).map((tag, index) => (
-              <Badge
-                key={index}
-                className="inline-block text-white px-1 py-1 rounded-full mr-1"
-              >
-                {tag.name}
-              </Badge>
-            ))}
-            {artistInfo.tags.length > maxTagsToShow && (
-              <span className="cursor-pointer text-black-500 hover:underline">
-                {`+${artistInfo.tags.length - maxTagsToShow} more`}
+            <span className='text-sm'>Other names: </span>
+            {artistInfo.geniusData?.alternate_names?.map((alias, index) => (
+              <span key={index}>
+                {index !== 0 && ', '}
+                <span className={index < 2 ? 'text-xs' : 'text-xs'}>
+                  {index < 2 ? alias : (
+                    <Popover trigger="hover" key={index}>
+                      <PopoverTrigger>
+                        <span>{index === 2 && '...'}</span>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverBody>
+                          {artistInfo.geniusData?.alternate_names.slice(2).join(', ')}
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  )}
               </span>
-            )}
-          </div>
+            </span>
+    ))}
+  </div>
         </div>
       </div>
-      <div>
+      <div className="mb-2">
 
               <Toaster />
               <Popover isOpen={isOpen} onClose={onClose}>
@@ -159,6 +164,11 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                 </PopoverFooter>
               </PopoverContent>
             </Popover>
+            <div className='mt-2 justify-content=end'> 
+            <Tooltip label="Coming Soon!" aria-label='A tooltip'>
+                <Button isDisabled>Claim</Button>
+              </Tooltip>
+            </div>
        
         
       </div>
