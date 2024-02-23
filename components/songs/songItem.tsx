@@ -19,16 +19,16 @@ const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, _id, geniusDat
 
   return (
     <Link href={`/songs/${_id}`} className="border border-gray-300 rounded">
-      <div className="flex items-center sm:w-40 rounded-md p-1 overflow-hidden">
+      <div className="flex items-center sm:w-40 rounded-md p-1 overflow-hidden ">
           
-        <div className="flex-shrink-0 w-14 h-14 sm:w-12 sm:h-12 overflow-hidden rounded-md">
+        <div className="flex-shrink-0 w-14 h-14 sm:w-12 sm:h-12 rounded-md">
             <Image
               src={photoSource}
               alt="Album Cover"
               width={16} 
               height={16} 
               layout="responsive"
-              className="object-cover"
+              className="object-cover border border-black"
             />
           </div>
           <div className="ml-2 flex-shrink">
