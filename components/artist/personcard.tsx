@@ -10,7 +10,7 @@ interface PersonCardProps {
 const PersonCard: React.FC<PersonCardProps> = ({ id, name, strArtistThumb}) => {
     const imageSrc = strArtistThumb || '/avatar.png';
 
-    const cardStyle = "flex-shrink-0 shadow-md rounded-full overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer mb-2";
+    const cardStyle = "flex-shrink-0 shadow-md rounded-full overflow-hidden hover:shadow-lg transition-shadow duration-300 border cursor-pointer mb-2";
     const imageContainerStyle = "flex-shrink-0 w-14 h-14 relative mr-4"; 
     const imageStyle = "rounded-full shadow-sm"; 
   
@@ -18,7 +18,7 @@ const PersonCard: React.FC<PersonCardProps> = ({ id, name, strArtistThumb}) => {
       <div className={`${cardStyle} w-[250px] h-[60px]`}>
         <Link href={`/artists/${id}`} className="flex items-center no-underline text-black p-1">
           <div className={`${imageContainerStyle}`}>
-            <div className="relative w-full h-full p-1">
+            <div className="relative w-12 h-12 p-2">
               <Image 
                 src={imageSrc} 
                 alt="Person"

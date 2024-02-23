@@ -114,7 +114,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         <div>
           <h1 className="font-bold mt-4 text-xl">{artistInfo.name}</h1>
           <div className="mt-2">
-            <span className='text-sm'>Other names: </span>
+            <span className='text-sm font-bold'>Other names: </span>
             {artistInfo.geniusData?.alternate_names?.map((alias, index) => (
               <span key={index}>
                 {index !== 0 && ', '}

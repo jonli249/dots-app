@@ -126,7 +126,7 @@ const SearchComponent = () => {
         position="relative" 
         zIndex="10" 
       >
-        <Icon as={SearchIcon} color="gray.400" mr="2" />
+        <Icon as={SearchIcon} color="gray.400" mx="2" my="2"/>
         <Text color="gray.400" fontWeight="normal" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
           Search for a collaborator or song
         </Text>

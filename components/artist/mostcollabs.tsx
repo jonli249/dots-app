@@ -74,7 +74,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="px-2 py-2 border border-gray-300 rounded-md w-full mr-4"
         />
-        <Select placeholder="Sort Order" value={sortOrder} onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}>
+        <Select placeholder="Sort" value={sortOrder} onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}>
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </Select>
