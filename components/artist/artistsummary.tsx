@@ -100,15 +100,15 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   const alias = artistInfo.geniusData?.alternate_names;
 
   return (
-    <div className=" p-4 relative flex justify-between">
-      <div className="flex items-center">
+    <div className="sm:flex w-full mt-6 justify-between">
+      <div className="space-x-3 flex flex-col sm:flex-row items-center justify-center sm:justify-normal sm:items-start">
         <div className="mr-4">
           <Image
             src={photoSource}
             alt="/avatar.png"
-            className="w-24 h-24 rounded-full bg-white p-1 shadow-md"
-            htmlWidth={400}
-            htmlHeight={400}
+            className="w-24 h-24 rounded-full bg-white p-1 shadow-lg"
+            htmlWidth={72}
+            htmlHeight={72}
           />
         </div>
         <div>
@@ -133,16 +133,15 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                   )}
               </span>
             </span>
-    ))}
-  </div>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="mb-2">
-
+      <div className="mt-4 sm:mt-0 flex ml-auto flex-col space-y-2 justify-between">
               <Toaster />
               <Popover isOpen={isOpen} onClose={onClose}>
               <PopoverTrigger>
-                <Button className="bg-gray-200 hover:bg-gray-300 align-middle" leftIcon={<WarningTwoIcon />} onClick={handleBadDataButtonClick}>
+                <Button  colorScheme='black' color="black" className="transition-all duration-200 ease-in-out hover:-translate-y-[2px] text-[15px] border-[2px] justify-center items-center px-[16px] py-[7px] border-black rounded-[5px] flex space-x-1 text-black w-full sm:max-w-[125px]" leftIcon={<WarningTwoIcon />} onClick={handleBadDataButtonClick}>
                   Bad Data
                 </Button>
               </PopoverTrigger>
@@ -158,15 +157,15 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                   />
                 </PopoverBody>
                 <PopoverFooter display="flex" justifyContent="flex-end">
-                  <Button size="sm" onClick={handleButtonClick}>
+                  <Button colorScheme='black' color="black" className="transition-all duration-200 ease-in-out hover:-translate-y-[2px] text-[15px] px-[14px] py-[7px] justify-center items-center border-[2px] border-black rounded-full flex space-x-1 font-bold" size="sm" onClick={handleButtonClick}>
                     Submit
                   </Button>
                 </PopoverFooter>
               </PopoverContent>
             </Popover>
-            <div className='mt-2 justify-content=end'> 
+            <div className='mt-2 flex justify-end'> 
             <Tooltip label="Coming Soon!" aria-label='A tooltip'>
-                <Button isDisabled>Claim</Button>
+                <Button isDisabled colorScheme='black' color="black" className="transition-all duration-200 ease-in-out hover:-translate-y-[2px] text-[15px] px-[14px] py-[7px] justify-center items-center border-[2px] border-black rounded-full flex space-x-1 font-bold" onClick={handleButtonClick}>Claim</Button>
               </Tooltip>
             </div>
        

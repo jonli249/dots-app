@@ -18,8 +18,7 @@ const ArtistPage: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col mx-auto xl:px-16">
-        <div className='w-full md:w-5/6 lg:w-5/6 xl:w-3/4 2xl:w-2/3 mx-auto'>
+      <div className="flex flex-col mx-auto max-w-[800px] px-3 xl:px-16 mt-6">
           <ArtistSummary artistId={id} />
           <Tabs defaultIndex={0} variant="unstyled" className="mt-8">
             <TabList>
@@ -44,7 +43,6 @@ const ArtistPage: React.FC = () => {
               </TabPanel>
             </TabPanels>
           </Tabs>
-        </div>
       </div>
     </div>
   );
