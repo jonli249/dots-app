@@ -3,7 +3,7 @@ import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import useAuth from '../../utils/useAuth';
-import { AccountIcon, SettingsIcon, LogoutIcon } from "../icon/Icons";
+//import { AccountIcon, SettingsIcon, LogoutIcon } from "../icon/Icons";
 
 function DropdownMenu() {
   const { logout, isAuthenticated } = useAuth();
