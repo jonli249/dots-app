@@ -1,5 +1,5 @@
 import React, { useState , Fragment} from 'react';
-import { Menu, MenuButton, MenuList, MenuItem, Button, Transition } from '@chakra-ui/react';
+import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import useAuth from '../../utils/useAuth';
