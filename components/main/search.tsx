@@ -100,7 +100,7 @@ const SearchComponent = () => {
 
   return (
     <>
-    <div className="max-w-[800px] w-full mx-auto px-3 xl:px-0 relative">
+    <div className="max-w-[750px] w-full mx-auto px-3 xl:px-0 relative">
       <Image
         src={"/bg-input.png"}
         alt="/bg-input.png"

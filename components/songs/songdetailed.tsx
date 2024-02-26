@@ -107,7 +107,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
   return (
     <div>
     <Navbar />
-    <div className="max-w-4xl mx-auto p-8 bg-white">
+    <div className="max-w-4xl mx-auto max-w-[750px] p-8 bg-white">
       <div className="flex items-start space-x-6">
         <Image 
           alt="Album cover"
@@ -173,7 +173,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
 
       <div className="mt-8">
         <h2 className="text-l font-semibold mb-4 text-gray-500">MAIN ARTIST</h2>
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           { artists?
             artists.map((artist, index) => (
               <PersonCard
@@ -186,7 +186,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
         </div>
 
         <h2 className="text-l font-semibold mb-4 text-gray-500">SONGWRITERS</h2>
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           {allwriters && allwriters.length > 0 ? (
             allwriters.map((songwriter, index) => (
               <PersonCard
@@ -202,7 +202,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
         </div>
 
         <h2 className="text-l font-semibold mb-4 text-gray-500">PRODUCERS</h2>
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           {producers && producers.length > 0 ? (
             producers.map((producer, index) => (
               <PersonCard
