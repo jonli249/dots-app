@@ -12,8 +12,20 @@ interface Song {
   coverImage: string;
   'first-release-date': string;
   geniusData?: {
-    header_image_thumbnail_url: string, 
-  }
+    header_image_thumbnail_url: string,
+    stats?: { 
+      hot: boolean, 
+      pageviews: number 
+    }
+  };
+  'writers'?: {
+    name: string;
+    id: string; 
+  }[];
+  'producers-credit'?: {
+    name: string;
+    id: string; 
+  }[];
 }
 
 interface SongListWithPaginationProps {
@@ -21,10 +33,14 @@ interface SongListWithPaginationProps {
   songsPerPage: number;
 }
 
+const normalizeTitle = (title: string): string => {
+  return title.toLowerCase().replace(/\s*\[.*?\]\s*|\s*\(.*?\)\s*/g, '').trim();
+};
+
 const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPage }) => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortOrder, setSortOrder] = useState<'relevance' | 'asc' | 'desc'>('relevance');
   const [searchQuery, setSearchQuery] = useState<string>('');
   
 
@@ -49,22 +65,53 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
     }
   }, [artistId]);
 
-  const fuse = useMemo(() => new Fuse(songs, {
+  const groupSongsByTitle = (songs: Song[]): Song[] => {
+    const grouped = songs.reduce((acc, song) => {
+      const normalizedTitle = normalizeTitle(song.title);
+      if (!acc[normalizedTitle]) {
+        acc[normalizedTitle] = [];
+      }
+      acc[normalizedTitle].push(song);
+      return acc;
+    }, {} as Record<string, Song[]>);
+
+    return Object.values(grouped).map(group => {
+      if (group.length === 1) return group[0];
+      // Sort by the amount of information (writers, producers-credit), and return the one with the most
+      return group.sort((a, b) => {
+        const aInfo = (a['writers']?.length || 0) + (a['producers-credit']?.length || 0);
+        const bInfo = (b['writers']?.length || 0) + (b['producers-credit']?.length || 0);
+        return bInfo - aInfo;
+      })[0];
+    });
+    };
+
+  const preprocessedSongs = useMemo(() => groupSongsByTitle(songs), [songs]);
+
+
+  const fuse = useMemo(() => new Fuse(preprocessedSongs, {
     keys: ['title'],
     threshold: 0.3,
-  }), [songs]);
+  }), [preprocessedSongs]);
 
   const filteredSongs = useMemo(() => {
     if (searchQuery && fuse) {
       const results = fuse.search(searchQuery);
       return results.map(result => result.item);
     }
-    return songs;
-  }, [searchQuery, fuse, songs]);
+    return preprocessedSongs;
+  }, [searchQuery, fuse, preprocessedSongs]);
 
   // Apply sorting to filtered (and possibly searched) songs
   const sortedAndFilteredSongs = useMemo(() => {
     return [...filteredSongs].sort((a, b) => {
+      if (sortOrder === 'relevance') {
+        
+        const pageviewsA = a.geniusData?.stats?.pageviews || 0;
+        const pageviewsB = b.geniusData?.stats?.pageviews || 0;   
+        return pageviewsB - pageviewsA; 
+      }
+
       const dateA = new Date(a['first-release-date']).getTime();
       const dateB = new Date(b['first-release-date']).getTime();
       return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
@@ -83,7 +130,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOrder(e.target.value as 'asc' | 'desc');
+    setSortOrder(e.target.value as 'relevance' | 'asc' | 'desc');
   };
 
   return (
@@ -100,9 +147,10 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
         </div>
         <div>
           <Select value={sortOrder} onChange={handleSortChange}>
-            <option value="asc">Date - Newest</option>
-            <option value="desc">Date - Oldest</option>
-            <option> Popularity</option>
+            <option value="relevance">Relevance</option>
+            <option value="desc">Date - Newest</option>
+            <option value="asc">Date - Oldest</option>
+            
           </Select>
         </div>
       </div>
