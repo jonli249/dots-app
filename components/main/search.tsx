@@ -33,7 +33,7 @@ interface Artist {
   interface Song {
     _id: string;
     title: string;
-    'artist-credit': { name: string }[];
+    'artist-credit': { name: string, artist: {name: string} }[];
     geniusData?: {
       header_image_thumbnail_url?: string, 
     };

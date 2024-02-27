@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 interface SongItemProps {
   title: string;
-  artistCredit?: { name: string }[];
+  artistCredit?: { name: string, artist: { name: string} }[];
   coverImage?: string;
   _id: string;
   geniusData?: {
@@ -18,7 +18,7 @@ const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, _id, geniusDat
   const photoSource = geniusData?.header_image_thumbnail_url || '/album.png';
 
   return (
-    <Link href={`/songs/${_id}`} className="border border-gray-300 rounded">
+    <Link href={`/songs/${_id}`} className="border border-gray-300 rounded shadow-md">
       <div className="flex items-center sm:w-40 rounded-md p-1 overflow-hidden ">
           
         <div className="flex-shrink-0 w-14 h-14 sm:w-12 sm:h-12 rounded-md">
@@ -40,7 +40,7 @@ const SongItem: React.FC<SongItemProps> = ({ title, artistCredit, _id, geniusDat
                 ? artistCredit.map((artist, index) => (
                     <span key={artist.name}>
                       {index > 0 && ', '}
-                      {artist.name}
+                      {artist.name || (artist.artist && artist.artist.name) || 'Unknown Artist'}
                     </span>
                   ))
                 : 'Unknown Artist'}

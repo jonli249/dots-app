@@ -7,7 +7,7 @@ import SongItem from '../../components/songs/songItem';
 
 interface Song {
   title: string;
-  'artist-credit'?: { name: string }[];
+  'artist-credit'?: { name: string, artist: { name: string} }[];
   _id: string;
   coverImage: string;
   'first-release-date': string;

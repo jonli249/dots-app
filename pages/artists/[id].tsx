@@ -39,7 +39,8 @@ const ArtistPage: React.FC = () => {
                 <Collaborators artistId={id} />
               </TabPanel>
               <TabPanel> 
-                <TwoCollab artistId={id} />
+              <TwoCollab artistId={id} />
+                
               </TabPanel>
             </TabPanels>
           </Tabs>

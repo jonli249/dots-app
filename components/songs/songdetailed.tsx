@@ -32,6 +32,7 @@ interface SongDetailViewProps {
       'artist':
       {
         id: string;
+        name:string
       } 
 
     }[];
@@ -131,7 +132,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
                       <span key={index}>
                         {index > 0 && ', '}
                         <Link href={`/artists/${artist.artist.id}`}>
-                          {artist.name}
+                          {artist.name || artist.artist.name}
                         </Link>
                       </span>
                     ))
@@ -179,7 +180,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
               <PersonCard
               key={artist.artist.id}
               id={artist.artist.id}
-              name={artist.name}
+              name={artist.name || artist.artist.name}
               strArtistThumb='/avatar.png' // Replace with your image path or pass dynamically
             />
             )) : <span>Nada</span>}
