@@ -42,6 +42,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortOrder, setSortOrder] = useState<'relevance' | 'asc' | 'desc'>('relevance');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [animationDirection, setAnimationDirection] = useState<'in' | 'out'>('in');
   
 
   useEffect(() => {
@@ -154,7 +155,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
           </Select>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 ${animationDirection === 'in' ? 'slide-in-right' : 'slide-out-left'}`">
         {displayedSongs.map((song, index) => (
           <SongItem
             key={index}
@@ -168,11 +169,17 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
       <div className="flex justify-center mt-10">
         <div className="flex space-x-4">
           <FaArrowLeft
-            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+            onClick={() => {
+              setCurrentPage(Math.max(1, currentPage - 1));
+              setAnimationDirection('out');
+            }}
             className={`cursor-pointer ${currentPage === 1 ? 'text-gray-300' : 'text-black'}`}
           />
           <FaArrowRight
-            onClick={() => setCurrentPage(Math.min(Math.ceil(filteredSongs.length / songsPerPage), currentPage + 1))}
+            onClick={() => {
+              setCurrentPage(Math.min(Math.ceil(filteredSongs.length / songsPerPage), currentPage + 1));
+              setAnimationDirection('in');
+            }}
             className={`cursor-pointer ${currentPage * songsPerPage >= filteredSongs.length ? 'text-gray-300' : 'text-black'}`}
           />
         </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Badge } from '@chakra-ui/react';
 import { Button } from '@chakra-ui/react';
-import { Image, Tooltip} from '@chakra-ui/react';
+import { Image, Tooltip, Skeleton, SkeletonCircle} from '@chakra-ui/react';
 import { Toaster, toast } from 'sonner';
 import { WarningTwoIcon } from '@chakra-ui/icons';
 import {
@@ -92,7 +92,20 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   
 
   if (!artistInfo) {
-    return <div>Loading artist information...</div>;
+    return (
+      <div style={{ width: "100%", maxWidth: 750 }}>
+      <div className='flex aic' style={{ gap: 20 }}>
+          <SkeletonCircle width={100} height={100} />
+          <Skeleton height={7} w={"100px"} />
+      </div>
+      <Skeleton h={10} mt={4} />
+      <div className='flex fdc' style={{ gap: 10, width: "100%", marginTop: 10 }}>
+          <div className='flex' style={{ gap: 10, flex: 1 }}>
+              <Skeleton fadeDuration={4} style={{ flex: 1, height: 60 }} />
+          </div>
+      </div>
+  </div>
+      );
   }
 
   const photoSource = artistInfo.strArtistThumb || '/avatar.png';

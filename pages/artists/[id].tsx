@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Tooltip } from '@chakra-ui/react';
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Tooltip, Skeleton, SkeletonCircle} from '@chakra-ui/react';
 import SongList from '../../components/songs/songlist';
 import Collaborators from '../../components/artist/mostcollabs';
 import Navbar from '../../components/main/navbar';
@@ -12,7 +12,35 @@ const ArtistPage: React.FC = () => {
   const { id } = Array.isArray(router.query) ? router.query[0] : router.query;
 
   if (!id) {
-    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+    return (
+      <div>
+        <Navbar />
+      <div className="flex flex-col mx-auto max-w-[800px] mt-6">
+        <div className='flex aic' style={{ gap: 20 }}>
+                      <SkeletonCircle width={100} height={100} />
+                      <Skeleton height={7} w={"100px"} />
+                  </div>
+                  <Skeleton h={10} mt={16} />
+                  <div className='flex fdc' style={{ gap: 10, width: "100%", marginTop: 10 }}>
+                      <div className='flex' style={{ gap: 10, flex: 1 }}>
+                          <Skeleton fadeDuration={4} style={{ flex: 1, height: 60 }} />
+                          <Skeleton fadeDuration={500} style={{ flex: 1, height: 60 }} />
+                          <Skeleton fadeDuration={500} style={{ flex: 1, height: 60 }} />
+                      </div>
+                      <div className='flex' style={{ gap: 10, flex: 1 }}>
+                          <Skeleton fadeDuration={4} style={{ flex: 1, height: 60 }} />
+                          <Skeleton fadeDuration={500} style={{ flex: 1, height: 60 }} />
+                          <Skeleton fadeDuration={500} style={{ flex: 1, height: 60 }} />
+                      </div>
+                      <div className='flex' style={{ gap: 10, flex: 1 }}>
+                          <Skeleton fadeDuration={4} style={{ flex: 1, height: 60 }} />
+                          <Skeleton fadeDuration={500} style={{ flex: 1, height: 60 }} />
+                          <Skeleton fadeDuration={500} style={{ flex: 1, height: 60 }} />
+                      </div>
+                  </div>
+        </div>
+      </div>
+    )
   }
 
   return (
