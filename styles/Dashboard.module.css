@@ -134,3 +134,12 @@
 .slide-out-left {
   animation: slideOutLeft 0.5s forwards;
 }
+
+
+.imageContainerWithSearch {
+  transform: translateY(-20px); 
+}
+
+.imageContainerWithoutSearch {
+  transform: translateY(0px);
+}

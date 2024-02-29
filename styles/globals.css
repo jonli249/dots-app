@@ -58,3 +58,10 @@
     content: unset !important;
   }
   
+  .imageContainerWithSearch {
+    transform: translateY(-10px); 
+  }
+  
+  .imageContainerWithoutSearch {
+    transform: translateY(0px);
+  }
