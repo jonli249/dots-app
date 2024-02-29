@@ -87,7 +87,7 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
   return (
     <>
-    <div className="p-4 relative flex items-center justify-center">
+    <div className="p-2 relative flex items-center justify-center">
       <div className="relative flex items-center space-x-2 sm:space-x-16 mt-4 mb-3">
         {originalCollaboratorInfo && (
           <CollaboratorCard

@@ -6,7 +6,7 @@ import Collaborators from '../../components/artist/mostcollabs';
 import Navbar from '../../components/main/navbar';
 import ArtistSummary from '../../components/artist/artistsummary';
 import TwoCollab from '../../components/artist/twocollab';
-
+import Image from 'next/image';
 
 const ArtistPage: React.FC = () => {
   const router = useRouter();
@@ -59,7 +59,7 @@ const ArtistPage: React.FC = () => {
         <Navbar />
       <div className="flex flex-col mx-auto max-w-[800px] mt-6">
           <ArtistSummary artistId={id} />
-          <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} variant="unstyled" className="mt-8">
+          <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} variant="unstyled" className="mt-6">
             <TabList>
               <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>SONGS</Tab>
               <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>COLLABORATORS</Tab>
@@ -76,8 +76,31 @@ const ArtistPage: React.FC = () => {
               <TabPanel>
                 <Collaborators artistId={id} />
               </TabPanel>
-              <TabPanel> 
-              <TwoCollab artistId={id} />
+              <TabPanel>
+                <Image 
+                  src={'/dividerline.png'} 
+                  alt="divider"
+                  width={800}
+                  height={10}
+                 />
+                  <Tabs variant="unstyled" >
+                  <TabList>
+                    <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>CONNECT THE DOTS</Tab>
+                    <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>RECOMMENDATIONS</Tab>
+                    
+                  </TabList>
+                  <TabPanels>
+                  <TabPanel>
+                    <TwoCollab artistId={id} />
+                  </TabPanel>
+                  <TabPanel>
+                    <div>
+                      Coming Soon
+                      </div>
+                  </TabPanel>
+                  </TabPanels>
+                
+                </Tabs>
                 
               </TabPanel>
             </TabPanels>
