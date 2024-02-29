@@ -10,10 +10,16 @@ import TwoCollab from '../../components/artist/twocollab';
 
 const ArtistPage: React.FC = () => {
   const router = useRouter();
+  const [tabIndex, setTabIndex] = useState(0);
   let { id } = router.query;
+
   if (Array.isArray(id)) {
     id = id[0];
   }
+
+  useEffect(() => {
+    setTabIndex(0);
+  }, [id]);
   
 
   if (!id) {
@@ -53,7 +59,7 @@ const ArtistPage: React.FC = () => {
         <Navbar />
       <div className="flex flex-col mx-auto max-w-[800px] mt-6">
           <ArtistSummary artistId={id} />
-          <Tabs defaultIndex={0} variant="unstyled" className="mt-8">
+          <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} variant="unstyled" className="mt-8">
             <TabList>
               <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>SONGS</Tab>
               <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>COLLABORATORS</Tab>
@@ -66,7 +72,6 @@ const ArtistPage: React.FC = () => {
                   artistId={id}
                   songsPerPage={12}
                 />
-
               </TabPanel>
               <TabPanel>
                 <Collaborators artistId={id} />
