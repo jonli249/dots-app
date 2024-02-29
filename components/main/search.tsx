@@ -163,6 +163,7 @@ const SearchComponent = () => {
                                                     id={(item as Artist).id}
                                                     name={(item as Artist).name}
                                                     strArtistThumb={(item as Artist).strArtistThumb}
+                                                    onClick={onClose}
                                                 />
                                             ) : (
                                                 <SongItem
@@ -170,6 +171,7 @@ const SearchComponent = () => {
                                                     artistCredit={(item as Song)['artist-credit']}
                                                     geniusData={(item as Song).geniusData}
                                                     _id={(item as Song)._id}
+                                                    onClick={onClose}
                                                 />
                                             )}
                                         </React.Fragment>

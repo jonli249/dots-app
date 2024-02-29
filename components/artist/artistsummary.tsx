@@ -44,7 +44,6 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
 
-
   useEffect(() => {
     const fetchArtistSummary = async () => {
       try {

@@ -7,6 +7,9 @@ import SearchIcon from '../icons/AppIcons';
 import FlowLine from '../icons/flowline';
 import SongListCollab from '../songs/songlistcollab';
 
+import { useRouter } from 'next/router';
+
+
 interface ArtistSummaryProps {
   artistId: string;
 }
@@ -30,6 +33,8 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<Artist[]>([]);
     const [bothCollaboratorsSelected, setBothCollaboratorsSelected] = useState(false);
+
+    const router = useRouter();
 
   useEffect(() => {
     const fetchOriginalCollaboratorInfo = async () => {
@@ -97,6 +102,10 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
               id={selectedCollaboratorInfo.id}
               name={selectedCollaboratorInfo.name}
               imageUrl={selectedCollaboratorInfo.strArtistThumb || ''}
+              onClick={() => {
+                setSelectedCollaboratorInfo(null);
+                router.push(`/artists/${selectedCollaboratorInfo.id}`);
+              }}
             />
             <Button className="text-lg ml-2" onClick={handleResetSelectedCollaborator}>X</Button>
           </div>

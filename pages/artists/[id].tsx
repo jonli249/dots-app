@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState }from 'react';
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Tooltip, Skeleton, SkeletonCircle} from '@chakra-ui/react';
 import SongList from '../../components/songs/songlist';
 import Collaborators from '../../components/artist/mostcollabs';
@@ -7,9 +7,14 @@ import Navbar from '../../components/main/navbar';
 import ArtistSummary from '../../components/artist/artistsummary';
 import TwoCollab from '../../components/artist/twocollab';
 
+
 const ArtistPage: React.FC = () => {
   const router = useRouter();
-  const { id } = Array.isArray(router.query) ? router.query[0] : router.query;
+  let { id } = router.query;
+  if (Array.isArray(id)) {
+    id = id[0];
+  }
+  
 
   if (!id) {
     return (

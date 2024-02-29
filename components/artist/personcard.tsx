@@ -5,9 +5,10 @@ import Image from 'next/image';
 interface PersonCardProps {
   id: string;
   name: string;
-  strArtistThumb?: string; // Optional image URL for the person's picture
+  strArtistThumb?: string; 
+  onClick?: () => void;
 }
-const PersonCard: React.FC<PersonCardProps> = ({ id, name, strArtistThumb}) => {
+const PersonCard: React.FC<PersonCardProps> = ({ id, name, strArtistThumb, onClick}) => {
     const imageSrc = strArtistThumb || '/avatar.png';
 
     const cardStyle = "flex-shrink-0 shadow-md rounded-full overflow-hidden hover:shadow-lg transition-shadow duration-300 border cursor-pointer mb-2";
@@ -15,7 +16,7 @@ const PersonCard: React.FC<PersonCardProps> = ({ id, name, strArtistThumb}) => {
     const imageStyle = "rounded-full shadow-sm"; 
   
     return (
-      <div className={`${cardStyle} w-[250px] h-[60px]`}>
+      <div onClick={onClick} className={`${cardStyle} w-[250px] h-[60px]`}>
         <Link href={`/artists/${id}`} className="flex items-center no-underline text-black p-1">
           <div className={`${imageContainerStyle}`}>
             <div className="relative w-12 h-12 p-2">
