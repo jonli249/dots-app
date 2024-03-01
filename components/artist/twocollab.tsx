@@ -6,6 +6,8 @@ import { Button } from "@chakra-ui/react";
 import SearchIcon from '../icons/AppIcons';
 import FlowLine from '../icons/flowline';
 import SongListCollab from '../songs/songlistcollab';
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Tooltip, Skeleton, SkeletonCircle} from '@chakra-ui/react';
+import MutualCollabs from './mutualcollabs';
 
 import { useRouter } from 'next/router';
 
@@ -59,6 +61,7 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     fetchOriginalCollaboratorInfo();
   }, [artistId]);
 
+
   const handleSearch = async (searchTerm: string) => {
     setSearchTerm(searchTerm);
     try {
@@ -71,6 +74,8 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       setSearchResults([]);
     }
   };
+
+  
 
   const handleSelectCollaborator = async (selectedArtist: Artist) => {
     const { id, name, strArtistThumb } = selectedArtist;
@@ -87,6 +92,7 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
   return (
     <>
+     
     <div className="p-2 relative flex items-center justify-center">
       <div className="relative flex items-center space-x-2 sm:space-x-16 mt-4 mb-3">
         {originalCollaboratorInfo && (
@@ -159,13 +165,32 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       </div>
     </div>
     <FlowLine />
-    <div className = "mt-2">
+    <div className = "mt-1">
         {originalCollaboratorInfo && selectedCollaboratorInfo && (
-            <SongListCollab 
-            artistId={originalCollaboratorInfo.id} 
-            artistId2={selectedCollaboratorInfo.id}
-            songsPerPage = {12}
-            />
+            <div className="flex flex-col mx-auto max-w-[800px]">
+            <Tabs variant="unstyled" className="mt-2">
+              <TabList justifyContent="center">
+                <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>SONGS</Tab>
+                <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>MUTUAL COLLABORATORS</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <SongListCollab 
+                  artistId={originalCollaboratorInfo.id} 
+                  artistId2={selectedCollaboratorInfo.id}
+                  songsPerPage = {12}
+                  />
+                </TabPanel>
+                <TabPanel>
+                  <MutualCollabs 
+                    artistId1={originalCollaboratorInfo.id} 
+                    artistId2={selectedCollaboratorInfo.id}
+                    />
+                </TabPanel>
+                
+              </TabPanels>
+            </Tabs>
+        </div>
         )}
     </div>
     
