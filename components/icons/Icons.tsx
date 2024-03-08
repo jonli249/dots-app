@@ -199,3 +199,24 @@ export const SwiperIcon = () => {
     </>
   );
 };
+export const FilterDropDownIcon = () => {
+  return (
+    <>
+      <svg
+        width="13"
+        height="14"
+        viewBox="0 0 13 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3.10876 5.79211L6.09789 9.03034L9.08703 5.79211"
+          stroke="#101828"
+          stroke-width="1.05615"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </>
+  );
+};

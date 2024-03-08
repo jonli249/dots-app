@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Dropdown from "./Dropdown";
 import Image from "next/image";
 import MultipleTagInputs from "./MultipleTagInputs";
-import CustomSelectedTag from "./CustomSelectedTag";
 import { Searchicon } from "../../icons/Icons";
 import { taylorbtn } from "../../icons/Helper";
+import FilterDropdown from "./FilterDropdown";
+import CustomSelectedTag from "./CustomSelectedTag";
 
 const Recomendtion = () => {
   const [tags, setTags] = useState([{ id: "Frequency", text: "Frequency" }]);
@@ -43,7 +43,9 @@ const Recomendtion = () => {
               ))}
             </div>
           )}
-          <Dropdown />
+          <div>
+            <FilterDropdown />
+          </div>
         </div>
       </div>
 

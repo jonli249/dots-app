@@ -255,3 +255,17 @@ export const taylorswift = [
     name3: "Tayor Swift",
   },
 ];
+export const dropdownData = [
+  {
+    name: "Filer 1",
+  },
+  {
+    name: "Filer 2",
+  },
+  {
+    name: "Filter 3",
+  },
+  {
+    name: "Filter 4",
+  },
+];
