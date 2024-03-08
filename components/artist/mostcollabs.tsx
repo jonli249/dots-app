@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useMemo} from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import axios from 'axios'; // Assuming you might switch to axios for consistency
-import { Select } from '@chakra-ui/react'; // For sort order selection
-import Fuse from 'fuse.js'; // For searching collaborators
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // For pagination controls
-import CollabCard from './collabpersoncard';;
-
+import React, { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import axios from "axios"; // Assuming you might switch to axios for consistency
+import { Select } from "@chakra-ui/react"; // For sort order selection
+import Fuse from "fuse.js"; // For searching collaborators
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // For pagination controls
+import CollabCard from "./collabpersoncard";
+import TopCollabs from "./topcollabs";
 interface Collaborator {
   _id: string;
   name: string;
@@ -21,22 +21,27 @@ interface CollaboratorsProps {
 const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const collaboratorsPerPage = 12; // Adjust as needed
 
   useEffect(() => {
     const fetchCollaborators = async () => {
       try {
-        const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/mostcollabs?artistId=${artistId}`);
+        const response = await axios.get(
+          `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/mostcollabs?artistId=${artistId}`
+        );
         if (response.data && Array.isArray(response.data)) {
           setCollaborators(response.data);
         } else {
-          console.warn('Expected data to be an array, but received:', response.data);
+          console.warn(
+            "Expected data to be an array, but received:",
+            response.data
+          );
           setCollaborators([]);
         }
       } catch (error) {
-        console.error('Error fetching collaborators:', error);
+        console.error("Error fetching collaborators:", error);
         setCollaborators([]);
       }
     };
@@ -46,14 +51,18 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
     }
   }, [artistId]);
 
-  const fuse = useMemo(() => new Fuse(collaborators, {
-    keys: ['name'],
-    threshold: 0.3,
-  }), [collaborators]);
+  const fuse = useMemo(
+    () =>
+      new Fuse(collaborators, {
+        keys: ["name"],
+        threshold: 0.3,
+      }),
+    [collaborators]
+  );
 
   const filteredCollaborators = useMemo(() => {
     if (searchQuery) {
-      return fuse.search(searchQuery).map(result => result.item);
+      return fuse.search(searchQuery).map((result) => result.item);
     }
     return collaborators;
   }, [searchQuery, fuse, collaborators]);
@@ -66,6 +75,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
 
   return (
     <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-6">
+      <TopCollabs />
       <div className="flex justify-between mb-4">
         <input
           type="text"
@@ -74,7 +84,11 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="px-2 py-2 border border-gray-300 rounded-md w-full mr-4"
         />
-        <Select placeholder="Sort" value={sortOrder} onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}>
+        <Select
+          placeholder="Sort"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+        >
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </Select>
@@ -93,11 +107,24 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
       <div className="flex justify-center mt-10">
         <FaArrowLeft
           onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-          className={`cursor-pointer ${currentPage === 1 ? 'text-gray-300' : 'text-black'}`}
+          className={`cursor-pointer ${
+            currentPage === 1 ? "text-gray-300" : "text-black"
+          }`}
         />
         <FaArrowRight
-          onClick={() => setCurrentPage(Math.min(Math.ceil(filteredCollaborators.length / collaboratorsPerPage), currentPage + 1))}
-          className={`cursor-pointer ${currentPage * collaboratorsPerPage >= filteredCollaborators.length ? 'text-gray-300' : 'text-black'}`}
+          onClick={() =>
+            setCurrentPage(
+              Math.min(
+                Math.ceil(filteredCollaborators.length / collaboratorsPerPage),
+                currentPage + 1
+              )
+            )
+          }
+          className={`cursor-pointer ${
+            currentPage * collaboratorsPerPage >= filteredCollaborators.length
+              ? "text-gray-300"
+              : "text-black"
+          }`}
         />
       </div>
     </div>

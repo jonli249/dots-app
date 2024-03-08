@@ -106,7 +106,7 @@ const SearchComponent = () => {
           height={144}
         />
 
-        <div className="relative h-[70px]">
+        <div className="relative h-[48px] sm:h-[70px]">
           <Accordion className="absolute z-50 w-full">
             <AccordionItem className="border bg-white rounded-[12px]   !border-[#B3B3B3]">
               <h2>
