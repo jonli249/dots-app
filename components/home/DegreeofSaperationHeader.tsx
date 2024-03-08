@@ -3,7 +3,7 @@ import React from "react";
 
 const DegreeofSaperationHeader = () => {
   return (
-    <div>
+    <>
       <div className="w-fit mx-auto flex gap-3 items-center">
         <div className="text-black text-[18px] sm:text-[26px] font-telegraf font-normal leading-normal flex items-center justify-center gap-4">
           <div className="w-[38px] h-[38px] border-[2px] border-black rounded-full flex items-center justify-center">
@@ -47,7 +47,7 @@ const DegreeofSaperationHeader = () => {
       <div className="bg-black w-[1px] h-[151px] hidden sm:block mx-auto -mt-[150px]"></div>
       {/* horizontal bar */}
       <div className="max-w-[484px] w-full hidden sm:block h-[60px] border border-black border-b-0 mx-auto"></div>
-    </div>
+    </>
   );
 };
 

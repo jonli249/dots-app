@@ -3,11 +3,9 @@ import React from "react";
 const Getstarted = () => {
   return (
     <div className="mt-12 sm:mt-[153px]">
-      <div>
-        <p className="text-black font-telegraf text-center text-[30px] sm:text-[81px] font-normal">
-          Get Started Now!
-        </p>
-      </div>
+      <p className="text-black font-telegraf text-center text-[30px] sm:text-[81px] font-normal">
+        Get Started Now!
+      </p>
       <div className="bg-[url(/blur-bg.png)] max-w-[260px] w-full h-[150px] mt-6 sm:mt-[47px] px-3 mx-auto bg-center bg-cover bg-no-repeat flex items-center justify-center">
         <button
           type="submit"

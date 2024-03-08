@@ -9,9 +9,7 @@ const SmartTools = () => {
         <span className="font-extrabold px-1"> Smart Tools</span> to connect the
         dots
       </p>
-      <div>
-        <DegreeOfSapereation />
-      </div>
+      <DegreeOfSapereation />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { Searchicon } from "../../icons/Icons";
 import { taylorbtn } from "../../icons/Helper";
 import FilterDropdown from "./FilterDropdown";
 import CustomSelectedTag from "./CustomSelectedTag";
+import RecommendCard from "./RecommendCard";
 
 const Recomendtion = () => {
   const [tags, setTags] = useState([{ id: "Frequency", text: "Frequency" }]);
@@ -51,20 +52,7 @@ const Recomendtion = () => {
 
       <div className="w-full my-[29px] flex gap-4 justify-center items-center flex-wrap">
         {taylorbtn.map((item, index) => (
-          <div
-            key={index}
-            className=" w-[175px] sm:w-[192px] h-[49px] border bg-white shadow-[2.445px_4.89px_12.225px_0px_rgba(0,0,0,0.10)] border-black rounded-[75px] flex gap-1 sm:gap-[17px] items-center px-3 py-[15px]"
-          >
-            <Image
-              src="/taylor-img.png"
-              width={33}
-              height={33}
-              alt="harry-image"
-            />
-            <p className="text-black whitespace-nowrap text-center font-telegraf text-[14px] sm:text-[18px] font-extrabold">
-              {item.name}
-            </p>
-          </div>
+          <RecommendCard key={index} item={item} />
         ))}
       </div>
     </div>

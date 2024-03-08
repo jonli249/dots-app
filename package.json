@@ -59,6 +59,7 @@
     "@types/react": "^18",
     "@types/react-autosuggest": "^10.1.11",
     "@types/react-dom": "^18",
+    "@types/react-tag-input": "^6.6.6",
     "autoprefixer": "^10.4.16",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",

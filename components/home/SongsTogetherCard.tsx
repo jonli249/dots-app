@@ -8,11 +8,9 @@ const SongsTogetherCard = () => {
     <div className="sm:max-w-[266px] w-full mx-auto">
       <div className="flex gap-3 items-center justify-center sm:justify-start">
         <Image src="/songs-cd.png" width={37} height={31} alt="cd-img" />
-        <div>
-          <p className="text-black text-[20px] sm:text-[29px] font-normal font-telegraf leading-normal">
-            Songs Together
-          </p>
-        </div>
+        <p className="text-black text-[20px] sm:text-[29px] font-normal font-telegraf leading-normal">
+          Songs Together
+        </p>
       </div>
       <div className="mt-[43px] flex flex-col gap-[14px]">
         {songsTogetherCardData.map((items, index) => (
