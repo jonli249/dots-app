@@ -72,14 +72,14 @@ export default function DegreesSwiper() {
       ))}
 
       {/* navigation */}
-      <div>
+      <>
         <div className="swiper-button-prev md:!right-0 !top-[49%] md:!top-[5px] md:rotate-180 rotate-[90deg] !left-[0%] md:!left-auto">
           <SwiperIcon />
         </div>
         <div className="swiper-button-next md:!left-auto max-md:rotate-[270deg] !right-[2%] md:!right-0 !top-[48%] md:!top-[42px]">
           <SwiperIcon />
         </div>
-      </div>
+      </>
     </Swiper>
   );
 }

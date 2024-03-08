@@ -1,7 +1,6 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { dropdownData } from "../../icons/Helper";
-import Dropdown from "./Dropdown";
 import { FilterDropDownIcon } from "../../icons/Icons";
 
 export default function FilterDropdown() {

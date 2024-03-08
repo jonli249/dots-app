@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import DegreesSwiper from "./DegreesSwiper";
 import { Searchicon } from "../../icons/Icons";
+import Line from "./Line";
 
 const DegreesPage = () => {
   return (
@@ -29,30 +30,30 @@ const DegreesPage = () => {
         </div>
       </div>
       <div className="mt-[43px] max-md:hidden">
-        <div className="w-[100px] h-[1px] flex justify-evenly items-center bg-[#000] opacity-[0.2] mx-auto">
-          <div className="w-[5px] h-[5px] rounded-full bg-[#000] opacity-[0.2]"></div>
-          <div className="w-[5px] h-[5px] rounded-full bg-[#000] opacity-[0.2]"></div>
-          <div className="w-[5px] h-[5px] rounded-full bg-[#000] opacity-[0.2]"></div>
+        <div className="w-[100px] h-[1px] flex justify-evenly items-center bg-black opacity-[0.2] mx-auto">
+          <Line classlist="w-[5px] h-[5px] rounded-full bg-black opacity-[0.2]" />
+          <Line classlist="w-[5px] h-[5px] rounded-full bg-black opacity-[0.2]" />
+          <Line classlist="w-[5px] h-[5px] rounded-full bg-black opacity-[0.2]" />
         </div>
-        <div className="w-[173px] h-[1px]  flex justify-evenly items-center bg-[#000] opacity-[0.4] mx-auto mt-[36px]">
-          <div className="w-[7px] h-[7px] rounded-full bg-[#000] opacity-[0.4]"></div>
-          <div className="w-[7px] h-[7px] rounded-full bg-[#000] opacity-[0.4]"></div>
-          <div className="w-[7px] h-[7px] rounded-full bg-[#000] opacity-[0.4]"></div>
+        <div className="w-[173px] h-[1px]  flex justify-evenly items-center bg-black opacity-[0.4] mx-auto mt-[36px]">
+          <Line classlist="w-[7px] h-[7px] rounded-full bg-black opacity-[0.4]" />
+          <Line classlist="w-[7px] h-[7px] rounded-full bg-black opacity-[0.4]" />
+          <Line classlist="w-[7px] h-[7px] rounded-full bg-black opacity-[0.4]" />
         </div>
       </div>
-      <div>
+      <>
         <DegreesSwiper />
-      </div>
+      </>
       <div className="mt-[26px] max-md:hidden">
-        <div className="w-[173px] h-[1px]  flex justify-evenly items-center bg-[#000] opacity-[0.4] mx-auto">
-          <div className="w-[7px] h-[7px] rounded-full bg-[#000] opacity-[0.4]"></div>
-          <div className="w-[7px] h-[7px] rounded-full bg-[#000] opacity-[0.4]"></div>
-          <div className="w-[7px] h-[7px] rounded-full bg-[#000] opacity-[0.4]"></div>
+        <div className="w-[173px] h-[1px]  flex justify-evenly items-center bg-black opacity-[0.4] mx-auto">
+          <Line classlist="w-[7px] h-[7px] rounded-full bg-black opacity-[0.4]" />
+          <Line classlist="w-[7px] h-[7px] rounded-full bg-black opacity-[0.4]" />
+          <Line classlist="w-[7px] h-[7px] rounded-full bg-black opacity-[0.4]" />
         </div>
-        <div className="w-[100px] h-[1px] flex justify-evenly items-center bg-[#000] opacity-[0.2] mx-auto mt-[36px]">
-          <div className="w-[5px] h-[5px] rounded-full bg-[#000] opacity-[0.2]"></div>
-          <div className="w-[5px] h-[5px] rounded-full bg-[#000] opacity-[0.2]"></div>
-          <div className="w-[5px] h-[5px] rounded-full bg-[#000] opacity-[0.2]"></div>
+        <div className="w-[100px] h-[1px] flex justify-evenly items-center bg-black opacity-[0.2] mx-auto mt-[36px]">
+          <Line classlist="w-[5px] h-[5px] rounded-full bg-black opacity-[0.2]" />
+          <Line classlist="w-[5px] h-[5px] rounded-full bg-black opacity-[0.2]" />
+          <Line classlist="w-[5px] h-[5px] rounded-full bg-black opacity-[0.2]" />
         </div>
       </div>
     </div>
