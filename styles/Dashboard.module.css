@@ -136,10 +136,26 @@
 }
 
 
-.imageContainerWithSearch {
-  transform: translateY(-20px); 
+.pulse-loader {
+  display: inline-block;
+  width: 10em;
+  height: 10em;
+  border: 2px solid #808080;
+  border-radius: 50%;
+  animation: pulse 1s infinite ease-in-out;
 }
 
-.imageContainerWithoutSearch {
-  transform: translateY(0px);
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
 }

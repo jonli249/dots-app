@@ -8,7 +8,7 @@ import FlowLine from '../icons/flowline';
 import SongListCollab from '../songs/songlistcollab';
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Tooltip, Skeleton, SkeletonCircle} from '@chakra-ui/react';
 import MutualCollabs from './mutualcollabs';
-
+import DegreesOfSeparation from './degreesOfSep';
 import { useRouter } from 'next/router';
 
 
@@ -35,6 +35,7 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<Artist[]>([]);
     const [bothCollaboratorsSelected, setBothCollaboratorsSelected] = useState(false);
+    const [degreesSeperation, setDegreesSeperation] = useState(false);
 
     const router = useRouter();
 
@@ -60,6 +61,8 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
     fetchOriginalCollaboratorInfo();
   }, [artistId]);
+
+
 
 
   const handleSearch = async (searchTerm: string) => {
@@ -89,6 +92,31 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     setSearchTerm('');
     setSearchResults([]);
   };
+
+  const fetchSongs = async () => {
+    try {
+      const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${originalCollaboratorInfo.id}&artistId2=${selectedCollaboratorInfo.id}`);
+      if (response.data && Array.isArray(response.data)) {
+        if (response.data.length === 0) {
+          setDegreesSeperation(true); 
+        } else {
+          setDegreesSeperation(false); 
+        }
+      } else {
+        setDegreesSeperation(true); 
+      }
+    } catch (error) {
+      console.error('Error fetching songs:', error);
+      setDegreesSeperation(false); 
+    }
+  };
+
+  useEffect(() => {
+    if (originalCollaboratorInfo && selectedCollaboratorInfo) {
+        fetchSongs();
+    }
+    }, [originalCollaboratorInfo, selectedCollaboratorInfo]);
+  
 
   return (
     <>
@@ -165,33 +193,39 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       </div>
     </div>
     <FlowLine />
-    <div className = "mt-1">
-        {originalCollaboratorInfo && selectedCollaboratorInfo && (
-            <div className="flex flex-col mx-auto max-w-[800px]">
+    <div className="mt-1">
+    {originalCollaboratorInfo && selectedCollaboratorInfo && (
+        <div className="flex flex-col mx-auto max-w-[800px]">
+        {degreesSeperation ? (
+            <DegreesOfSeparation
+                originalCollaboratorId = {originalCollaboratorInfo.id} 
+                selectedCollaboratorId = {selectedCollaboratorInfo.id}
+            />
+        ) : (
             <Tabs variant="unstyled" className="mt-2">
-              <TabList justifyContent="center">
+            <TabList justifyContent="center">
                 <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>SONGS</Tab>
                 <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>MUTUAL COLLABORATORS</Tab>
-              </TabList>
-              <TabPanels>
+            </TabList>
+            <TabPanels>
                 <TabPanel>
-                  <SongListCollab 
-                  artistId={originalCollaboratorInfo.id} 
-                  artistId2={selectedCollaboratorInfo.id}
-                  songsPerPage = {12}
-                  />
+                <SongListCollab 
+                    artistId={originalCollaboratorInfo.id} 
+                    artistId2={selectedCollaboratorInfo.id}
+                    songsPerPage={12}
+                />
                 </TabPanel>
                 <TabPanel>
-                  <MutualCollabs 
+                <MutualCollabs 
                     artistId1={originalCollaboratorInfo.id} 
                     artistId2={selectedCollaboratorInfo.id}
-                    />
+                />
                 </TabPanel>
-                
-              </TabPanels>
+            </TabPanels>
             </Tabs>
-        </div>
         )}
+        </div>
+    )}
     </div>
     
 
