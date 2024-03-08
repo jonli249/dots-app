@@ -3,65 +3,152 @@
 @tailwind utilities;
 
 * {
-    /* font-family: "Outfit", sans-serif; */
-    font-family: 'Barlow', sans-serif !important;
+  /* font-family: "Outfit", sans-serif; */
+  font-family: "Barlow", sans-serif !important;
 }
 
-
-
 .powerFont {
-    font-family: 'Rubik Glitch', cursive !important;
+  font-family: "Rubik Glitch", cursive !important;
 }
 
 .scrollbarHidden::-webkit-scrollbar {
-    width: 0;
-    /* Adjust the width as needed */
-    background-color: transparent;
+  width: 0;
+  /* Adjust the width as needed */
+  background-color: transparent;
 }
 
 .scrollbarHidden::-webkit-scrollbar-thumb {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .searchContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff; /* Background color for the search container */
-  }
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* Background color for the search container */
+}
 
 .swiper {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.songs-swiper .swiper-button-prev::after,
+.songs-swiper .swiper-button-next::after {
+  content: unset !important;
+}
+
+.imageContainerWithSearch {
+  transform: translateY(-10px);
+}
+
+.imageContainerWithoutSearch {
+  transform: translateY(0px);
+}
+
+.example::-webkit-scrollbar {
+  display: none;
+}
+.slideani {
+  animation-name: anim;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes anim {
+  0% {
+    transform: translateX(10%);
   }
-  
-  .swiper-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  100% {
+    transform: translateX(-100%);
   }
-  
-  .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+}
+
+.slideani2 {
+  animation-name: anim2;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes anim2 {
+  0% {
+    transform: translateX(-100%);
   }
-  
-  .songs-swiper .swiper-button-prev::after,
-  .songs-swiper .swiper-button-next::after {
-    content: unset !important;
+
+  100% {
+    transform: translateX(10%);
   }
-  
-  .imageContainerWithSearch {
-    transform: translateY(-10px); 
+}
+.slideanihero {
+  animation-name: anim3;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes anim3 {
+  0% {
+    transform: translateX(10%);
   }
-  
-  .imageContainerWithoutSearch {
-    transform: translateY(0px);
+
+  100% {
+    transform: translateX(-100%);
   }
+}
+
+/* styling for multiple tags input */
+.ReactTags__tags.react-tags-wrapper {
+  width: 100%;
+  display: flex;
+  height: 100%;
+}
+.ReactTags__tagInput {
+  width: 100%;
+  background: #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 0 6px 6px 0;
+}
+.ReactTags__tagInputField {
+  width: 100%;
+  padding-right: 16px;
+  background: transparent;
+  outline: none;
+  font-family: Inter;
+  font-size: 14.946px;
+  font-weight: 400;
+
+  @media (max-width: 640px) {
+    height: 47px;
+  }
+}
+
+/* hiding the react tag input */
+.ReactTags__selected {
+  display: none;
+}
+
+.swiper-button-next::after {
+  content: "" !important ;
+}
+.swiper-button-prev::after {
+  content: "" !important;
+}
