@@ -95,8 +95,10 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
   const fetchSongs = async () => {
     try {
-      const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${originalCollaboratorInfo.id}&artistId2=${selectedCollaboratorInfo.id}`);
-      if (response.data && Array.isArray(response.data)) {
+        if (originalCollaboratorInfo && selectedCollaboratorInfo) { 
+            const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${originalCollaboratorInfo.id}&artistId2=${selectedCollaboratorInfo.id}`);
+        
+        if (response.data && Array.isArray(response.data)) {
         if (response.data.length === 0) {
           setDegreesSeperation(true); 
         } else {
@@ -105,6 +107,7 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       } else {
         setDegreesSeperation(true); 
       }
+    } else {return null}
     } catch (error) {
       console.error('Error fetching songs:', error);
       setDegreesSeperation(false); 
