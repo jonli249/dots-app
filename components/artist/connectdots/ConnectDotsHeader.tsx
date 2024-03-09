@@ -8,7 +8,7 @@ const ConnectDotsHeader = () => {
       <div className="flex justify-center sm:justify-between gap-3 sm:gap-8 flex-col sm:flex-row mx-auto sm:max-w-[447px] sm:w-full w-fit">
         <div className="max-w-[192px] w-full h-[49px] border bg-white shadow-[2.445px_4.89px_12.225px_0px_rgba(0,0,0,0.10)] border-black rounded-[75px] font-extrabold flex gap-[17px] items-center px-3 py-[15px]">
           <Image
-            src="/img/tyler.png"
+            src="/tyler.png"
             width={64}
             height={64}
             alt="harry-image"

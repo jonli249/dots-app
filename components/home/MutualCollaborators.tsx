@@ -13,9 +13,11 @@ const MutualCollaborators = () => {
           height={32}
           alt="cd-img"
         />
-        <p className="text-black text-[20px] sm:text-[29px] font-normal font-telegraf leading-normal">
-          Mutual Collaborators
-        </p>
+        <div>
+          <p className="text-black text-[20px] sm:text-[29px] font-normal font-telegraf leading-normal">
+            Mutual Collaborators
+          </p>
+        </div>
       </div>
       <div className="mt-[43px] flex flex-col gap-[18px] items-center">
         {mutualCollaboratorsCardData.map((items, index) => (

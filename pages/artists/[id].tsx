@@ -70,7 +70,7 @@ const ArtistPage: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col px-3 lg:px-0 mx-auto max-w-[800px] mt-6">
+      <div className="flex flex-col px-3 lg:px-0 mx-auto max-w-[826px] mt-6">
         <ArtistSummary artistId={id} />
         <Tabs
           index={tabIndex}

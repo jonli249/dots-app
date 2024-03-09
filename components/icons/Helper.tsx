@@ -269,3 +269,32 @@ export const dropdownData = [
     name: "Filter 4",
   },
 ];
+export const swiperData = [
+  {
+    name: "Managers",
+  },
+  {
+    name: "Hitmakers",
+  },
+  {
+    name: "Publishers",
+  },
+  {
+    name: "Managers",
+  },
+  {
+    name: "Hitmakers",
+  },
+  {
+    name: "Publishers",
+  },
+  {
+    name: "Managers",
+  },
+  {
+    name: "Hitmakers",
+  },
+  {
+    name: "Publishers",
+  },
+];

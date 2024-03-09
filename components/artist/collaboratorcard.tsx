@@ -15,8 +15,8 @@ const CollaboratorCard: React.FC<PersonCardProps> = ({
   imageUrl,
   onClick,
 }) => {
-  const imageSrc = imageUrl || "/avatar.png";
-
+  const imageSrc = imageUrl || "/btn-2-img.png";
+  console.log(imageUrl);
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (onClick) {
       event.preventDefault(); // Prevent default if custom onClick is provided
@@ -28,7 +28,7 @@ const CollaboratorCard: React.FC<PersonCardProps> = ({
   return (
     <div
       onClick={handleClick}
-      className="relative flex items-center bg-white shadow-md rounded-full overflow-hidden border border-black hover:shadow-lg transition-shadow duration-300 cursor-pointer mb-2"
+      className="relative flex items-center bg-white shadow-md rounded-full overflow-hidden border border-black hover:shadow-lg transition-shadow duration-300 cursor-pointer "
     >
       <Link
         href={`/artists/${id}`}
@@ -43,7 +43,7 @@ const CollaboratorCard: React.FC<PersonCardProps> = ({
             className="rounded-full shadow-sm p-2"
           />
         </div>
-        <div className="text-md font-semibold mr-8">{name}</div>
+        <div className="text-md line-clamp-1 font-semibold mr-8">{name}</div>
       </Link>
     </div>
   );
