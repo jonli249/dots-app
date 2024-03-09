@@ -4,6 +4,7 @@ import { Select } from "@chakra-ui/react";
 import Fuse from "fuse.js";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import SongItem from "../../components/songs/songItem";
+import SongCard from "./songcard";
 
 interface Song {
   title: string;
@@ -35,8 +36,6 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        console.log(artistId);
-        console.log(artistId2);
         const response = await axios.get(
           `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${artistId}&artistId2=${artistId2}`
         );
@@ -56,7 +55,6 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({
       fetchSongs();
     }
   }, [artistId, artistId2]);
-
   const fuse = useMemo(
     () =>
       new Fuse(songs, {
@@ -89,7 +87,6 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({
     const endIndex = startIndex + songsPerPage;
     return sortedAndFilteredSongs.slice(startIndex, endIndex);
   }, [sortedAndFilteredSongs, currentPage, songsPerPage]);
-  console.log(displayedSongs, "dfadfadfadfasdfasdfdfadfasdf");
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -119,7 +116,7 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({
           </Select>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {displayedSongs.map((song, index) => (
           <SongItem
             key={index}
@@ -129,7 +126,9 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({
             geniusData={song.geniusData}
           />
         ))}
-      </div>
+      </div> */}
+      <SongCard />
+
       <div className="flex justify-center mt-10">
         <div className="flex space-x-4">
           <FaArrowLeft

@@ -1,35 +1,34 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import useAuth from '../../utils/useAuth';
-import Link from 'next/link';
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import useAuth from "../../utils/useAuth";
+import Link from "next/link";
 
 function SignupForm() {
   const router = useRouter();
   const { signup } = useAuth();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [company, setCompany] = useState(''); // Add state for company
-  const [signupError, setSignupError] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [company, setCompany] = useState(""); // Add state for company
+  const [signupError, setSignupError] = useState("");
 
   const handleSignup = async () => {
     try {
       if (password !== confirmPassword) {
-        setSignupError('Passwords do not match');
+        setSignupError("Passwords do not match");
         return;
       }
 
       const user = await signup(name, email, password, company); // Pass company to the signup function
-      console.log("User", user);
 
       if (user) {
-        router.push('/dashboard');
+        router.push("/dashboard");
       }
     } catch (error) {
-      console.error('Signup error:', error);
-      setSignupError('An error occurred during signup');
+      console.error("Signup error:", error);
+      setSignupError("An error occurred during signup");
     }
   };
 
@@ -72,7 +71,7 @@ function SignupForm() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           className="w-full p-2 mb-2 border rounded"
         />
-        
+
         <button
           onClick={handleSignup}
           className="w-full py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -81,7 +80,7 @@ function SignupForm() {
         </button>
         {signupError && <p className="text-red-500 mt-2">{signupError}</p>}
         <p className="mt-4 text-center">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link href="/login" className="text-blue-500">
             Log in
           </Link>

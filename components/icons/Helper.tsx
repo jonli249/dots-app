@@ -298,3 +298,10 @@ export const swiperData = [
     name: "Publishers",
   },
 ];
+export const SongData = [
+  {
+    title: "hello",
+    geniusData: "/tylor-swift.png",
+    id: "adfdf",
+  },
+];

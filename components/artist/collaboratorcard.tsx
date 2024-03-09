@@ -16,14 +16,12 @@ const CollaboratorCard: React.FC<PersonCardProps> = ({
   onClick,
 }) => {
   const imageSrc = imageUrl || "/btn-2-img.png";
-  console.log(imageUrl);
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (onClick) {
       event.preventDefault(); // Prevent default if custom onClick is provided
       onClick(id);
     }
   };
-  console.log(imageUrl);
 
   return (
     <div

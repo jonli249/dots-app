@@ -1,18 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import { swiperData } from "../icons/Helper";
 
 export default function Heroswiper() {
+  const [activeSlide, setActiveSlide] = useState(1);
+
+  const onTransitionStart = (swiper: any) => {
+    setActiveSlide(swiper.realIndex);
+  };
+
   return (
     <Swiper
+      onSlideChange={onTransitionStart}
       loop={true}
+      grabCursor={true}
       spaceBetween={10}
       centeredSlides={true}
       slidesPerView={3}
       autoplay={{
-        delay: 13000,
+        delay: 3000,
         disableOnInteraction: false,
       }}
       breakpoints={{
@@ -34,21 +42,19 @@ export default function Heroswiper() {
         },
       }}
       navigation={true}
-      modules={[Autoplay, Pagination, Navigation]}
+      modules={[Autoplay]}
       className="mySwiper flex gap-4"
     >
       {swiperData.map((item, index) => (
         <SwiperSlide key={index}>
-          {" "}
-          <div>
-            {" "}
-            <button
-              type="submit"
-              className=" px-4 slideanihero py-1 lg:py-3 rounded-[10px] w-[100px] sm:w-[165px] lg:w-[255px] h-[48px] sm:h-[52px] lg:h-[74px] border border-[#CDCDCD] bg-[rgba(255,255,255,0.30);] shadow-[2px_ 4px_10px_0px_rgba(0,0,0,0.10);] text-black text-[14px] sm:text-[20px] lg:text-[35px] font-semibold font-inter"
-            >
-              {item.name}
-            </button>{" "}
-          </div>
+          <button
+            type="submit"
+            className={`px-4 py-1 lg:py-3 rounded-[10px] w-[100px] sm:w-[165px] lg:w-[255px] h-[48px] sm:h-[52px] lg:h-[74px] bg-[rgba(255,255,255,0.30)] shadow-[2px_ 4px_10px_0px_rgba(0,0,0,0.10)] text-black text-[14px] sm:text-[20px] lg:text-[35px] font-semibold font-inter ${
+              activeSlide === index && "border border-[#CDCDCD]"
+            }`}
+          >
+            {item.name}
+          </button>
         </SwiperSlide>
       ))}
     </Swiper>

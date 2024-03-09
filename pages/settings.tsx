@@ -1,11 +1,10 @@
-import React from 'react';
-import useAuth from '../utils/useAuth'; // Import the useAuth hook
-import UserProfile from '../components/UserProfile'; // Import the UserProfile component
-import Navbar from '../components/main/navbar';
+import React from "react";
+import useAuth from "../utils/useAuth"; // Import the useAuth hook
+import UserProfile from "../components/UserProfile"; // Import the UserProfile component
+import Navbar from "../components/main/navbar";
 
 const SettingsPage: React.FC = () => {
   const { session, isAuthenticated, logout } = useAuth(); // Use the hook to get user session and isAuthenticated method
-  console.log("Sessions",session);
   return (
     <div>
       <Navbar />
