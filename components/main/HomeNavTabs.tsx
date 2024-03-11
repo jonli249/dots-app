@@ -5,7 +5,7 @@ const HomeNavTabs = () => {
   const [activeTab, setActiveTab] = useState("PLAYLISTS");
   return (
     <div className="mt-[47px] max-w-[951px] px-3 lg:px-0 w-full mx-auto">
-      <div className=" flex gap-6 items-center mb-10">
+      <div className=" flex gap-3 whitespace-nowrap overflow-auto pb-2 sm:gap-6 items-center mb-5 sm:mb-10">
         <button
           onClick={() => setActiveTab("PLAYLISTS")}
           className={`${

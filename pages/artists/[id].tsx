@@ -18,6 +18,7 @@ import TwoCollab from "../../components/artist/twocollab";
 import Image from "next/image";
 import Recomendtion from "../../components/artist/recommendations/Recomendtion";
 import DegreesPage from "../../components/artist/degrees/DegreesPage";
+import PageSEO from "../../components/icons/PageSEO";
 
 const ArtistPage: React.FC = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const ArtistPage: React.FC = () => {
 
   if (!id) {
     return (
-      <div>
+      <>
         <Navbar />
         <div className="flex flex-col mx-auto max-w-[800px] mt-6">
           <div className="flex aic" style={{ gap: 20 }}>
@@ -63,12 +64,13 @@ const ArtistPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
     <div>
+      <PageSEO title="Artists" />
       <Navbar />
       <div className="flex flex-col px-3 lg:px-0 mx-auto max-w-[826px] mt-6">
         <ArtistSummary artistId={id} />
@@ -79,11 +81,22 @@ const ArtistPage: React.FC = () => {
           className="mt-6"
         >
           <TabList className="whitespace-nowrap overflow-auto">
-            <Tab _selected={{ fontWeight: "bold", color: "black" }}>SONGS</Tab>
-            <Tab _selected={{ fontWeight: "bold", color: "black" }}>
+            <Tab
+              _selected={{ color: "#565656" }}
+              className="font-inter font-semibold text-[#565656]/40 "
+            >
+              SONGS
+            </Tab>
+            <Tab
+              _selected={{ color: "#565656" }}
+              className="font-inter font-semibold text-[#565656]/40  "
+            >
               COLLABORATORS
             </Tab>
-            <Tab _selected={{ fontWeight: "bold", color: "black" }}>
+            <Tab
+              _selected={{ color: "#565656" }}
+              className="font-inter font-semibold text-[#565656]/40 "
+            >
               SMART TOOLS
             </Tab>
           </TabList>
@@ -103,13 +116,22 @@ const ArtistPage: React.FC = () => {
               />
               <Tabs variant="unstyled">
                 <TabList className="whitespace-nowrap overflow-auto">
-                  <Tab _selected={{ fontWeight: "bold", color: "black" }}>
+                  <Tab
+                    _selected={{ color: "#565656" }}
+                    className="text-[#565656]/40 font-inter font-semibold"
+                  >
                     RECOMMENDATIONS
                   </Tab>
-                  <Tab _selected={{ fontWeight: "bold", color: "black" }}>
+                  <Tab
+                    _selected={{ color: "#565656" }}
+                    className="text-[#565656]/40 font-inter font-semibold"
+                  >
                     CONNECT THE DOTS
                   </Tab>
-                  <Tab _selected={{ fontWeight: "bold", color: "black" }}>
+                  <Tab
+                    _selected={{ color: "#565656" }}
+                    className="text-[#565656]/40 font-inter font-semibold"
+                  >
                     DEGREES
                   </Tab>
                 </TabList>

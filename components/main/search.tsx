@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
+  Skeleton,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import axios from "axios";
@@ -118,7 +119,7 @@ const SearchComponent = () => {
 
   return (
     <>
-      <div className="max-w-[750px] w-full mx-auto px-3 xl:px-0 relative">
+      <div className="max-w-[829px] w-full mx-auto px-3 xl:px-0 relative">
         <Image
           src={"/bg-input.png"}
           alt="/bg-input.png"
@@ -131,7 +132,7 @@ const SearchComponent = () => {
           <Accordion className="absolute z-50 w-full">
             <AccordionItem className="border bg-white rounded-[12px]   !border-[#B3B3B3]">
               <h2>
-                <AccordionButton className="bg-white rounded-[12px] h-[81px] z-10 px-6  relative shadow-[2.402px_4.804px_12.011px_0px_rgba(0,0,0,0.05)] hover:bg-gray-100  w-full p-3 flex items-center">
+                <AccordionButton className="bg-white rounded-[12px] md:h-[81px] z-10 px-6  relative shadow-[2.402px_4.804px_12.011px_0px_rgba(0,0,0,0.05)] hover:bg-gray-100  w-full p-3 flex items-center">
                   <Icon as={SearchIcon} color="gray.400" mx="2" my="2" />
                   <input
                     type="text"
@@ -210,7 +211,9 @@ const SearchComponent = () => {
                               ))
                             ) : (
                               <>
-                                <h1>Loading...</h1>
+                                <div>
+                                  <Skeleton style={{ flex: 1, height: 60 }} />
+                                </div>
                               </>
                             )}
                           </VStack>
