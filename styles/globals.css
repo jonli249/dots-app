@@ -152,3 +152,7 @@
 .swiper-button-prev::after {
   content: "" !important;
 }
+.drop-menu .css-r6z5ec {
+  max-width: 242px;
+  width: 100%;
+}

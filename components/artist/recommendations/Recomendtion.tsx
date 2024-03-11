@@ -16,7 +16,7 @@ const Recomendtion = () => {
   };
 
   return (
-    <div className="max-w-[827px] w-full mx-auto max-lg:px-3 mt-[19px]">
+    <div className="max-w-[827px] w-full mx-auto mt-[19px]">
       <div className="w-full flex flex-col md:flex-row items-start md:items-center md:justify-between gap-4">
         {/* search */}
         <div className="w-full h-[47px] flex items-start sm:items-center">

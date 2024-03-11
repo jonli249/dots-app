@@ -4,15 +4,15 @@ import { scrollbtn } from "../icons/Helper";
 
 const Scrollbtn = () => {
   return (
-    <div className="flex flex-col gap-6 2xl:gap-[45px] mt-20 sm:mt-[108px]">
+    <div className="flex flex-col gap-6 xl:gap-9 2xl:gap-11 mt-20 sm:mt-[108px]">
       {/* scroll section 1 */}
-      <div className="flex gap-6 xl:gap-10 2xl:gap-[58px] overflow-hidden justify-between items-center example">
+      <div className="flex gap-6 xl:gap-9 2xl:gap-11 overflow-hidden justify-between items-center example">
         {scrollbtn.map((item, index) => (
           <div
             key={index}
-            className="flex slideani gap-6 2xl:gap-[58px] justify-between items-center"
+            className="flex slideani gap-6 xl:gap-9 2xl:gap-11 justify-between items-center"
           >
-            <div className="sm:w-[255px] w-[185px] h-[62px] md:h-[70px] xl:h-[87px] 2xl:h-[93px] rounded-lg border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-3 2xl:py-[18px] px-2 xl:px-4 2xl:px-6 flex items-center gap-1 sm:gap-4">
+            <div className="w-[185px] sm:w-[250px] h-[62px] md:h-[70px] xl:h-[78px] 2xl:h-[84px] rounded-lg border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-3 px-2 xl:px-4 2xl:px-6 flex items-center gap-1 sm:gap-3">
               <Image
                 src="/btn-1-img.png"
                 width={58}
@@ -44,14 +44,13 @@ const Scrollbtn = () => {
       </div>
 
       {/* scroll section 2 */}
-      <div className="flex gap-6 xl:gap-10 2xl:gap-[58px] overflow-hidden justify-between items-center example ">
+      <div className="flex gap-6 xl:gap-9 2xl:gap-11 overflow-hidden justify-between items-center example ">
         {scrollbtn.map((item, index) => (
           <div
             key={index}
-            className="flex slideani2 gap-6 xl:gap-10 2xl:gap-[58px] justify-between items-center"
+            className="flex slideani2 gap-6 xl:gap-9 2xl:gap-11 justify-between items-center"
           >
-            {" "}
-            <div className="sm:w-[255px] w-[185px] h-[62px] md:h-[70px] xl:h-[87px] rounded-lg border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-[18px] px-2 sm:px-6 flex items-center gap-1 sm:gap-4">
+            <div className="w-[185px] sm:w-[250px] h-[62px] md:h-[70px] xl:h-[78px] 2xl:h-[84px] rounded-lg border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-3 px-2 sm:px-6 flex items-center gap-1 sm:gap-3">
               <Image
                 src="/btn-1-img.png"
                 width={58}
@@ -83,14 +82,14 @@ const Scrollbtn = () => {
       </div>
 
       {/* scroll section 3 */}
-      <div className="flex gap-6 xl:gap-10 2xl:gap-[58px] overflow-hidden justify-between items-center example">
+      <div className="flex gap-6 xl:gap-9 2xl:gap-11 overflow-hidden justify-between items-center example">
         {scrollbtn.map((item, index) => (
           <div
             key={index}
-            className="flex slideani gap-6 xl:gap-10 2xl:gap-[58px] justify-between items-center"
+            className="flex slideani gap-6 xl:gap-9 2xl:gap-11 justify-between items-center"
           >
             {" "}
-            <div className="sm:w-[255px] w-[185px] h-[62px] md:h-[70px] xl:h-[87px] rounded-lg border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-[18px] px-2 sm:px-6 flex items-center gap-1 sm:gap-4">
+            <div className="w-[185px] sm:w-[250px] h-[62px] md:h-[70px] xl:h-[78px] 2xl:h-[84px] rounded-lg border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-3 px-2 sm:px-6 flex items-center gap-1 sm:gap-3">
               <Image
                 src="/btn-1-img.png"
                 width={58}
@@ -122,13 +121,13 @@ const Scrollbtn = () => {
       </div>
 
       {/* scroll section 4 */}
-      <div className="flex gap-6 xl:gap-10 2xl:gap-[58px] overflow-hidden justify-between items-center example ">
+      <div className="flex gap-6 xl:gap-9 2xl:gap-11 overflow-hidden justify-between items-center example ">
         {scrollbtn.map((item, index) => (
           <div
             key={index}
-            className="flex slideani2 gap-6 xl:gap-10 2xl:gap-[58px] justify-between items-center"
+            className="flex slideani2 gap-6 xl:gap-9 2xl:gap-11 justify-between items-center"
           >
-            <div className="sm:w-[255px] w-[185px] h-[62px] md:h-[70px] xl:h-[87px] rounded-lg border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-[18px] px-2 sm:px-6 flex items-center gap-1 sm:gap-4">
+            <div className="w-[185px] sm:w-[250px] h-[62px] md:h-[70px] xl:h-[78px] 2xl:h-[84px] rounded-lg border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-3 px-2 sm:px-6 flex items-center gap-1 sm:gap-3">
               <Image
                 src="/btn-1-img.png"
                 width={58}

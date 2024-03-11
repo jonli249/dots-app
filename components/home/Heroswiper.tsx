@@ -20,7 +20,7 @@ export default function Heroswiper() {
       centeredSlides={true}
       slidesPerView={3}
       autoplay={{
-        delay: 3000,
+        delay: 2500,
         disableOnInteraction: false,
       }}
       breakpoints={{
@@ -45,11 +45,13 @@ export default function Heroswiper() {
         <SwiperSlide key={index}>
           <button
             type="submit"
-            className={`px-2 sm:px-4 py-1 lg:py-3 rounded-[10px] w-[85px] sm:w-[165px] lg:w-[255px] h-[48px] sm:h-[52px] lg:h-[74px] bg-[rgba(255,255,255,0.30)] shadow-[2px_ 4px_10px_0px_rgba(0,0,0,0.10)] text-black text-[14px] sm:text-[20px] lg:text-[35px] font-semibold font-inter ${
+            className={`px-2 sm:px-4 py-1 lg:py-3 rounded-[10px] w-[87px] sm:w-[165px] lg:w-[165px] 2xl:w-[220px] h-10 sm:h-[52px] lg:h-[60px] 2xl:h-[70px] bg-[rgba(255,255,255,0.30)] shadow-[2px_ 4px_10px_0px_rgba(0,0,0,0.10)] ${
               activeSlide === index && "border border-[#CDCDCD]"
             }`}
           >
-            {item.name}
+            <span className="text-black text-[14px] sm:text-xl 2xl:text-3xl font-semibold font-inter">
+              {item.name}
+            </span>
           </button>
         </SwiperSlide>
       ))}

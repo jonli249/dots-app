@@ -305,3 +305,17 @@ export const SongData = [
     id: "adfdf",
   },
 ];
+export const playList = [
+  {
+    img: "/new-music.png",
+    heading: "New Music Friday",
+  },
+  {
+    img: "/billboard.png",
+    heading: "Billboard Hot 100",
+  },
+  {
+    img: "/viral.png",
+    heading: "Viral 50",
+  },
+];

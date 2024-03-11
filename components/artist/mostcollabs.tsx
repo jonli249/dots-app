@@ -7,6 +7,7 @@ import Fuse from "fuse.js"; // For searching collaborators
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // For pagination controls
 import CollabCard from "./collabpersoncard";
 import TopCollabs from "./topcollabs";
+import CollaboratorSelect from "./CollaboratorSelect";
 interface Collaborator {
   _id: string;
   name: string;
@@ -84,14 +85,15 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="px-2 py-2 border border-gray-300 rounded-md w-full mr-4"
         />
-        <Select
+        {/* <Select
           placeholder="Sort"
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
         >
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
-        </Select>
+        </Select> */}
+        <CollaboratorSelect />
       </div>
       <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 bg-opacity-90">
         {displayedCollaborators.map((collaborator, index) => (

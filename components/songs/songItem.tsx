@@ -26,22 +26,22 @@ const SongItem: React.FC<SongItemProps> = ({
     <Link
       onClick={onClick}
       href={`/songs/${_id}`}
-      className="border border-gray-300 rounded shadow-md"
+      className="max-w-[203px] w-full "
     >
-      <div className="flex items-center sm:w-40 rounded-md p-1 overflow-hidden ">
-        <div className="flex-shrink-0 w-14 h-14 sm:w-12 sm:h-12 rounded-md">
-          <Image
-            src={photoSource}
-            alt="Album Cover"
-            width={16}
-            height={16}
-            layout="responsive"
-            className="object-cover border border-black"
-          />
-        </div>
-        <div className="ml-2 flex-shrink">
-          <h2 className="text-xs sm:text-xs font-semibold truncate">{title}</h2>
-          <p className="text-xs sm:text-xxs text-gray-500 truncate">
+      <div className=" cursor-pointer h-[70px] max-sm:mx-auto rounded-[15px] border border-[#696969] bg-white shadow-[2.089px_4.178px_10.446px_0px_rgba(0,0,0,0.10)] py-[14px] pl-3 flex items-center gap-2 hover:border-[#DDD3A0] hover:shadow-[#DDD3A0] hover:border-[3px] hover:shadow-xl duration-150">
+        <Image
+          src={photoSource}
+          alt="Album Cover"
+          width={41}
+          height={41}
+          layout="responsive"
+          className="object-cover rounded-[5px] border !h-[41px] !w-[41px] border-black"
+        />
+        <div className="flex flex-col  items-start pr-1">
+          <p className="text-black font-telegraf line-clamp-1 font-extrabold leading-normal text-[13px]">
+            {title}
+          </p>
+          <p className="text-black text-[9px] line-clamp-1 font-telegraf font-normal leading-normal">
             {artistCredit && artistCredit.length > 0
               ? artistCredit.map((artist, index) => (
                   <span key={artist.name}>

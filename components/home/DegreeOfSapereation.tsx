@@ -6,11 +6,9 @@ import MutualCollaborators from "./MutualCollaborators";
 
 const DegreeOfSapereation = () => {
   return (
-    <div className="mt-20 md:mt-[105px] 2xl:mt-[126px]">
-      <div>
-        <DegreeofSaperationHeader />
-      </div>
-      <div className="max-w-[800px] w-full px-4 flex flex-col sm:flex-row items-start mt-5 md:mt-[30px] 2xl:mt-[46px] gap-3 justify-between mx-auto">
+    <div className="mt-10 sm:mt-20 md:mt-[105px] 2xl:mt-[126px]">
+      <DegreeofSaperationHeader />
+      <div className="max-w-[690px] lg:max-w-[765px] w-full px-4 flex flex-col sm:flex-row items-center sm:items-start sm:mt-5 md:mt-6 2xl:mt-5 gap-3 justify-between mx-auto">
         <SongsTogetherCard />
         <MutualCollaborators />
       </div>

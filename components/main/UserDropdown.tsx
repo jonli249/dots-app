@@ -20,9 +20,12 @@ function DropdownMenu() {
       >
         Me
       </MenuButton>
-      <MenuList className="flex flex-col gap-5 ">
+      <MenuList className="flex flex-col gap-8 !py-6  !max-w-[242px] !rounded-[20px] w-full pl-[41px] pr-5">
         <MenuItem onClick={() => setMenuOpen(false)}>
-          <Link href="/account" className="flex items-center gap-3">
+          <Link
+            href="/account"
+            className="flex text-[18px] font-bold items-center gap-8 rounded-md"
+          >
             {" "}
             <span>
               <Image
@@ -36,7 +39,10 @@ function DropdownMenu() {
           </Link>
         </MenuItem>
         <MenuItem onClick={() => setMenuOpen(false)}>
-          <Link href="/settings" className="flex items-center gap-3">
+          <Link
+            href="/settings"
+            className="flex text-[18px] font-bold items-center gap-8 rounded-md"
+          >
             <span>
               <Image
                 src="/setting-icon.png"
@@ -46,6 +52,22 @@ function DropdownMenu() {
               />
             </span>
             Settings
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={() => setMenuOpen(false)}>
+          <Link
+            href="/settings"
+            className="flex items-center text-black/50 gap-8 text-[18px] font-bold rounded-md"
+          >
+            <span>
+              <Image
+                src="/login-img.png"
+                width={21}
+                height={21}
+                alt="login icon"
+              />
+            </span>
+            Log Out
           </Link>
         </MenuItem>
         {isAuthenticated() && (

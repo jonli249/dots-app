@@ -114,7 +114,7 @@ const ArtistPage: React.FC = () => {
                   </Tab>
                 </TabList>
                 <TabPanels>
-                  <TabPanel>
+                  <TabPanel className="!p-0">
                     <Recomendtion />
                   </TabPanel>
                   <TabPanel>
