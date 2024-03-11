@@ -22,7 +22,9 @@ const config = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         inter: ["Inter", "sans-serif"],
-        Telegraf: ["Telegraf", "sans-serif"],
+        "Telegraf-ultralight": ["Telegraf-ultralight", "sans-serif"],
+        "Telegraf-ultrabold": ["Telegraf-ultrabold", "sans-serif"],
+        "Telegraf-normal": ["Telegraf-normal", "sans-serif"],
       },
 
       keyframes: {

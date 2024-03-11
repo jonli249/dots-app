@@ -183,10 +183,16 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
           <div className="flex flex-col mx-auto max-w-[800px]">
             <Tabs variant="unstyled" className="mt-2">
               <TabList justifyContent="center">
-                <Tab _selected={{ fontWeight: "bold", color: "black" }}>
+                <Tab
+                  _selected={{ fontWeight: "bold" }}
+                  className="font-inter text-[#5E5E5E] font-normal"
+                >
                   SONGS
                 </Tab>
-                <Tab _selected={{ fontWeight: "bold", color: "black" }}>
+                <Tab
+                  _selected={{ fontWeight: "bold" }}
+                  className="font-inter text-[#5E5E5E] font-normal"
+                >
                   COLLABORATORS
                 </Tab>
               </TabList>

@@ -10,7 +10,7 @@ const HomeNavTabs = () => {
           onClick={() => setActiveTab("PLAYLISTS")}
           className={`${
             activeTab === "PLAYLISTS" ? "text-[#565656]" : "text-[#565656]/40"
-          } text-[15px] font-semibold `}
+          } text-[15px] font-semibold font-inter `}
         >
           PLAYLISTS
         </button>
@@ -18,7 +18,7 @@ const HomeNavTabs = () => {
           onClick={() => setActiveTab("TRENDING")}
           className={`${
             activeTab === "TRENDING" ? "text-[#565656]" : "text-[#565656]/40"
-          } text-[15px] font-semibold `}
+          } text-[15px] font-semibold font-inter `}
         >
           TRENDING SEARCHES
         </button>
@@ -26,7 +26,7 @@ const HomeNavTabs = () => {
           onClick={() => setActiveTab("ADVANCED")}
           className={`${
             activeTab === "ADVANCED" ? "text-[#565656]" : "text-[#565656]/40"
-          } text-[15px] font-semibold `}
+          } text-[15px] font-semibold font-inter `}
         >
           ADVANCED SEARCH
         </button>

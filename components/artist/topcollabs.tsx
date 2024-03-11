@@ -21,7 +21,7 @@ const TopCollabs = () => {
           </div>
 
           <div>
-            <p className="text-[#fff] max-sm:text-center text-[20px] not-italic font-extrabold leading-[normal]">
+            <p className="text-[#fff] font-Telegraf-ultrabold max-sm:text-center text-[20px] not-italic font-extrabold leading-[normal]">
               Top Collaborators
             </p>
 
@@ -34,7 +34,7 @@ const TopCollabs = () => {
                   <div
                     className={`${item.valueBg} w-[38px] h-[38px] rounded-[100%] absolute right-[-11px] top-[-11px] flex justify-center items-center`}
                   >
-                    <p className="text-[#FFF] text-center text-[12.767px] not-italic font-extrabold leading-[normal]">
+                    <p className="text-[#FFF] text-center font-Telegraf-ultrabold text-[12.767px] not-italic font-extrabold leading-[normal]">
                       {item.value}
                     </p>
                   </div>
@@ -47,7 +47,7 @@ const TopCollabs = () => {
                       alt="man-img-src"
                     />
 
-                    <p className="text-center text-[#000] text-[11px] font-extrabold">
+                    <p className="text-center text-[#000] font-Telegraf-ultrabold text-[11px] font-extrabold">
                       {item.personName}
                     </p>
                   </div>

@@ -37,7 +37,9 @@ const CollabCard: React.FC<PersonCardProps> = ({
               className="rounded-full shadow-sm p-2"
             />
           </div>
-          <p className="text-sm line-clamp-1 font-semibold ">{name}</p>
+          <p className="text-sm line-clamp-1 font-Telegraf-ultrabold font-semibold ">
+            {name}
+          </p>
         </Link>
       </div>
     </div>

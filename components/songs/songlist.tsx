@@ -4,6 +4,7 @@ import { Select } from "@chakra-ui/react";
 import Fuse from "fuse.js";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import SongItem from "../../components/songs/songItem";
+import CollaboratorSelect from "../artist/CollaboratorSelect";
 
 interface Song {
   title: string;
@@ -161,11 +162,12 @@ const SongList: React.FC<SongListWithPaginationProps> = ({
           />
         </div>
         <div>
-          <Select value={sortOrder} onChange={handleSortChange}>
+          {/* <Select value={sortOrder} onChange={handleSortChange}>
             <option value="relevance">Relevance</option>
             <option value="desc">Date - Newest</option>
             <option value="asc">Date - Oldest</option>
-          </Select>
+          </Select> */}
+          <CollaboratorSelect />
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 ${animationDirection === 'in' ? 'slide-in-right' : 'slide-out-left'}`">

@@ -9,9 +9,11 @@ const PlayListsTab = () => {
           <div
             key={index}
             style={{ backgroundImage: `url(${item.img})` }}
-            className="max-w-[289px] w-full h-[148px] bg-no-repeat bg-cover bg-center text-white font-Inter font-bold text-[24px] leading-normal p-[22px]"
+            className="max-w-[289px] w-full h-[148px]  bg-no-repeat bg-cover bg-center  p-[22px]"
           >
-            {item.heading}
+            <p className="text-white font-inter font-bold text-[24px] leading-normal">
+              {item.heading}
+            </p>
           </div>
         ))}
       </div>

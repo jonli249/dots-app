@@ -38,10 +38,10 @@ const SongItem: React.FC<SongItemProps> = ({
           className="object-cover rounded-[5px] border !h-[41px] !w-[41px] border-black"
         />
         <div className="flex flex-col  items-start pr-1">
-          <p className="text-black font-telegraf line-clamp-1 font-extrabold leading-normal text-[13px]">
+          <p className="text-black font-Telegraf-ultrabold line-clamp-1 font-extrabold leading-normal text-[13px]">
             {title}
           </p>
-          <p className="text-black text-[9px] line-clamp-1 font-telegraf font-normal leading-normal">
+          <p className="text-black text-[9px] line-clamp-1 font-Telegraf-normal font-normal leading-normal">
             {artistCredit && artistCredit.length > 0
               ? artistCredit.map((artist, index) => (
                   <span key={artist.name}>

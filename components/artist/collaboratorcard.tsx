@@ -41,7 +41,9 @@ const CollaboratorCard: React.FC<PersonCardProps> = ({
             className="rounded-full shadow-sm p-2"
           />
         </div>
-        <div className="text-md line-clamp-1 font-semibold mr-8">{name}</div>
+        <div className="text-md line-clamp-1 font-Telegraf-ultrabold font-semibold mr-8">
+          {name}
+        </div>
       </Link>
     </div>
   );
