@@ -24,7 +24,7 @@ function DropdownMenu() {
         <MenuItem onClick={() => setMenuOpen(false)}>
           <Link
             href="/account"
-            className="flex text-[18px] font-bold items-center gap-8 rounded-md"
+            className="flex text-[18px] font-medium items-center gap-8 font-inter rounded-md"
           >
             {" "}
             <span>
@@ -41,7 +41,7 @@ function DropdownMenu() {
         <MenuItem onClick={() => setMenuOpen(false)}>
           <Link
             href="/settings"
-            className="flex text-[18px] font-bold items-center gap-8 rounded-md"
+            className="flex text-[18px] font-medium items-center gap-8 font-inter rounded-md"
           >
             <span>
               <Image
@@ -57,7 +57,7 @@ function DropdownMenu() {
         <MenuItem onClick={() => setMenuOpen(false)}>
           <Link
             href="/settings"
-            className="flex items-center text-black/50 gap-8 text-[18px] font-bold rounded-md"
+            className="flex items-center font-inter text-black/50 gap-8 text-[18px] font-medium rounded-md"
           >
             <span>
               <Image
