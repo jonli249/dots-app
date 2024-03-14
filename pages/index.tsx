@@ -15,7 +15,7 @@ const Homepage = () => {
         <div className="flex justify-center md:h-[81px] w-full mt-[57px] max-w-l md:max-w-xl lg:max-w-[951px] ">
           <SearchComponent />
         </div>
-        <HomeNavTabs />
+        {/* <HomeNavTabs /> */}
       </div>
     </div>
   );
