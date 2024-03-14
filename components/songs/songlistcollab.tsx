@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
-import { Select } from '@chakra-ui/react';
-import Fuse from 'fuse.js';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import SongItem from '../../components/songs/songItem';
+import React, { useState, useEffect, useMemo } from "react";
+import axios from "axios";
+import { Select } from "@chakra-ui/react";
+import Fuse from "fuse.js";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import SongItem from "../../components/songs/songItem";
+import SongCard from "./songcard";
 
 interface Song {
   title: string;
-  'artist-credit'?: { name: string, artist: {name: string}}[];
+  "artist-credit"?: { name: string; artist: { name: string } }[];
   _id: string;
   coverImage: string;
-  'first-release-date': string;
+  "first-release-date": string;
   geniusData?: {
-    header_image_thumbnail_url: string, 
-  }
+    header_image_thumbnail_url: string;
+  };
 }
 
 interface SongListWithPaginationProps {
@@ -22,25 +23,30 @@ interface SongListWithPaginationProps {
   songsPerPage: number;
 }
 
-const SongListCollab: React.FC<SongListWithPaginationProps> = ({ artistId, artistId2, songsPerPage }) => {
+const SongListCollab: React.FC<SongListWithPaginationProps> = ({
+  artistId,
+  artistId2,
+  songsPerPage,
+}) => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-
-        const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${artistId}&artistId2=${artistId2}`);
+        const response = await axios.get(
+          `https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${artistId}&artistId2=${artistId2}`
+        );
         if (response.data && Array.isArray(response.data)) {
           setSongs(response.data);
         } else {
           setSongs([]);
-          console.error('No songs found for the artist');
+          console.error("No songs found for the artist");
         }
       } catch (error) {
-        console.error('Error fetching songs:', error);
+        console.error("Error fetching songs:", error);
         setSongs([]);
       }
     };
@@ -49,16 +55,19 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({ artistId, artis
       fetchSongs();
     }
   }, [artistId, artistId2]);
-
-  const fuse = useMemo(() => new Fuse(songs, {
-    keys: ['title'],
-    threshold: 0.3,
-  }), [songs]);
+  const fuse = useMemo(
+    () =>
+      new Fuse(songs, {
+        keys: ["title"],
+        threshold: 0.3,
+      }),
+    [songs]
+  );
 
   const filteredSongs = useMemo(() => {
     if (searchQuery && fuse) {
       const results = fuse.search(searchQuery);
-      return results.map(result => result.item);
+      return results.map((result) => result.item);
     }
     return songs;
   }, [searchQuery, fuse, songs]);
@@ -66,9 +75,9 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({ artistId, artis
   // Apply sorting to filtered (and possibly searched) songs
   const sortedAndFilteredSongs = useMemo(() => {
     return [...filteredSongs].sort((a, b) => {
-      const dateA = new Date(a['first-release-date']).getTime();
-      const dateB = new Date(b['first-release-date']).getTime();
-      return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      const dateA = new Date(a["first-release-date"]).getTime();
+      const dateB = new Date(b["first-release-date"]).getTime();
+      return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
     });
   }, [filteredSongs, sortOrder]);
 
@@ -84,7 +93,7 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({ artistId, artis
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOrder(e.target.value as 'asc' | 'desc');
+    setSortOrder(e.target.value as "asc" | "desc");
   };
 
   return (
@@ -107,26 +116,41 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({ artistId, artis
           </Select>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {displayedSongs.map((song, index) => (
           <SongItem
             key={index}
             title={song.title}
-            artistCredit={song['artist-credit']}
+            artistCredit={song["artist-credit"]}
             _id={song._id}
             geniusData={song.geniusData}
           />
         ))}
-      </div>
+      </div> */}
+      <SongCard />
+
       <div className="flex justify-center mt-10">
         <div className="flex space-x-4">
           <FaArrowLeft
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-            className={`cursor-pointer ${currentPage === 1 ? 'text-gray-300' : 'text-black'}`}
+            className={`cursor-pointer ${
+              currentPage === 1 ? "text-gray-300" : "text-black"
+            }`}
           />
           <FaArrowRight
-            onClick={() => setCurrentPage(Math.min(Math.ceil(filteredSongs.length / songsPerPage), currentPage + 1))}
-            className={`cursor-pointer ${currentPage * songsPerPage >= filteredSongs.length ? 'text-gray-300' : 'text-black'}`}
+            onClick={() =>
+              setCurrentPage(
+                Math.min(
+                  Math.ceil(filteredSongs.length / songsPerPage),
+                  currentPage + 1
+                )
+              )
+            }
+            className={`cursor-pointer ${
+              currentPage * songsPerPage >= filteredSongs.length
+                ? "text-gray-300"
+                : "text-black"
+            }`}
           />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface StarsProps {
   activeTab: boolean;
@@ -115,4 +115,108 @@ export const LogoutIcon: React.FC<LogoutIconProps> = ({ active }) => {
   );
 };
 
+export const ScrollForMoreArrowIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="7"
+      viewBox="0 0 12 7"
+      fill="none"
+    >
+      <path
+        d="M5.60125 6.13473C5.8897 6.42318 6.35737 6.42318 6.64582 6.13473L11.3464 1.43416C11.6348 1.14571 11.6348 0.678036 11.3464 0.389586C11.0579 0.101135 10.5903 0.101135 10.3018 0.389585L6.12354 4.56787L1.94525 0.389585C1.6568 0.101134 1.18913 0.101134 0.900678 0.389584C0.612228 0.678035 0.612228 1.14571 0.900678 1.43416L5.60125 6.13473ZM5.38491 4.56787L5.38491 5.61244L6.86216 5.61244L6.86216 4.56787L5.38491 4.56787Z"
+        fill="black"
+      />
+    </svg>
+  );
+};
 
+export const SearchIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+    >
+      <g opacity="0.5">
+        <path
+          d="M17.344 17.3441L13.7513 13.7514M15.6922 9.08502C15.6922 12.7341 12.734 15.6923 9.08496 15.6923C5.43588 15.6923 2.47772 12.7341 2.47772 9.08502C2.47772 5.43594 5.43588 2.47778 9.08496 2.47778C12.734 2.47778 15.6922 5.43594 15.6922 9.08502Z"
+          stroke="#101828"
+          strokeWidth="1.65181"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const Searchicon = () => {
+  return (
+    <div>
+      <svg
+        width="23"
+        height="23"
+        viewBox="0 0 23 23"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g opacity="0.5">
+          <path
+            d="M19.9891 19.9941L15.853 15.858M18.0875 10.4857C18.0875 14.6868 14.6818 18.0925 10.4807 18.0925C6.27967 18.0925 2.87402 14.6868 2.87402 10.4857C2.87402 6.28467 6.27967 2.87903 10.4807 2.87903C14.6818 2.87903 18.0875 6.28467 18.0875 10.4857Z"
+            stroke="#101828"
+            stroke-width="1.90168"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+      </svg>
+    </div>
+  );
+};
+
+export const SwiperIcon = () => {
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+      >
+        <path
+          d="M3.37583 5.44295L6.73471 8.81152L10.1033 5.45264"
+          stroke="#101828"
+          stroke-width="1.12124"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </>
+  );
+};
+export const FilterDropDownIcon = () => {
+  return (
+    <>
+      <svg
+        width="13"
+        height="14"
+        viewBox="0 0 13 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3.10876 5.79211L6.09789 9.03034L9.08703 5.79211"
+          stroke="#101828"
+          stroke-width="1.05615"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </>
+  );
+};
