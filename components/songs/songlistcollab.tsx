@@ -116,7 +116,7 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({
           </Select>
         </div>
       </div>
-      {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
         {displayedSongs.map((song, index) => (
           <SongItem
             key={index}
@@ -126,8 +126,7 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({
             geniusData={song.geniusData}
           />
         ))}
-      </div> */}
-      <SongCard />
+      </div>
 
       <div className="flex justify-center mt-10">
         <div className="flex space-x-4">

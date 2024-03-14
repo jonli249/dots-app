@@ -117,34 +117,30 @@ const ArtistPage: React.FC = () => {
               <Tabs variant="unstyled">
                 <TabList className="whitespace-nowrap overflow-auto">
                   <Tab
+                      _selected={{ color: "#565656" }}
+                      className="text-[#565656]/40 font-inter font-semibold"
+                    >
+                      CONNECT THE DOTS / DEGREES
+                  </Tab>
+                  <Tab
                     _selected={{ color: "#565656" }}
                     className="text-[#565656]/40 font-inter font-semibold"
                   >
                     RECOMMENDATIONS
                   </Tab>
-                  <Tab
-                    _selected={{ color: "#565656" }}
-                    className="text-[#565656]/40 font-inter font-semibold"
-                  >
-                    CONNECT THE DOTS
-                  </Tab>
-                  <Tab
-                    _selected={{ color: "#565656" }}
-                    className="text-[#565656]/40 font-inter font-semibold"
-                  >
-                    DEGREES
-                  </Tab>
+                  
+                  
                 </TabList>
+                
                 <TabPanels>
-                  <TabPanel className="!p-0">
-                    <Recomendtion />
-                  </TabPanel>
                   <TabPanel>
                     <TwoCollab artistId={id} />
                   </TabPanel>
-                  <TabPanel>
-                    <DegreesPage />
+                  <TabPanel className="!p-0">
+                    <Recomendtion />
                   </TabPanel>
+                  
+
                 </TabPanels>
               </Tabs>
             </TabPanel>
