@@ -29,7 +29,7 @@ interface Song {
 }
 
 interface SongListWithPaginationProps {
-  artistId: string;
+  wId: string;
   songsPerPage: number;
 }
 

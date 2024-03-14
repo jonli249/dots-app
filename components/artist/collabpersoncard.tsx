@@ -21,7 +21,7 @@ const CollabCard: React.FC<PersonCardProps> = ({ id, name, imageUrl, count}) => 
             {count}
         </div>
 
-        <Link href={`/artists/${id}?tabs=0`} className="flex items-center no-underline text-black">
+        <Link href={`/artists/${id}`} className="flex items-center no-underline text-black">
             <div className="flex-shrink-0 w-14 h-14 relative mr-2">
             <Image 
                 src={imageSrc} 

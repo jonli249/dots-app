@@ -31,8 +31,7 @@ const SongListCollab: React.FC<SongListWithPaginationProps> = ({ artistId, artis
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        console.log(artistId);
-        console.log(artistId2);
+
         const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${artistId}&artistId2=${artistId2}`);
         if (response.data && Array.isArray(response.data)) {
           setSongs(response.data);
