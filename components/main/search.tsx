@@ -125,14 +125,14 @@ const SearchComponent = () => {
           alt="/bg-input.png"
           className="absolute -top-7 z-[-1]"
           width={956}
-          height={144}
+          height={120}
         />
 
         <div className="relative h-[48px] sm:h-[70px]">
-          <Accordion className="absolute z-50 w-full">
+          <Accordion className="absolute z-50 w-full rounded-[10px]">
             <AccordionItem className="border bg-white rounded-[12px]   !border-[#B3B3B3]">
               <h2>
-                <AccordionButton className="bg-white rounded-[12px] md:h-[81px] z-10 px-6  relative shadow-[2.402px_4.804px_12.011px_0px_rgba(0,0,0,0.05)] hover:bg-gray-100  w-full p-3 flex items-center">
+                <AccordionButton className="bg-white rounded-[12px] md:h-[62px] z-10 px-6  relative shadow-[2.402px_4.804px_12.011px_0px_rgba(0,0,0,0.05)] hover:bg-gray-100  w-full p-3 flex items-center">
                   <Icon as={SearchIcon} color="gray.400" mx="2" my="2" />
                   <input
                     type="text"
@@ -141,7 +141,7 @@ const SearchComponent = () => {
                     className="w-full px-3 bg-transparent outline-none"
                     placeholder="Search  for a collaborator or song"
                   />
-                  <div className="flex items-center w-[110px] gap-2">
+                  {/* <div className="flex items-center w-[110px] gap-2">
                     <Image
                       src="/commond-icon-img.png"
                       width={38}
@@ -155,12 +155,13 @@ const SearchComponent = () => {
                       K
                     </span>
                   </div>
+                  */}
                 </AccordionButton>
               </h2>
               {inputValue.length > 0 && (
                 <AccordionPanel
                   pb={4}
-                  className="border-t  bg-white !px-0 !pb-0 rounded-b-[12px] border-[#B3B3B3]"
+                  className="border-t  bg-white !px-0 !pb-0 rounded-b-[10px] border-[#B3B3B3]"
                 >
                   <div className="max-h-[229px] bg-white px-9 py-7  w-full h-full overflow-auto transition duration-300 ease-in-out ">
                     <Flex
@@ -194,7 +195,7 @@ const SearchComponent = () => {
                                       strArtistThumb={
                                         (item as Artist).strArtistThumb
                                       }
-                                      onClick={onClose}
+                                      onClick={() => onClose()}
                                     />
                                   ) : (
                                     <SongItem
@@ -204,7 +205,7 @@ const SearchComponent = () => {
                                       }
                                       geniusData={(item as Song).geniusData}
                                       _id={(item as Song)._id}
-                                      onClick={onClose}
+                                      onClick={() => onClose()}
                                     />
                                   )}
                                 </React.Fragment>
@@ -221,6 +222,7 @@ const SearchComponent = () => {
                       ))}
                     </Flex>
                   </div>
+                  {/*
                   <div className="bg-[#424242] flex items-center gap-2 flex-wrap justify-between py-4 pl-6 pr-[18px]  rounded-[0px_0px_10px_10px]">
                     <p className="text-[15px] flex items-center text-[#D7D7D7] font-normal">
                       Pro tip: add a
@@ -237,6 +239,7 @@ const SearchComponent = () => {
                       for help
                     </p>
                   </div>
+                            */}
                 </AccordionPanel>
               )}
             </AccordionItem>

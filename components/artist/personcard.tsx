@@ -23,13 +23,14 @@ const PersonCard: React.FC<PersonCardProps> = ({
 
   return (
     <div className="relative w-[208px] h-[53px]">
-      <Image
+      {/* <Image
         className="absolute right-0 z-10 top-[-7px]"
         src="/verified.png"
         width={30}
         height={30}
         alt="verified"
       />
+    */}
       <div
         onClick={onClick}
         className={`${cardStyle} relative w-[208px] h-[53px]`}

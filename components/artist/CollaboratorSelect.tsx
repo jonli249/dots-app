@@ -3,7 +3,6 @@ import { Listbox, Transition } from "@headlessui/react";
 import { FilterDropDownIcon } from "../icons/Icons";
 
 const people = [
-  { name: "Devon Webb" },
   { name: "Ascending" },
   { name: "Descending" },
 ];
