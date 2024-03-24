@@ -36,6 +36,7 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     const [searchResults, setSearchResults] = useState<Artist[]>([]);
     const [bothCollaboratorsSelected, setBothCollaboratorsSelected] = useState(false);
     const [degreesSeperation, setDegreesSeperation] = useState(false);
+    const [showSongsTab, setShowSongsTab] = useState(true);
 
     const router = useRouter();
 
@@ -97,15 +98,29 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     try {
         if (originalCollaboratorInfo && selectedCollaboratorInfo) { 
             const response = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${originalCollaboratorInfo.id}&artistId2=${selectedCollaboratorInfo.id}`);
-        
-        if (response.data && Array.isArray(response.data)) {
-        if (response.data.length === 0) {
-          setDegreesSeperation(true); 
+            console.log("Number1")
+          if (response.data && Array.isArray(response.data)) {
+            if (response.data.length === 0) {
+              const response2 = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/mutualcollabs?artistId=${originalCollaboratorInfo.id}&artistId2=${selectedCollaboratorInfo.id}`);
+              if (response2.data && Array.isArray(response2.data) && response2.data.length === 0) {
+                const response3 = await axios.get(`https://us-east-1.aws.data.mongodb-api.com/app/dotstester-bpjzg/endpoint/findtwocollabs?artistId=${originalCollaboratorInfo.id}&artistId2=${selectedCollaboratorInfo.id}`)
+                if (response3.data && Array.isArray(response3.data) && response3.data.length === 0) {
+                  setDegreesSeperation(true);
+                  setShowSongsTab(false);
+              }
+              else {
+                
+                setDegreesSeperation(false); 
+              } 
+              setShowSongsTab(true);
+                setDegreesSeperation(false);
+              }
+            } else {
+              setShowSongsTab(true);
+              setDegreesSeperation(false); 
+            }
         } else {
-          setDegreesSeperation(false); 
-        }
-      } else {
-        setDegreesSeperation(true); 
+          setDegreesSeperation(true); 
       }
     } else {return null}
     } catch (error) {
@@ -211,13 +226,15 @@ const TwoCollab: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                 <Tab _selected={{ fontWeight: 'bold', color: 'black' }}>MUTUAL COLLABORATORS</Tab>
             </TabList>
             <TabPanels>
-                <TabPanel>
-                <SongListCollab 
-                    artistId={originalCollaboratorInfo.id} 
-                    artistId2={selectedCollaboratorInfo.id}
-                    songsPerPage={12}
-                />
-                </TabPanel>
+            {showSongsTab && (
+                  <TabPanel>
+                    <SongListCollab 
+                      artistId={originalCollaboratorInfo.id} 
+                      artistId2={selectedCollaboratorInfo.id}
+                      songsPerPage={12}
+                    />
+                  </TabPanel>
+                )}
                 <TabPanel>
                 <MutualCollabs 
                     artistId1={originalCollaboratorInfo.id} 

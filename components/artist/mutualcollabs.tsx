@@ -100,7 +100,7 @@ const MutualCollabs: React.FC<CollaboratorsProps> = ({
             key={collaborator._id}
             id={collaborator._id}
             name={collaborator.name}
-            imageUrl={collaborator.imageUrl || "/btn-2-img.png"} // Adjust the default image path as necessary
+            imageUrl={collaborator.imageUrl || "/avatar.png"} // Adjust the default image path as necessary
           />
         ))}
       </div>

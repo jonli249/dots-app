@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Flex,
@@ -12,6 +12,7 @@ import {
   AccordionButton,
   AccordionPanel,
   Skeleton,
+  useOutsideClick,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import axios from "axios";
@@ -54,6 +55,7 @@ const SearchComponent = () => {
       img: "/collaborators-img.png",
     },
   ]);
+
 
   const fetchArtists = async (searchTerm: string): Promise<Artist[]> => {
     const response = await axios.get(
