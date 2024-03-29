@@ -31,6 +31,7 @@ interface ArtistInfo {
     "iso-3166-1-codes": string[];
   };
   geniusData?: { alternate_names: string[] };
+  management?: {company: string};
 }
 
 const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
@@ -46,8 +47,8 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         );
 
         if (response.data && response.data.name) {
-          const { name, strArtistThumb, geniusData, area } = response.data;
-          setArtistInfo({ name, strArtistThumb, geniusData, area });
+          const { name, strArtistThumb, geniusData, area, management} = response.data;
+          setArtistInfo({ name, strArtistThumb, geniusData, area, management});
         } else {
           setArtistInfo(null);
           console.error("No artist information found");
@@ -131,7 +132,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                   ) : (
                     <Popover trigger="hover" key={index}>
                       <PopoverTrigger>
-                        <span>{index === 2 && "..."}</span>
+                        <span className="font-bold">{index === 2 && "see more"}</span>
                       </PopoverTrigger>
                       <PopoverContent>
                         <PopoverBody>
@@ -145,7 +146,16 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                 </span>
               </span>
             ))}
+            
           </div>
+          {artistInfo.management && (
+              <>
+                <span className="text-sm">
+                  <span className="font-bold">Management:</span>{" "}
+                  {artistInfo.management.company}
+                </span>
+              </>
+            )}
         </div>
       </div>
       <div className="mt-4 sm:mt-0 flex ml-auto flex-col space-y-2 justify-between">
