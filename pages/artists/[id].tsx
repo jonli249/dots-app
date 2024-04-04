@@ -72,7 +72,7 @@ const ArtistPage: React.FC = () => {
     <div>
       <PageSEO title="Artists" />
       <Navbar />
-      <div className="flex flex-col px-3 lg:px-0 mx-auto max-w-[826px] mt-6">
+      <div className="flex flex-col px-3 lg:px-0 mx-auto max-w-[826px] mt-2">
         <ArtistSummary artistId={id} />
         <Tabs
           index={tabIndex}
@@ -82,19 +82,19 @@ const ArtistPage: React.FC = () => {
         >
           <TabList className="whitespace-nowrap overflow-auto">
             <Tab
-              _selected={{ color: "#565656" }}
+              _selected={{ color: "#565656" , outline: "2px solid #565656", outlineOffset: '-2px', borderRadius: '5px'}}
               className="font-inter font-semibold text-[#565656]/40 "
             >
               SONGS
             </Tab>
             <Tab
-              _selected={{ color: "#565656" }}
+              _selected={{ color: "#565656" , outline: "2px solid #565656", outlineOffset: '-2px', borderRadius: '5px'}}
               className="font-inter font-semibold text-[#565656]/40  "
             >
               COLLABORATORS
             </Tab>
             <Tab
-              _selected={{ color: "#565656" }}
+              _selected={{ color: "#565656" , outline: "2px solid #565656", outlineOffset: '-2px', borderRadius: '5px'}}
               className="font-inter font-semibold text-[#565656]/40 "
             >
               SMART TOOLS
@@ -118,6 +118,7 @@ const ArtistPage: React.FC = () => {
                 <TabList className="whitespace-nowrap overflow-auto">
                   <Tab
                       _selected={{ color: "#565656" }}
+                      
                       className="text-[#565656]/40 font-inter font-semibold"
                     >
                       CONNECT THE DOTS / DEGREES

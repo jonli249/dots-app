@@ -139,7 +139,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
                     : <span>No artists found</span>}
                 </p>
                 <p className="text-gray-600">Released: {releaseDate}</p>
-              </div>
+              </div>{/*
               <div className="ml-auto flex items-center space-x-2">
               <Toaster />
               <Popover isOpen={isOpen} onClose={onClose}>
@@ -167,6 +167,7 @@ const SongDetailView: React.FC<SongDetailViewProps> = ({ songData }) => {
               </PopoverContent>
             </Popover>
               </div>
+              */}
             </div>
           </div>
         </div>

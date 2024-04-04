@@ -18,6 +18,7 @@ import {
   Input,
   useDisclosure,
   Box,
+  Flex, Text, CloseButton, Spacer 
 } from "@chakra-ui/react";
 
 interface ArtistSummaryProps {
@@ -38,6 +39,8 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   const [artistInfo, setArtistInfo] = useState<ArtistInfo | null>(null);
   const [feedback, setFeedback] = useState<string>("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isBannerVisible, setBannerVisible] = useState(true);
+
 
   useEffect(() => {
     const fetchArtistSummary = async () => {
@@ -109,6 +112,9 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
   return (
     <div className="sm:flex w-full mt-6 justify-between mx-auto">
+      
+      
+
       <div className="space-x-3 flex flex-col sm:flex-row items-center justify-between sm:justify-normal sm:items-start">
         <div>
           <Image
@@ -120,7 +126,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
           />
         </div>
         <div>
-          <h1 className="font-bold mt-4 text-xl">{artistInfo.name}</h1>
+          <h1 className="font-bold mt-4 text-4xl">{artistInfo.name}</h1>
           <div className="mt-2">
             <span className="text-sm font-bold">Other names: </span>
             {artistInfo.geniusData?.alternate_names?.map((alias, index) => (
@@ -158,6 +164,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
             )}
         </div>
       </div>
+      {/*
       <div className="mt-4 sm:mt-0 flex ml-auto flex-col space-y-2 justify-between">
         <Toaster />
         <Popover isOpen={isOpen} onClose={onClose}>
@@ -210,6 +217,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
           </Tooltip>
         </div>
       </div>
+          */}
     </div>
   );
 };
