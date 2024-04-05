@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 import { Badge } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { Image, Tooltip, Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import { Toaster, toast } from "sonner";
 import { WarningTwoIcon } from "@chakra-ui/icons";
+import { FaInstagram } from 'react-icons/fa';
 import {
   Popover,
   PopoverTrigger,
@@ -31,7 +33,7 @@ interface ArtistInfo {
   area?: {
     "iso-3166-1-codes": string[];
   };
-  geniusData?: { alternate_names: string[] };
+  geniusData?: { alternate_names: string[], instagram_name: string };
   management?: {company: string};
 }
 
@@ -165,6 +167,13 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
               </>
             )}
         </div>
+      </div>
+      <div className="mt-6 sm:mt-0 flex ml-auto flex-row space-x-1 justify-between bg-gray-500">
+      {artistInfo.geniusData?.instagram_name && (
+        <Link href={`https://instagram.com/${artistInfo.geniusData.instagram_name}`} target="_blank" rel="noopener noreferrer" aria-label="Artist's Instagram">
+          <FaInstagram size="24" color="#000000"/> 
+        </Link>
+      )}
       </div>
       {/*
       <div className="mt-4 sm:mt-0 flex ml-auto flex-col space-y-2 justify-between">
