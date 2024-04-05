@@ -135,7 +135,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
   };
 
   return (
-    <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-6">
+    <div className="flex flex-col max-w-[900px] mx-auto xl:px-0 font-inter mt-6">
       <div className="flex justify-between mb-4">
         <div className="flex-1 mr-4">
           <input

@@ -125,8 +125,10 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
             htmlHeight={72}
           />
         </div>
-        <div>
+        <div >
+          <div className="sm:content-center md:content-start">
           <h1 className="font-bold mt-4 text-4xl">{artistInfo.name}</h1>
+          </div>
           <div className="mt-2">
             <span className="text-sm font-bold">Other names: </span>
             {artistInfo.geniusData?.alternate_names?.map((alias, index) => (

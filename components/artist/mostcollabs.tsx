@@ -100,13 +100,14 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
 
   return (
     <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-6">
-      <div className="px-3">
+      <div className="">
       <div className=" mb-8 px-3 bg-[url(/Hero-Bg-round.png)] bg-no-repeat bg-center bg-cover max-w-[826px] w-full mx-auto py-5 md:py-2 rounded-2xl">
-        <div className="max-w-[713px] w-full mx-auto flex max-md:flex-col gap-7 sm:gap-5 items-center justify-between">
+        <div className="max-w-[800px] w-full mx-auto flex max-md:flex-col gap-7 sm:gap-5 items-center justify-between">
+          {/*
           <div className="p-6 border-black border flex justify-center items-center w-[235px] h-[235px] rounded-[100%]">
             <div className="p-6 border-black border w-full h-full rounded-[100%] flex justify-center items-center">
             <div className="p-6 border-black border flex justify-center items-center w-[235px] h-[235px] rounded-[100%]">
-                {/* Replace the hardcoded image with strArtistThumb */}
+                
                 {artistData && (
                   <Image
                     src={artistData.strArtistThumb || "/avatar.png"} // Fallback to a default image if strArtistThumb is not available
@@ -117,8 +118,9 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
                   />
                 )}
               </div>
-            </div>
+            </div> 
           </div>
+          */}
 
           <div>
             <p className="text-[#fff] font-Telegraf-ultrabold max-sm:text-center text-[20px] not-italic font-extrabold leading-[normal]">
