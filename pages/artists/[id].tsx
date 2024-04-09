@@ -125,14 +125,14 @@ const ArtistPage: React.FC = () => {
             >
               COLLABORATORS
             </Tab>
-            
+            {/*
             <Tab
               _selected={{ color: "#565656" , outline: "2px solid #565656", outlineOffset: '-2px', borderRadius: '5px'}}
               className="font-inter font-semibold text-[#565656]/40 "
             >
               SMART TOOLS
             </Tab>
-            
+            */}
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -144,7 +144,7 @@ const ArtistPage: React.FC = () => {
             <TabPanel>
               <Collaborators artistId={artistId} />
             </TabPanel>
-            
+            {/*
             <TabPanel>
               <Image
                 src={"/dividerline.png"}
@@ -180,7 +180,7 @@ const ArtistPage: React.FC = () => {
                 </TabPanels>
               </Tabs>
             </TabPanel>
-            
+            */}
           </TabPanels>
         </Tabs>
       </div>
