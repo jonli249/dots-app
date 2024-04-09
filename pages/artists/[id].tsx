@@ -14,12 +14,14 @@ import SongList from "../../components/songs/songlist";
 import Collaborators from "../../components/artist/mostcollabs";
 import Navbar from "../../components/main/navbar";
 import ArtistSummary from "../../components/artist/artistsummary";
+import ArtistInfo from "../../components/artist/artistinfo";
 import TwoCollab from "../../components/artist/twocollab";
 import Image from "next/image";
 import Recomendtion from "../../components/artist/recommendations/Recomendtion";
 import DegreesPage from "../../components/artist/degrees/DegreesPage";
 import PageSEO from "../../components/icons/PageSEO";
 import axios from 'axios';
+import { Box, Text, VStack, Link, Badge } from "@chakra-ui/react";
 
 const ArtistPage: React.FC = () => {
   const router = useRouter();
@@ -56,6 +58,7 @@ const ArtistPage: React.FC = () => {
     fetchData();
     setTabIndex(0);
   }, [id]);
+
 
   if (!artistId) {
     return (
@@ -134,7 +137,7 @@ const ArtistPage: React.FC = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-
+              <ArtistInfo artistId={artistId} />
             </TabPanel>
             <TabPanel>
               <SongList artistId={artistId} songsPerPage={12} />
