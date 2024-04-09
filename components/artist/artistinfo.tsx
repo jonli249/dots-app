@@ -97,10 +97,6 @@ const ArtistInfo: React.FC<ArtistInfoProps> = ({ artistId }) => {
       <Text mb="2" fontSize="lg" fontWeight="bold">Bio:</Text>
       <VStack align="start" spacing={4}>
         <Text textAlign="justify">{artistInfo.bio_and_accolades.content}</Text>
-        {/* If you have accolades as a list, you could map over them like this: */}
-        {artistInfo.accolades && artistInfo.accolades.map((accolade, index) => (
-          <Badge key={index} colorScheme="green">{accolade}</Badge>
-        ))}
         </VStack>
     </Box>
     )}

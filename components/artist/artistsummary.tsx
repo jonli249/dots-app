@@ -168,7 +168,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
             )}
         </div>
       </div>
-      <div className="mt-6 sm:mt-0 flex ml-auto flex-row space-x-1 justify-between bg-gray-500">
+      <div className="mt-6 sm:mt-0 flex ml-auto flex-row space-x-1 justify-between">
       {artistInfo.geniusData?.instagram_name && (
         <Link href={`https://instagram.com/${artistInfo.geniusData.instagram_name}`} target="_blank" rel="noopener noreferrer" aria-label="Artist's Instagram">
           <FaInstagram size="24" color="#000000"/> 
