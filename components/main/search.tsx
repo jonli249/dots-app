@@ -14,7 +14,7 @@ import {
   Skeleton,
   useOutsideClick,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon , CloseIcon} from "@chakra-ui/icons";
 import axios from "axios";
 import debounce from "lodash/debounce";
 import PersonCard from "../artist/personcard";
@@ -46,6 +46,7 @@ interface Section {
 const SearchComponent = () => {
   const [inputValue, setInputValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const inputRef = React.useRef(null);
   const [sections, setSections] = useState<Section[]>([
     { title: "Songs", data: [], link: "songs", img: "/song-img.png" },
     {
@@ -56,6 +57,11 @@ const SearchComponent = () => {
     },
   ]);
 
+
+  const handleClearInput = () => {
+    setInputValue("");
+    onClose(); 
+  };
 
   const fetchArtists = async (searchTerm: string): Promise<Artist[]> => {
     const response = await axios.get(
@@ -131,8 +137,10 @@ const SearchComponent = () => {
         />
 
         <div className="relative h-[48px] sm:h-[70px]">
-          <Accordion className="absolute z-50 w-full rounded-[10px]">
+          <Accordion allowToggle lassName="absolute z-50 w-full rounded-[10px]">
             <AccordionItem className="border bg-white rounded-[12px]   !border-[#B3B3B3]">
+              {({ isExpanded }) => (
+              <>
               <h2>
                 <AccordionButton className="bg-white rounded-[12px] md:h-[62px] z-10 px-6  relative shadow-[2.402px_4.804px_12.011px_0px_rgba(0,0,0,0.05)] hover:bg-gray-100  w-full p-3 flex items-center">
                   <Icon as={SearchIcon} color="gray.400" mx="2" my="2" />
@@ -141,7 +149,7 @@ const SearchComponent = () => {
                     onChange={(e) => setInputValue(e.target.value)}
                     value={inputValue}
                     className="w-full px-3 bg-transparent outline-none"
-                    placeholder="Search  for a collaborator or song"
+                    placeholder="Search for a collaborator or song"
                   />
                   {/* <div className="flex items-center w-[110px] gap-2">
                     <Image
@@ -243,6 +251,8 @@ const SearchComponent = () => {
                   </div>
                             */}
                 </AccordionPanel>
+              )}
+              </>
               )}
             </AccordionItem>
           </Accordion>
