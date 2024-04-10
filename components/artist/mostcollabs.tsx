@@ -30,7 +30,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [artistData, setArtistData] = useState<ArtistData | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const collaboratorsPerPage = 12; 
 
@@ -75,11 +75,13 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   );
 
   const dynamicDatamap = useMemo(() => {
-    return collaborators.slice(0, 3).map((collab, index) => ({
+    return collaborators.slice(0, 4).map((collab, index) => ({
       imgSrc: collab.imageUrl,
       personName: collab.name,
       value: collab.count,
-      valueBg: "bg-blue-500" 
+      id: collab._id,
+      valueBg: "bg-blue-500", 
+      count: collab.count 
     }));
   }, [collaborators]);
 
@@ -90,19 +92,33 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
     return collaborators;
   }, [searchQuery, fuse, collaborators]);
 
-  const displayedCollaborators = useMemo(() => {
-    const offsetCollaborators = filteredCollaborators.slice(3);
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOrder(event.target.value as "asc" | "desc");
+  };
+  
 
-    const startIndex = (currentPage - 1) * collaboratorsPerPage;
-    const endIndex = startIndex + collaboratorsPerPage;
-    return offsetCollaborators.slice(startIndex, endIndex);
-    }, [filteredCollaborators, currentPage, collaboratorsPerPage]);
+    const displayedCollaborators = useMemo(() => {
+      let sortedCollaborators = [...filteredCollaborators.slice(4)];
+      
+      sortedCollaborators.sort((a, b) => {
+        if (sortOrder === "asc") {
+          return a.count - b.count;
+        } else {
+          return b.count - a.count;
+        }
+      });
+      
+      const startIndex = (currentPage - 1) * collaboratorsPerPage;
+      const endIndex = startIndex + collaboratorsPerPage;
+      return sortedCollaborators.slice(startIndex, endIndex);
+    }, [filteredCollaborators, currentPage, collaboratorsPerPage, sortOrder]);
+
+  
 
   return (
     <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-6">
-      <div className="">
-      <div className=" mb-8 px-3 bg-[url(/Hero-Bg-round.png)] bg-no-repeat bg-center bg-cover max-w-[826px] w-full mx-auto py-5 md:py-2 rounded-2xl">
-        <div className="max-w-[800px] w-full mx-auto flex max-md:flex-col gap-7 sm:gap-5 items-center justify-between">
+      <div className=" mb-8 px-1 bg-[url(/Hero-Bg-round.png)] bg-no-repeat bg-center bg-cover bg-center max-w-[826px] w-full mx-auto py-5 md:py-2 rounded-2xl">
+        <div className="max-w-[826px] w-full items-center justify-between">
           {/*
           <div className="p-6 border-black border flex justify-center items-center w-[235px] h-[235px] rounded-[100%]">
             <div className="p-6 border-black border w-full h-full rounded-[100%] flex justify-center items-center">
@@ -123,62 +139,49 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
           */}
 
           <div>
-            <p className="text-[#fff] font-Telegraf-ultrabold max-sm:text-center text-[20px] not-italic font-extrabold leading-[normal]">
+            <p className="text-[#fff] font-Telegraf-ultrabold max-sm:text-center text-[20px] not-italic font-extrabold leading-[normal] text-center">
               Top Collaborators
             </p>
 
-            <div className="grid sm:grid-cols-4 grid-cols-2 gap-7 sm:gap-5 justify-center pt-[23px]">
+            <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 bg-opacity-90 pt-[23px]">
               {dynamicDatamap.map((item, index) => (
-                <div
-                  key={index}
-                  className="relative  border-[1.035px_solid_#9E9E9E] bg-[#fff] w-[96px] h-[120px] rounded-[15.104px] shadow-[2.07px_4.141px_10.352px_0px_rgba(0,0,0,0.10)]"
-                >
-                  <div
-                    className={`${item.valueBg} w-[38px] h-[38px] rounded-[100%] absolute right-[-11px] top-[-11px] flex justify-center items-center`}
-                  >
-                    <p className="text-[#FFF] text-center font-Telegraf-ultrabold text-[12.767px] not-italic font-extrabold leading-[normal]">
-                      {item.value}
-                    </p>
-                  </div>
-
-                  <div className="px-[23px] pt-[19px] pb-[18px]">
-                    <Image
-                      src={item.imgSrc || "/avatar.png"}
-                      width={49}
-                      height={49}
-                      alt="man-img-src"
-                    />
-
-                    <p className="text-center text-[#000] font-Telegraf-ultrabold text-[11px] font-extrabold">
-                      {item.personName}
-                    </p>
-                  </div>
-                </div>
+                <CollabCard
+                key={index}
+                id={item.id}
+                name={item.personName}
+                imageUrl={item.imgSrc}
+                count={item.count}
+              />
               ))}
             </div>
           </div>
         </div>
       </div>
-      </div>
+
       <div className="flex justify-between mb-4">
-        <input
-          type="text"
-          placeholder="Search by collaborator name..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="px-2 py-2 border border-gray-300 rounded-md w-full mr-4"
-        />
-        {/* <Select
-          placeholder="Sort"
+        <div className="flex-1 mr-4">
+          <input
+            type="text"
+            placeholder="Search by collaborator name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="px-2 py-2 border border-gray-300 rounded-md w-full mr-4"
+          />
+        </div>
+        <div>
+        <Select
+          onChange={handleSortChange}
           value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+          className="text-xs py-1 px-1 bg-white border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 whitespace-nowrap"
         >
-          <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
-        </Select> */}
-        <CollaboratorSelect />
+          <option value="asc">Ascending</option>
+        </Select>
+        </div>
+        
+        
       </div>
-      <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 bg-opacity-90">
+      <div className="px-1 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 bg-opacity-90">
         {displayedCollaborators.map((collaborator, index) => (
           <CollabCard
             key={index}
