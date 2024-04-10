@@ -137,7 +137,7 @@ const SearchComponent = () => {
         />
 
         <div className="relative h-[48px] sm:h-[70px]">
-          <Accordion allowToggle lassName="absolute z-50 w-full rounded-[10px]">
+          <Accordion allowToggle className="absolute z-50 w-full rounded-[10px]">
             <AccordionItem className="border bg-white rounded-[12px]   !border-[#B3B3B3]">
               {({ isExpanded }) => (
               <>
