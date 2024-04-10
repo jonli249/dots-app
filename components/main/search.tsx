@@ -13,6 +13,8 @@ import {
   AccordionPanel,
   Skeleton,
   useOutsideClick,
+  Button, 
+  ButtonGroup
 } from "@chakra-ui/react";
 import { SearchIcon , CloseIcon} from "@chakra-ui/icons";
 import axios from "axios";
@@ -43,6 +45,17 @@ interface Section {
   img: string;
 }
 
+const SearchToggle = ({ setSectionFilter }) => {
+  return (
+    <Flex display={{ base: 'flex', md: 'none' }} justifyContent="center" my="4">
+      <ButtonGroup isAttached variant="outline">
+        <Button onClick={() => setSectionFilter('Songs')}>Songs</Button>
+        <Button onClick={() => setSectionFilter('Collaborators')}>Collaborators</Button>
+      </ButtonGroup>
+    </Flex>
+  );
+};
+
 const SearchComponent = () => {
   const [inputValue, setInputValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,6 +69,7 @@ const SearchComponent = () => {
       img: "/collaborators-img.png",
     },
   ]);
+  const [sectionFilter, setSectionFilter] = useState<null | string>(null);
 
 
   const handleClearInput = () => {
@@ -137,6 +151,7 @@ const SearchComponent = () => {
         />
 
         <div className="relative h-[48px] sm:h-[70px]">
+          
           <Accordion allowToggle className="absolute z-50 w-full rounded-[10px]">
             <AccordionItem className="border bg-white rounded-[12px]   !border-[#B3B3B3]">
               {({ isExpanded }) => (
@@ -168,6 +183,7 @@ const SearchComponent = () => {
                   */}
                 </AccordionButton>
               </h2>
+              <SearchToggle setSectionFilter={setSectionFilter} />
               {inputValue.length > 0 && (
                 <AccordionPanel
                   pb={4}
@@ -178,7 +194,9 @@ const SearchComponent = () => {
                       direction={{ base: "column", md: "row" }}
                       gap={{ base: "4", md: "8" }}
                     >
-                      {sections.map((section) => (
+                      {sections
+                        .filter((section) => !sectionFilter || section.title === sectionFilter)
+                        .map((section) => (
                         <Box key={section.title} flex="1">
                           <Text
                             className="border-none flex items-center text-[8D8D8D] gap-4"
