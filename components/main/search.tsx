@@ -45,7 +45,11 @@ interface Section {
   img: string;
 }
 
-const SearchToggle = ({ setSectionFilter }) => {
+interface SearchToggleProps {
+  setSectionFilter: (filter: string) => void;
+}
+
+const SearchToggle: React.FC<SearchToggleProps> = ({ setSectionFilter }) => {
   return (
     <Flex display={{ base: 'flex', md: 'none' }} justifyContent="center" my="4">
       <ButtonGroup isAttached variant="outline">
