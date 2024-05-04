@@ -7,30 +7,34 @@ interface PersonCardProps {
   name: string;
   imageUrl?: string;
   count?: number;
+  ogid?: string;
+  onClick?: (id: string) => void;
 }
 
-const CollabCard: React.FC<PersonCardProps> = ({
+const PopupCard: React.FC<PersonCardProps> = ({
   id,
   name,
   imageUrl,
   count,
+  ogid, 
+  onClick,
 }) => {
   const imageSrc = imageUrl || "/avatar.png";
 
-  
-
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (onClick) {
+      e.preventDefault();  // Prevents the link from navigating
+      onClick(id);
+    }
+  };
 
   return (
-    <div className="relative">
+    <div className="relative" onClick={handleClick}>
       <div className="absolute right-0 z-10 top-[-7px] bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
         {count}
       </div>
 
       <div className=" flex items-center bg-white shadow-md rounded-full overflow-hidden border border-black hover:shadow-lg transition-shadow duration-300 cursor-pointer mb-2">
-        <Link
-          href={`/artists/${id}?tabs=0`}
-          className="flex items-center no-underline text-black"
-        >
           <div className="flex-shrink-0 w-14 h-14 relative mr-2">
             <Image
               src={imageSrc}
@@ -43,10 +47,10 @@ const CollabCard: React.FC<PersonCardProps> = ({
           <p className="text-sm line-clamp-1 font-Telegraf-ultrabold font-semibold ">
             {name}
           </p>
-        </Link>
+        
       </div>
     </div>
   );
 };
 
-export default CollabCard;
+export default PopupCard;

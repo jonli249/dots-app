@@ -6,7 +6,9 @@ import { Button } from "@chakra-ui/react";
 import { Image, Tooltip, Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import { Toaster, toast } from "sonner";
 import { WarningTwoIcon } from "@chakra-ui/icons";
-import { FaInstagram } from 'react-icons/fa';
+import { FaSpotify, FaDeezer, FaTwitter, FaFacebook, FaSoundcloud, FaApple, FaYoutube, FaInstagram } from 'react-icons/fa';
+import { MdWeb } from 'react-icons/md'; // Assuming using for Wikidata and VIAF as a generic web icon
+import { SiTidal } from 'react-icons/si'; // Tidal icon from Simple Icons
 import {
   Popover,
   PopoverTrigger,
@@ -27,6 +29,11 @@ interface ArtistSummaryProps {
   artistId: string;
 }
 
+interface LinkInfo {
+  type: string;
+  url: string;
+}
+
 interface ArtistInfo {
   name: string;
   strArtistThumb?: string;
@@ -35,6 +42,7 @@ interface ArtistInfo {
   };
   geniusData?: { alternate_names: string[], instagram_name: string };
   management?: {company: string};
+  links?: LinkInfo[];
 }
 
 const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
@@ -52,8 +60,8 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         );
 
         if (response.data && response.data.name) {
-          const { name, strArtistThumb, geniusData, area, management} = response.data;
-          setArtistInfo({ name, strArtistThumb, geniusData, area, management});
+          const { name, strArtistThumb, geniusData, area, management, links} = response.data;
+          setArtistInfo({ name, strArtistThumb, geniusData, area, management, links});
         } else {
           setArtistInfo(null);
           console.error("No artist information found");
@@ -88,6 +96,30 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     }
   };
 
+  ///FaSpotify, FaDeezer, FaTwitter, FaFacebook, FaSongkick, FaSoundcloud, FaApple, FaYoutube, FaInstagram
+  const renderLinks = (links: LinkInfo[]) => {
+    const iconMap: { [key: string]: JSX.Element } = {
+      instagram: <FaInstagram size="24" color="#000000"/>,
+      spotify: <FaSpotify size="24" color="#000000"/>,
+      twitter: <FaTwitter size="24" color="#000000"/>,
+      youtube: <FaYoutube size="24" color="#000000"/>,
+      soundcloud: <FaSoundcloud size="24" color="#000000"/>,
+      
+    };
+  
+    return links.map((link, index) => {
+      const IconComponent = iconMap[link.type.toLowerCase()];
+      if (!IconComponent) return null;
+  
+      return (
+        <Link key={index} href={link.url} target="_blank" rel="noopener noreferrer" aria-label={`Artist's ${link.type}`}>
+          {IconComponent}
+        </Link>
+      );
+    });
+  };
+    
+
   if (!artistInfo) {
     return (
       <div style={{ width: "100%", maxWidth: 750 }}>
@@ -111,6 +143,8 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
   const photoSource = artistInfo.strArtistThumb || "/avatar.png";
 
   const alias = artistInfo.geniusData?.alternate_names;
+
+  
 
   return (
     <div className="sm:flex w-full mt-6 justify-between mx-auto">
@@ -168,12 +202,9 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
             )}
         </div>
       </div>
-      <div className="mt-6 sm:mt-0 flex ml-auto flex-row space-x-1 justify-between">
-      {artistInfo.geniusData?.instagram_name && (
-        <Link href={`https://instagram.com/${artistInfo.geniusData.instagram_name}`} target="_blank" rel="noopener noreferrer" aria-label="Artist's Instagram">
-          <FaInstagram size="24" color="#000000"/> 
-        </Link>
-      )}
+      <div className="mt-6 sm:mt-0 flex ml-auto flex-row space-x-2 justify-between">
+        {artistInfo.links &&  renderLinks(artistInfo.links)}
+      
       </div>
       {/*
       <div className="mt-4 sm:mt-0 flex ml-auto flex-col space-y-2 justify-between">

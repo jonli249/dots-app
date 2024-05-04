@@ -5,10 +5,12 @@ import axios from "axios"; // Assuming you might switch to axios for consistency
 import { Select } from "@chakra-ui/react"; // For sort order selection
 import Fuse from "fuse.js"; // For searching collaborators
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // For pagination controls
-import CollabCard from "./collabpersoncard";
+import PopupCard from "./popupcard";
 import TopCollabs from "./topcollabs";
-import CollaboratorSelect from "./CollaboratorSelect";
+import SongListCollab from '../songs/songlistcollab';
 import dynamic from "../../node_modules/next/dynamic";
+import { Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton } from "@chakra-ui/react";
+
 
 interface Collaborator {
   _id: string;
@@ -29,6 +31,8 @@ interface ArtistData {
 const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [artistData, setArtistData] = useState<ArtistData | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedCollab, setSelectedCollab] = useState<Collaborator | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -64,6 +68,15 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
     fetchData();
   }, [artistId]);
 
+  const toggleDrawer = (collabId?: string) => {
+    if (collabId) {
+      const collab = collaborators.find(c => c._id === collabId);
+      setSelectedCollab(collab ?? null);
+    } else {
+      setSelectedCollab(null); // This will close the drawer and clear the selection
+    }
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   const fuse = useMemo(
     () =>
@@ -116,6 +129,8 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   
 
   return (
+
+  
     <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-6">
       <div className=" mb-8 px-1 bg-[url(/Hero-Bg-round.png)] bg-no-repeat bg-center bg-cover bg-center max-w-[826px] w-full mx-auto py-5 md:py-2 rounded-2xl">
         <div className="max-w-[826px] w-full items-center justify-between">
@@ -145,12 +160,13 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
 
             <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 bg-opacity-90 pt-[23px]">
               {dynamicDatamap.map((item, index) => (
-                <CollabCard
+                <PopupCard
                 key={index}
                 id={item.id}
                 name={item.personName}
                 imageUrl={item.imgSrc}
                 count={item.count}
+                onClick={() => toggleDrawer(item.id)}
               />
               ))}
             </div>
@@ -183,15 +199,43 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
       </div>
       <div className="px-1 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 bg-opacity-90">
         {displayedCollaborators.map((collaborator, index) => (
-          <CollabCard
+          <PopupCard
             key={index}
             id={collaborator._id}
             name={collaborator.name}
             imageUrl={collaborator.imageUrl}
             count={collaborator.count}
+            ogid = {artistId}
+            onClick={() => toggleDrawer(collaborator._id)}
           />
         ))}
       </div>
+
+      <Drawer
+      isOpen={isDrawerOpen}
+      placement="bottom"
+      onClose={() => toggleDrawer()}
+    >
+      <DrawerOverlay />
+      <DrawerContent className="max-w-l rounded-t-lg overflow-hidden" >
+        <DrawerCloseButton />
+        <DrawerHeader>Collaboration Details</DrawerHeader>
+        <DrawerBody>
+          {selectedCollab && artistId ? ( 
+              <SongListCollab
+                artistId={artistId} 
+                artistId2={selectedCollab._id}
+                songsPerPage={12}
+              />
+            ) : (
+              <p>No collaborator selected or artist ID is not available.</p>
+            )}
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+
+      
+
       <div className="flex justify-center mt-10">
         <FaArrowLeft
           onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
