@@ -76,7 +76,7 @@ const MutualCollabs: React.FC<CollaboratorsProps> = ({
   }, [filteredCollaborators, currentPage, collaboratorsPerPage]);
 
   return (
-    <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-2">
+    <div className="flex flex-col max-w-l mx-auto xl:px-0 font-inter mt-2">
       <div className="flex justify-between mb-4">
         <input
           type="text"

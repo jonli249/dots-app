@@ -6,10 +6,22 @@ import { Select } from "@chakra-ui/react"; // For sort order selection
 import Fuse from "fuse.js"; // For searching collaborators
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // For pagination controls
 import PopupCard from "./popupcard";
+import PersonCard from "./personcard";
 import TopCollabs from "./topcollabs";
+import MutualCollabs from "./mutualcollabs";
 import SongListCollab from '../songs/songlistcollab';
 import dynamic from "../../node_modules/next/dynamic";
 import { Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  Tooltip,
+  Skeleton,
+  SkeletonCircle,
+} from "@chakra-ui/react";
 
 
 interface Collaborator {
@@ -32,6 +44,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [artistData, setArtistData] = useState<ArtistData | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
   const [selectedCollab, setSelectedCollab] = useState<Collaborator | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -219,14 +232,56 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
       <DrawerOverlay />
       <DrawerContent className="max-w-l rounded-t-lg overflow-hidden" >
         <DrawerCloseButton />
-        <DrawerHeader>Collaboration Details</DrawerHeader>
+        <DrawerHeader>
+        {selectedCollab && artistId ? ( 
+          <PersonCard
+            id = {selectedCollab._id}
+            name = {selectedCollab.name}
+            />
+            ) : (
+              <p>No collaborator selected or artist ID is not available.</p>
+            )}
+          
+        </DrawerHeader>
         <DrawerBody>
           {selectedCollab && artistId ? ( 
-              <SongListCollab
-                artistId={artistId} 
-                artistId2={selectedCollab._id}
-                songsPerPage={12}
-              />
+              
+              <Tabs
+                index={tabIndex}
+                onChange={(index) => setTabIndex(index)}
+                variant="unstyled"
+                className="mt-6"
+              >
+          <TabList className="whitespace-nowrap overflow-auto px-5">
+                <Tab
+                  _selected={{ color: "#565656" , outline: "2px solid #565656", outlineOffset: '-2px', borderRadius: '5px'}}
+                  className="font-inter font-semibold text-[#565656]/40 "
+                >
+                  SONGS
+                </Tab>
+                <Tab
+                  _selected={{ color: "#565656" , outline: "2px solid #565656", outlineOffset: '-2px', borderRadius: '5px'}}
+                  className="font-inter font-semibold text-[#565656]/40  "
+                >
+                  MUTUAL COLLABORATORS
+                </Tab>
+                
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                    <SongListCollab
+                    artistId={artistId} 
+                    artistId2={selectedCollab._id}
+                    songsPerPage={12}
+                  />
+                </TabPanel>
+                <TabPanel>
+                  <MutualCollabs artistId1={artistId} artistId2={selectedCollab._id} />
+                </TabPanel>
+                
+                
+              </TabPanels>
+            </Tabs>
             ) : (
               <p>No collaborator selected or artist ID is not available.</p>
             )}
