@@ -71,10 +71,6 @@ const ArtistInfo: React.FC<ArtistInfoProps> = ({ artistId }) => {
   if (!artistInfo) {
     return (
       <div style={{ width: "100%", maxWidth: 750 }}>
-        <div className="flex aic" style={{ gap: 20 }}>
-          <SkeletonCircle width={100} height={100} />
-          <Skeleton height={7} w={"100px"} />
-        </div>
         <Skeleton h={10} mt={4} />
         <div
           className="flex fdc"
@@ -89,11 +85,11 @@ const ArtistInfo: React.FC<ArtistInfoProps> = ({ artistId }) => {
   }
 
   return (
-    <div className="sm:flex w-full mt-6 justify-between mx-auto">
-       <div className="sm:flex w-full mt-6 justify-between mx-auto">
+    <div className="sm:flex w-full mt-2 justify-between mx-auto">
+       <div className="sm:flex w-full mt-2 justify-between mx-auto">
     
     {artistInfo?.bio_and_accolades && (
-      <Box p={5} shadow="md" borderWidth="1px" borderRadius="md" mt={4}>
+      <Box p={5} shadow="md" borderWidth="1px" borderRadius="md">
       <Text mb="2" fontSize="lg" fontWeight="bold">Bio:</Text>
       <VStack align="start" spacing={4}>
         <Text textAlign="justify">{artistInfo.bio_and_accolades.content}</Text>

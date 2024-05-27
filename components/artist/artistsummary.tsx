@@ -6,9 +6,8 @@ import { Button } from "@chakra-ui/react";
 import { Image, Tooltip, Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import { Toaster, toast } from "sonner";
 import { WarningTwoIcon } from "@chakra-ui/icons";
-import { FaSpotify, FaDeezer, FaTwitter, FaFacebook, FaSoundcloud, FaApple, FaYoutube, FaInstagram } from 'react-icons/fa';
-import { MdWeb } from 'react-icons/md'; // Assuming using for Wikidata and VIAF as a generic web icon
-import { SiTidal } from 'react-icons/si'; // Tidal icon from Simple Icons
+import { FaSpotify, FaDeezer, FaTwitter, FaFacebook, FaSoundcloud, FaApple, FaYoutube, FaInstagram ,  FaGuitar, FaDrum, FaMusic } from 'react-icons/fa';
+import { GiTambourine, GiGuitarBassHead, GiDrumKit , GiPianoKeys} from 'react-icons/gi';
 import {
   Popover,
   PopoverTrigger,
@@ -34,6 +33,15 @@ interface LinkInfo {
   url: string;
 }
 
+interface IconMap {
+  [key: string]: { icon: JSX.Element, label: string };
+}
+
+interface InstrumentInfo {
+  type: string;
+  count: string;
+}
+
 interface ArtistInfo {
   name: string;
   strArtistThumb?: string;
@@ -43,6 +51,7 @@ interface ArtistInfo {
   geniusData?: { alternate_names: string[], instagram_name: string };
   management?: {company: string};
   links?: LinkInfo[];
+  instruments?: InstrumentInfo[];
 }
 
 const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
@@ -60,8 +69,8 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
         );
 
         if (response.data && response.data.name) {
-          const { name, strArtistThumb, geniusData, area, management, links} = response.data;
-          setArtistInfo({ name, strArtistThumb, geniusData, area, management, links});
+          const { name, strArtistThumb, geniusData, area, management, links, instruments} = response.data;
+          setArtistInfo({ name, strArtistThumb, geniusData, area, management, links, instruments});
         } else {
           setArtistInfo(null);
           console.error("No artist information found");
@@ -75,6 +84,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
     fetchArtistSummary();
   }, [artistId]);
 
+  
   const handleBadDataButtonClick = () => {
     onOpen();
   };
@@ -106,6 +116,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       soundcloud: <FaSoundcloud size="24" color="#000000"/>,
       
     };
+    
   
     return links.map((link, index) => {
       const IconComponent = iconMap[link.type.toLowerCase()];
@@ -118,6 +129,39 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       );
     });
   };
+
+  const renderInstruments = (instruments: InstrumentInfo[]) => {
+    if (!instruments) return null;
+    const instrumentCounts: { [key: string]: number } = {};
+    instruments.forEach(({ type, count }) => {
+      const normalizedType = type.replace(/guitar|electric guitar|acoustic guitar/, 'guitar') 
+                                .replace(/drums \(drum set\)|percussion/, 'drums')
+                                .replace(/bass guitar|bass/, 'bassguitar') 
+                                .replace(/tambourine/, 'tambourine')
+                                .replace(/keyboard/, 'piano');
+      instrumentCounts[normalizedType] = (instrumentCounts[normalizedType] || 0) + parseInt(count, 10);
+    });
+
+    const iconMap: IconMap = {
+      guitar: { icon: <FaGuitar size="20" />, label: "Guitar"},
+      bassguitar: { icon: <GiGuitarBassHead size="20" />, label: "Bass Guitar"},
+      piano: { icon: <GiPianoKeys size="20" />, label: "Piano/Keys"},
+      drums: { icon: <GiDrumKit size="20" />, label: "Drums"},
+      tambourine: { icon: <GiTambourine size="20" />, label: "Drums"},
+    };
+
+    return Object.entries(instrumentCounts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([type, count]) => (
+        <Tooltip key={type} label={`${iconMap[type].label} x${count}`} placement="top" hasArrow>
+          <Button size="md" bg="gray.200" _hover={{ bg: "gray.300" }}>
+            {iconMap[type].icon}
+          </Button>
+        </Tooltip>
+      ));
+  };
+        
+
     
 
   if (!artistInfo) {
@@ -200,14 +244,23 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
                 </span>
               </>
             )}
+            <Flex mt="1" ml="auto" direction="column">
+          <Flex direction="row" gap="2" mt="0">
+            {artistInfo.instruments && renderInstruments(artistInfo.instruments)}
+          </Flex>
+          <Toaster />
+          </Flex>
         </div>
       </div>
-      <div className="mt-6 sm:mt-0 flex ml-auto flex-row space-x-2 justify-between">
-        {artistInfo.links &&  renderLinks(artistInfo.links)}
       
-      </div>
-      {/*
-      <div className="mt-4 sm:mt-0 flex ml-auto flex-col space-y-2 justify-between">
+      
+      <div className="mt-1 sm:mt-0 flex ml-auto flex-col space-y-1 justify-between">
+        <div className="mt-6 sm:mt-0 flex ml-auto flex-row space-x-2 justify-between">
+          {artistInfo.links &&  renderLinks(artistInfo.links)}
+        
+        </div>
+        
+         
         <Toaster />
         <Popover isOpen={isOpen} onClose={onClose}>
           <PopoverTrigger>
@@ -245,6 +298,7 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
             </PopoverFooter>
           </PopoverContent>
         </Popover>
+        {/*
         <div className="mt-2 flex justify-end">
           <Tooltip label="Coming Soon!" aria-label="A tooltip">
             <Button
@@ -257,9 +311,8 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
               Claim
             </Button>
           </Tooltip>
-        </div>
+          </div> */}
       </div>
-          */}
     </div>
   );
 };
