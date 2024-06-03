@@ -155,7 +155,7 @@ const SongList: React.FC<SongListWithPaginationProps> = ({ artistId, songsPerPag
           </Select>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 ${animationDirection === 'in' ? 'slide-in-right' : 'slide-out-left'}`">
+      <div className="grid grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 ${animationDirection === 'in' ? 'slide-in-right' : 'slide-out-left'}`">
         {displayedSongs.map((song, index) => (
           <SongItem
             key={index}

@@ -206,37 +206,38 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
           />
         </div>
         <div >
-          <div className="sm:content-center md:content-start">
-          <h1 className="font-bold mt-4 text-4xl">{artistInfo.name}</h1>
-          </div>
+        <div className="sm:content-center md:content-start">
+      <h1 className="font-bold mt-4 text-4xl">{artistInfo.name}</h1>
+    </div>
+            {artistInfo.geniusData?.alternate_names && artistInfo.geniusData.alternate_names.length > 0 && (
           <div className="mt-2">
             <span className="text-sm font-bold">Other names: </span>
-            {artistInfo.geniusData?.alternate_names?.map((alias, index) => (
+            {artistInfo.geniusData.alternate_names.map((alias, index) => (
               <span key={index}>
-                {index !== 0 && ", "}
-                <span className={index < 2 ? "text-xs" : "text-xs"}>
-                  {index < 2 ? (
-                    alias
-                  ) : (
-                    <Popover trigger="hover" key={index}>
+                {index !== 0 && index < 3 && ", "}
+                {index < 2 ? (
+                  <span className="text-xs">{alias}</span>
+                ) : (
+                  index === 2 && (
+                    <Popover trigger="hover">
                       <PopoverTrigger>
-                        <span className="font-bold">{index === 2 && "see more"}</span>
+                        <span className="font-bold text-xs cursor-pointer">see more</span>
                       </PopoverTrigger>
                       <PopoverContent>
-                        <PopoverBody>
-                          {artistInfo.geniusData?.alternate_names
-                            .slice(2)
-                            .join(", ")}
+                        <PopoverBody className="text-xs">
+                          {artistInfo.geniusData?.alternate_names.slice(2).join(", ")}
                         </PopoverBody>
                       </PopoverContent>
                     </Popover>
-                  )}
-                </span>
+                  )
+                )}
               </span>
             ))}
-            
           </div>
-          {artistInfo.management && (
+        )}
+
+
+              {artistInfo.management && (
               <>
                 <span className="text-sm">
                   <span className="font-bold">Management:</span>{" "}
@@ -254,15 +255,8 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
       </div>
       
       
-      <div className="mt-1 sm:mt-0 flex ml-auto flex-col space-y-1 justify-between">
-        <div className="mt-6 sm:mt-0 flex ml-auto flex-row space-x-2 justify-between">
-          {artistInfo.links &&  renderLinks(artistInfo.links)}
-        
-        </div>
-        
-         
-        <Toaster />
-        <Popover isOpen={isOpen} onClose={onClose}>
+      <div className="mt-1 sm:mt-0 flex ml-auto flex-col space-y-2 justify-start">
+      <Popover isOpen={isOpen} onClose={onClose}>
           <PopoverTrigger>
             <Button
               colorScheme="black"
@@ -298,6 +292,14 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
             </PopoverFooter>
           </PopoverContent>
         </Popover>
+        <div className="mt-4 sm:mt-0 flex ml-auto flex-row space-x-2 justify-between">
+          {artistInfo.links &&  renderLinks(artistInfo.links)}
+        
+        </div>
+        
+         
+        <Toaster />
+       
         {/*
         <div className="mt-2 flex justify-end">
           <Tooltip label="Coming Soon!" aria-label="A tooltip">

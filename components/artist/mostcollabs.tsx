@@ -83,12 +83,18 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
 
   const toggleDrawer = (collabId?: string) => {
     if (collabId) {
-      const collab = collaborators.find(c => c._id === collabId);
-      setSelectedCollab(collab ?? null);
+      if (selectedCollab && selectedCollab._id === collabId) {
+        setIsDrawerOpen(false);
+        setSelectedCollab(null);
+      } else {
+        const collab = collaborators.find(c => c._id === collabId);
+        setSelectedCollab(collab ?? null);
+        setIsDrawerOpen(true); 
+      }
     } else {
-      setSelectedCollab(null); // This will close the drawer and clear the selection
+      setSelectedCollab(null);
+      setIsDrawerOpen(false);
     }
-    setIsDrawerOpen(!isDrawerOpen);
   };
 
   const fuse = useMemo(
