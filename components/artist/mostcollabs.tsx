@@ -36,6 +36,8 @@ interface CollaboratorsProps {
 }
 
 interface ArtistData {
+  _id: string; 
+  name: string;
   strArtistThumb?: string;
 }
 
@@ -81,7 +83,13 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
     fetchData();
   }, [artistId]);
 
+  useEffect(() => {
+    // Automatically close the drawer if the artistData changes
+    setIsDrawerOpen(false);
+  }, [artistData]);
+
   const toggleDrawer = (collabId?: string) => {
+    console.log("ARTIST DATA: ", artistData);
     if (collabId) {
       if (selectedCollab && selectedCollab._id === collabId) {
         setIsDrawerOpen(false);
@@ -148,6 +156,7 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   
 
   return (
+    
 
   
     <div className="flex flex-col max-w-[800px] mx-auto xl:px-0 font-inter mt-6">
@@ -239,11 +248,20 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
       <DrawerContent className="max-w-l rounded-t-lg overflow-hidden" >
         <DrawerCloseButton />
         <DrawerHeader>
-        {selectedCollab && artistId ? ( 
+        {selectedCollab && artistId && artistData? ( 
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'left', gap: '20px' }}>
           <PersonCard
-            id = {selectedCollab._id}
-            name = {selectedCollab.name}
-            />
+            id={selectedCollab._id}
+            name={selectedCollab.name}
+          />
+          <span style={{ margin: '0 10px' }}>+</span>
+          <PersonCard
+            id={artistData._id}
+            name={artistData.name}
+            imageUrl={artistData.strArtistThumb}
+          />
+        </div>
+          
             ) : (
               <p>No collaborator selected or artist ID is not available.</p>
             )}
