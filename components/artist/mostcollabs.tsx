@@ -89,7 +89,6 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
   }, [artistData]);
 
   const toggleDrawer = (collabId?: string) => {
-    console.log("ARTIST DATA: ", artistData);
     if (collabId) {
       if (selectedCollab && selectedCollab._id === collabId) {
         setIsDrawerOpen(false);
@@ -258,7 +257,6 @@ const Collaborators: React.FC<CollaboratorsProps> = ({ artistId }) => {
           <PersonCard
             id={artistData._id}
             name={artistData.name}
-            imageUrl={artistData.strArtistThumb}
           />
         </div>
           
