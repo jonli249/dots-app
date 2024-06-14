@@ -152,13 +152,17 @@ const ArtistSummary: React.FC<ArtistSummaryProps> = ({ artistId }) => {
 
     return Object.entries(instrumentCounts)
       .sort((a, b) => b[1] - a[1])
-      .map(([type, count]) => (
-        <Tooltip key={type} label={`${iconMap[type].label} x${count}`} placement="top" hasArrow>
-          <Button size="md" bg="gray.200" _hover={{ bg: "gray.300" }}>
-            {iconMap[type].icon}
-          </Button>
-        </Tooltip>
-      ));
+      .map(([type, count]) => {
+        if (iconMap[type]) {
+          return (
+            <Tooltip key={type} label={`${iconMap[type].label} x${count}`} placement="top" hasArrow>
+              <Button size="md" bg="gray.200" _hover={{ bg: "gray.300" }}>
+                {iconMap[type].icon}
+              </Button>
+            </Tooltip>
+          );
+        }
+      });
   };
         
 
